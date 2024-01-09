@@ -1,0 +1,48 @@
+.root {
+  box-shadow: 1px 1px 10px 5px #e0e0e0;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  min-height: 370px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &__title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    height: 3rem;
+    align-items: center;
+    font-size: 20px;
+  }
+  &__content {
+    flex: auto;
+  }
+  &__btns {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &__input {
+    //display: flex;
+    justify-content: space-between;
+    align-items: center;
+    label {
+      //flex: 2;
+      padding-bottom: 5px;
+    }
+    input {
+      //flex: 3;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    textarea {
+      flex: 3;
+    }
+  }
+}

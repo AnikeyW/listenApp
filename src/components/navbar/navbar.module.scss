@@ -1,0 +1,20 @@
+
+.nav {
+  height: var(--nav-height);
+}
+.navList {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: var(--header-color);
+}
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.active {
+  color: teal;
+}
