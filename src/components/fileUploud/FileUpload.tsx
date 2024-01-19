@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 interface IFileUploadProps {
-  setFile: (file: File) => void;
+  setFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
   accept: string;
   children: React.ReactNode;
 }
@@ -13,11 +13,6 @@ const FileUpload: React.FC<IFileUploadProps> = ({
 }) => {
   const ref = useRef<HTMLInputElement>(null);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(e.target.files[0]);
-    }
-  };
   return (
     <div onClick={() => ref.current?.click()}>
       <input
@@ -25,7 +20,7 @@ const FileUpload: React.FC<IFileUploadProps> = ({
         type="file"
         accept={accept}
         style={{ display: 'none' }}
-        onChange={onChange}
+        onChange={setFile}
       />
       {children}
     </div>

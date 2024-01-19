@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import styles from './page.module.scss';
 import TrackList from '@/components/tracklist/TrackList';
-import { useRouter } from 'next/navigation';
 import { ITrack } from '@/types/track';
 import { useTrackStore } from '@/stores/trackStore';
 import ErrorMessage from '@/components/errorMessage/ErrorMessage';
@@ -12,17 +11,15 @@ const Tracks = () => {
   const isLoading = useTrackStore((state) => state.isLoading);
   const error = useTrackStore((state) => state.error);
   const fetchTracks = useTrackStore((state) => state.fetchTracks);
-  const router = useRouter();
 
   useEffect(() => {
-    fetchTracks();
+    fetchTracks(100, 0);
   }, []);
 
   return (
     <div className={styles.root}>
       <div className={styles.trackHeader}>
-        Треки
-        <button onClick={() => router.push('/tracks/create')}>Загрузить</button>
+        Мои треки
       </div>
       {error && <ErrorMessage message={error} />}
       {isLoading && <div>Загрузка...</div>}

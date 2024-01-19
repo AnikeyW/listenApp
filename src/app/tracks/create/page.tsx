@@ -7,25 +7,44 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import Input from '@/components/UI/Input/Input';
-import TextArea from '@/components/UI/TextArea/TextArea';
+import { usePlayerStore } from '@/stores/playerStore';
+import Button from '@/components/UI/Button/Button';
+import { RiImageAddLine } from 'react-icons/ri';
+import Image from 'next/image';
+import addAudioIcon from '@/assets/add-audio.png';
+import PreviewNewTrack from '@/components/previewNewTrack/PreviewNewTrack';
 
-interface IFormDataStep1 {
+export interface IFormDataStep1 {
   name: string;
   artist: string;
   text: string;
 }
 
 const Page = () => {
+  const activeTrack = usePlayerStore((state) => state.activeTrack);
   const [currentStep, setCurrentStep] = useState(1);
   const [picture, setPicture] = useState<any>(null);
+  const [imagePreviewSrc, setImagePreviewSrc] = useState<string>('');
   const [audio, setAudio] = useState<any>(null);
   const [formDataStep1, setFormDataStep1] = useState<IFormDataStep1>({
     name: '',
     artist: '',
     text: '',
   });
-  const { handleSubmit, control } = useForm();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      artist: '',
+      text: '',
+    },
+    mode: 'all',
+  });
   const submitForm1 = useRef<HTMLInputElement | null>(null);
+
   const router = useRouter();
 
   const steps = [
@@ -37,6 +56,13 @@ const Page = () => {
   const next = () => {
     if (currentStep === 1) {
       submitForm1.current?.click();
+      if (
+        errors?.artist ||
+        errors?.name ||
+        formDataStep1.name === '' ||
+        formDataStep1.artist === ''
+      )
+        return;
     }
     if (currentStep !== steps.length) {
       setCurrentStep((prev) => prev + 1);
@@ -62,64 +88,150 @@ const Page = () => {
     setFormDataStep1(data);
   };
 
+  const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setPicture(e.target.files[0]);
+      if (!FileReader) return;
+      const img = new FileReader();
+      img.onload = () => {
+        if (img.result && typeof img.result === 'string') {
+          setImagePreviewSrc(img.result);
+        }
+      };
+      img.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onChangeAudio = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setAudio(e.target.files[0]);
+    }
+  };
+
   return (
-    <div className={styles.root}>
+    <div
+      className={`${styles.root} ${activeTrack ? styles.withActiveTrack : ''}`}
+    >
       <h2 className={styles.root__title}>Загрузка нового трека</h2>
       <div className={styles.root__content}>
         <StepWrapper currentStep={currentStep} steps={steps}>
           {currentStep === 1 && (
-            <form onSubmit={handleSubmit(handleStep1)} className={styles.form}>
-              <div className={styles.form__input}>
-                <label htmlFor="name">Название трека: </label>
-                <Controller
-                  name="name"
-                  control={control}
-                  render={({ field }) => <Input {...field} type="text" />}
-                />
-              </div>
-              <div className={styles.form__input}>
-                <label htmlFor="artist">Имя исполнителя: </label>
-                <Controller
-                  name="artist"
-                  control={control}
-                  render={({ field }) => <Input {...field} type="text" />}
-                />
-              </div>
-              <div className={styles.form__input}>
-                <label htmlFor="text">Слова к треку</label>
-                <Controller
-                  name="text"
-                  control={control}
-                  render={({ field }) => <TextArea {...field} rows={4} />}
-                />
-              </div>
-              <input
-                type="submit"
-                style={{ display: 'none' }}
-                ref={submitForm1}
+            <>
+              <PreviewNewTrack
+                picture={picture}
+                formDataStep1={formDataStep1}
+                imagePreviewSrc={imagePreviewSrc}
               />
-            </form>
+              <form
+                onSubmit={handleSubmit(handleStep1)}
+                className={styles.form}
+              >
+                <div className={styles.form__input}>
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={'Название трека'}
+                      />
+                    )}
+                  />
+                  {errors?.name && (
+                    <p style={{ color: 'coral' }}>Обязательное поле</p>
+                  )}
+                </div>
+                <div className={styles.form__input}>
+                  <Controller
+                    name="artist"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={'Имя исполнителя'}
+                      />
+                    )}
+                  />
+                  {errors?.artist && (
+                    <p style={{ color: 'coral' }}>Обязательное поле</p>
+                  )}
+                </div>
+                <input
+                  type="submit"
+                  style={{ display: 'none' }}
+                  ref={submitForm1}
+                  onClick={handleSubmit(handleStep1)}
+                />
+              </form>
+            </>
           )}
           {currentStep === 2 && (
-            <FileUpload setFile={setPicture} accept={'image/*'}>
-              <button>Загрузить изображение</button>
-            </FileUpload>
+            <>
+              <PreviewNewTrack
+                picture={picture}
+                formDataStep1={formDataStep1}
+                imagePreviewSrc={imagePreviewSrc}
+              />
+              <div style={{ flex: 1 }}>
+                <FileUpload setFile={onChangePicture} accept={'image/*'}>
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      border: '2px dotted teal',
+                      justifyContent: 'center',
+                      borderRadius: '1rem',
+                    }}
+                  >
+                    <RiImageAddLine size={100} />
+                  </div>
+                </FileUpload>
+              </div>
+            </>
           )}
           {currentStep === 3 && (
-            <FileUpload setFile={setAudio} accept={'audio/*'}>
-              <button>Загрузить аудио</button>
-            </FileUpload>
+            <>
+              <PreviewNewTrack
+                picture={picture}
+                formDataStep1={formDataStep1}
+                imagePreviewSrc={imagePreviewSrc}
+              />
+              <div style={{ flex: 1 }}>
+                <FileUpload setFile={onChangeAudio} accept={'audio/*'}>
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      border: '2px dotted teal',
+                      justifyContent: 'center',
+                      borderRadius: '1rem',
+                    }}
+                  >
+                    <Image
+                      src={addAudioIcon}
+                      alt={''}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </FileUpload>
+              </div>
+            </>
           )}
         </StepWrapper>
       </div>
 
       <div className={styles.root__btns}>
-        <button disabled={currentStep === 1} onClick={back}>
+        <Button disabled={currentStep === 1} onClick={back}>
           Назад
-        </button>
-        <button onClick={next}>
-          {currentStep !== steps.length ? 'Вперед' : 'Загрузить'}
-        </button>
+        </Button>
+        <Button onClick={next}>
+          {currentStep !== steps.length ? 'Далее' : 'Загрузить'}
+        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { HiHome, HiOutlineViewList, HiPlusCircle } from 'react-icons/hi'
 import styles from './navbar.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,17 +17,33 @@ const Navbar = () => {
             }`}
             href="/"
           >
-            Главная
+            <div className={styles.linkTitle}>
+              <HiHome size={24}/>
+              <div>Главная</div>
+            </div>
           </Link>
         </li>
+        {/*<li>*/}
+        {/*  <Link*/}
+        {/*    className={`${styles.link} ${*/}
+        {/*      pathname === '/albums' ? styles.active : ''*/}
+        {/*    }`}*/}
+        {/*    href="/albums"*/}
+        {/*  >*/}
+        {/*    Альбомы*/}
+        {/*  </Link>*/}
+        {/*</li>*/}
         <li>
           <Link
             className={`${styles.link} ${
-              pathname === '/albums' ? styles.active : ''
+              pathname === '/tracks/create' ? styles.active : ''
             }`}
-            href="/albums"
+            href="/tracks/create"
           >
-            Альбомы
+            <div className={styles.linkTitle}>
+              <HiPlusCircle size={24}/>
+              <div>Добавить</div>
+            </div>
           </Link>
         </li>
         <li>
@@ -36,7 +53,10 @@ const Navbar = () => {
             }`}
             href="/tracks"
           >
-            Треки
+            <div className={styles.linkTitle}>
+              <HiOutlineViewList size={24}/>
+              <div>Треки</div>
+            </div>
           </Link>
         </li>
       </ul>

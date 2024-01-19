@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './trackProgress.module.scss';
+import { formatTime } from '@/utils'
 
 interface ITrackProgressProps {
   left: number;
@@ -12,6 +13,7 @@ const TrackProgress: React.FC<ITrackProgressProps> = ({
   left,
   onChange,
 }) => {
+
   return (
     <div className={styles.trackProgress}>
       <input
@@ -22,7 +24,7 @@ const TrackProgress: React.FC<ITrackProgressProps> = ({
         onChange={onChange}
       />
       <div>
-        {left} / {right}
+        {formatTime(left)}
       </div>
     </div>
   );

@@ -1,6 +1,15 @@
 
 .nav {
   height: var(--nav-height);
+  background: var(--header-color);
+  @media screen and (max-width: 640px) {
+    height: calc(var(--nav-height) + 25px);
+    padding-bottom: 25px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
 }
 .navList {
   height: 100%;
@@ -8,13 +17,22 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  background: var(--header-color);
+  @media screen and (max-width: 640px) {
+    justify-content: space-around;
+    padding: 0 2rem;
+  }
 }
 .link {
   text-decoration: none;
-  color: black;
+  color: #818181;
+  .linkTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+  }
 }
 
 .active {
-  color: teal;
+  color: #ffffff;
 }

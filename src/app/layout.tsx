@@ -21,6 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <link rel="manifest" href="/manifest.json" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      {/*<meta name="apple-touch-fullscreen" content="yes"/>*/}
+      <meta name="HandheldFriendly" content="true" />
       <link rel="apple-touch-icon" href="/icon-256x256.png" />
       <body className={inter.className}>
         <Wrapper>

@@ -8,6 +8,8 @@ import TrackProgress from '@/components/trackProgress/TrackProgress';
 import volumeIcon from '@/assets/volume-icon.svg';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/tracklist/TrackList';
+import { HiMiniXMark } from "react-icons/hi2";
+import { log } from 'util'
 
 const Player = () => {
   const {
@@ -21,6 +23,7 @@ const Player = () => {
     setVolume,
     setCurrentTime,
     setDuration,
+    setActiveTrack
   } = usePlayerStore((state) => state);
 
   // useEffect(() => {
@@ -67,6 +70,11 @@ const Player = () => {
     setCurrentTime(Number(e.target.value));
   };
 
+  const turnOffPlayer = () => {
+    audio.pause()
+    setActiveTrack(null)
+  }
+
   return (
     <>
       {activeTrack ? (
@@ -85,14 +93,15 @@ const Player = () => {
               onChange={changeCurrentTime}
             />
           </div>
-          <Image
-            src={volumeIcon}
-            alt={'volume'}
-            width={24}
-            height={24}
-            style={{ marginLeft: 'auto' }}
-          />
-          <TrackProgress left={volume} right={100} onChange={changeVolume} />
+          {/*<Image*/}
+          {/*  src={volumeIcon}*/}
+          {/*  alt={'volume'}*/}
+          {/*  width={24}*/}
+          {/*  height={24}*/}
+          {/*  style={{ marginLeft: 'auto' }}*/}
+          {/*/>*/}
+          <HiMiniXMark size={30} onClick={turnOffPlayer}/>
+          {/*<TrackProgress left={volume} right={100} onChange={changeVolume} />*/}
         </div>
       ) : null}
     </>

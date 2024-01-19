@@ -14,12 +14,12 @@ const StepWrapper: React.FC<IStepWrapperProps> = ({
   steps,
 }) => {
   return (
-    <div>
+    <>
       <div className={styles.stepper}>
         <Stepper steps={steps} currentStep={currentStep} />
       </div>
-      <div>{children}</div>
-    </div>
+      <div className={styles.content}>{children}</div>
+    </>
   );
 };
 

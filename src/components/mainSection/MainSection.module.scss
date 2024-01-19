@@ -1,6 +1,7 @@
 .main {
-  flex: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  //flex: auto;
+  height: calc(100% - var(--nav-height-mobile));
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
 }

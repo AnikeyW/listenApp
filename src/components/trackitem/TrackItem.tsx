@@ -10,6 +10,7 @@ import { usePlayerStore } from '@/stores/playerStore';
 import { useTrackStore } from '@/stores/trackStore';
 import { ITrack } from '@/types/track';
 import { audio, initAudio } from '@/components/tracklist/TrackList';
+import { formatTime } from '@/utils'
 interface ITrackItemProps {
   track: ITrack;
 }
@@ -24,6 +25,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
   const setDuration = usePlayerStore((state) => state.setDuration);
   const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
+  const currentTime = usePlayerStore((state) => state.currentTime);
   const deleteTrack = useTrackStore((state) => state.deleteTrack);
   const router = useRouter();
 
@@ -106,16 +108,17 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
         <Image
           src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
           alt={track.name}
-          width={24}
-          height={24}
+          width={40}
+          height={40}
         />
       </div>
       <div className={styles.track__info}>
-        {track.name} {track.artist}
+        <div className={styles.track__info__trackName}>{track.name}</div>
+        <div className={styles.track__info__artistName}>{track.artist}</div>
       </div>
 
       <div className={styles.track__duration}>
-        {!pause && !pauseLocal && activeTrack?.id === track.id && '222 / 959'}
+        {!pause && !pauseLocal && activeTrack?.id === track.id && formatTime(currentTime)}
       </div>
       <div>
         <Image

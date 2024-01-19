@@ -6,7 +6,7 @@ interface ITrackState {
   tracks: ITrack[];
   isLoading: boolean;
   error: string | null;
-  fetchTracks: () => void;
+  fetchTracks: (count?: number, offset?: number) => void;
   deleteTrack: (trackId: number) => void;
 }
 
@@ -14,12 +14,16 @@ export const useTrackStore = create<ITrackState>()((set, getState) => ({
   tracks: [],
   isLoading: false,
   error: null,
-  fetchTracks: async (): Promise<void> => {
+  fetchTracks: async (count, offset): Promise<void> => {
     try {
       set({ error: null });
       set({ isLoading: true });
       const response = await axios.get(
         process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
+        {params:{
+            count,
+            offset
+          }}
       );
       set({ tracks: response.data });
     } catch (err: unknown) {

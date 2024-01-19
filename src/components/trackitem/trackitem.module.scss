@@ -2,7 +2,7 @@
   border: 1px solid black;
   border-radius: 0.3rem;
   display: flex;
-  height: 30px;
+  height: 46px;
   align-items: center;
   padding: 0 5px;
   justify-content: space-between;
@@ -10,12 +10,21 @@
     flex: 30px 0.5;
   }
   &__img{
-    width: 24px;
-    height: 24px;
-    flex: 30px 0.5;
+    width: 40px;
+    height: 40px;
+    flex: 40px 0.5;
+    img{
+      border-radius: 5px;
+    }
   }
   &__info{
     flex: 100px 6;
+    &__trackName{
+      font-weight: bold;
+    }
+    &__artistName{
+      font-size: 13px;
+    }
   }
   &__duration{
     flex: 30px 0.5;

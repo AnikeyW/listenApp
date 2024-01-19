@@ -1,7 +1,10 @@
 :root{
     --wrapper-width: 1200px;
+    --player-height: 60px;
     --nav-height: 50px;
-    --header-color: seashell;
+    --nav-height-mobile: 75px;
+    --header-color: #252525;
+    --trackslist-title-height: 30px;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,9 +33,11 @@ footer, header, hgroup, menu, nav, section {
 }
 html {
     height: 100%;
+    touch-action:none;
 }
 body {
     line-height: 1;
+    touch-action:none;
 }
 ol, ul {
     list-style: none;

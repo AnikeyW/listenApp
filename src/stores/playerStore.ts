@@ -14,7 +14,7 @@ interface IPlayerState {
   setCurrentTime: (value: number) => void;
   setVolume: (value: number) => void;
   setDuration: (value: number) => void;
-  setActiveTrack: (track: ITrack) => void;
+  setActiveTrack: (track: ITrack | null) => void;
   setAudio: (webAudio: any) => void;
 }
 
