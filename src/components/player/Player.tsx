@@ -1,56 +1,29 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { MouseEvent } from 'react';
 import styles from './Player.module.scss';
 import Image from 'next/image';
 import pauseIcon from '@/assets/pause-icon.svg';
 import playIcon from '@/assets/play-icon.svg';
 import TrackProgress from '@/components/trackProgress/TrackProgress';
-import volumeIcon from '@/assets/volume-icon.svg';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/tracklist/TrackList';
-import { HiMiniXMark } from "react-icons/hi2";
-import { log } from 'util'
+import { HiMiniXMark } from 'react-icons/hi2';
 
 const Player = () => {
   const {
     pause,
     duration,
     currentTime,
-    volume,
     activeTrack,
     playTrack,
     pauseTrack,
-    setVolume,
     setCurrentTime,
-    setDuration,
-    setActiveTrack
+    setActiveTrack,
+    setIsShowPlayerFullScreen,
   } = usePlayerStore((state) => state);
 
-  // useEffect(() => {
-  //   if (!audio) {
-  //     initAudio();
-  //   } else {
-  //     setInitAudio();
-  //     if (activeTrack) {
-  //       play();
-  //     }
-  //   }
-  // }, [activeTrack]);
-
-  const setInitAudio = () => {
-    if (activeTrack) {
-      audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-      };
-      audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
-      };
-    }
-  };
-
-  const play = () => {
+  const play = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     if (pause) {
       playTrack();
       audio.play();
@@ -60,25 +33,25 @@ const Player = () => {
     }
   };
 
-  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    audio.volume = Number(e.target.value) / 100;
-    setVolume(Number(e.target.value));
-  };
-
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>): void => {
     audio.currentTime = Number(e.target.value);
     setCurrentTime(Number(e.target.value));
   };
 
-  const turnOffPlayer = () => {
-    audio.pause()
-    setActiveTrack(null)
-  }
+  const turnOffPlayer = (e: MouseEvent<HTMLImageElement>) => {
+    e.stopPropagation();
+    audio.pause();
+    setActiveTrack(null);
+  };
+
+  const showPlayerFullScreen = () => {
+    setIsShowPlayerFullScreen(true);
+  };
 
   return (
     <>
       {activeTrack ? (
-        <div className={styles.player}>
+        <div className={styles.player} onClick={showPlayerFullScreen}>
           <div className={styles.player__btn} onClick={play}>
             {!pause ? (
               <Image src={pauseIcon} alt={'pause'} width={24} height={24} />
@@ -87,21 +60,13 @@ const Player = () => {
             )}
           </div>
           <div className={styles.player__trackProgress}>
-            <TrackProgress
-              left={currentTime}
-              right={duration}
-              onChange={changeCurrentTime}
-            />
+            {/*<TrackProgress*/}
+            {/*  left={currentTime}*/}
+            {/*  right={duration}*/}
+            {/*  onChange={changeCurrentTime}*/}
+            {/*/>*/}
           </div>
-          {/*<Image*/}
-          {/*  src={volumeIcon}*/}
-          {/*  alt={'volume'}*/}
-          {/*  width={24}*/}
-          {/*  height={24}*/}
-          {/*  style={{ marginLeft: 'auto' }}*/}
-          {/*/>*/}
-          <HiMiniXMark size={30} onClick={turnOffPlayer}/>
-          {/*<TrackProgress left={volume} right={100} onChange={changeVolume} />*/}
+          <HiMiniXMark size={30} onClick={turnOffPlayer} />
         </div>
       ) : null}
     </>

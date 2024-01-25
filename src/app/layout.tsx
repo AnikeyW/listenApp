@@ -5,6 +5,7 @@ import Navbar from '@/components/navbar/Navbar';
 import Player from '@/components/player/Player';
 import Wrapper from '@/components/wrapper/Wrapper';
 import MainSection from '@/components/mainSection/mainSection';
+import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <link rel="manifest" href="/manifest.json" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      {/*<meta name="apple-touch-fullscreen" content="yes"/>*/}
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
       <meta name="HandheldFriendly" content="true" />
       <link rel="apple-touch-icon" href="/icon-256x256.png" />
       <body className={inter.className}>
@@ -30,6 +33,7 @@ export default function RootLayout({
           <Navbar />
           <MainSection>{children}</MainSection>
           <Player />
+          <PlayerFullScreen />
         </Wrapper>
       </body>
     </html>

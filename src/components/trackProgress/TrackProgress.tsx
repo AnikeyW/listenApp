@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './trackProgress.module.scss';
-import { formatTime } from '@/utils'
+import { formatTime } from '@/utils';
 
 interface ITrackProgressProps {
   left: number;
@@ -13,18 +13,21 @@ const TrackProgress: React.FC<ITrackProgressProps> = ({
   left,
   onChange,
 }) => {
-
   return (
     <div className={styles.trackProgress}>
-      <input
-        type="range"
-        min={0}
-        max={right}
-        value={left}
-        onChange={onChange}
-      />
-      <div>
-        {formatTime(left)}
+      <div className={styles.trackProgress__range}>
+        <input
+          type="range"
+          min={0}
+          max={right}
+          value={left}
+          onChange={onChange}
+        />
+      </div>
+
+      <div className={styles.trackProgress__times}>
+        <div>{formatTime(left)}</div>
+        <div>{formatTime(right)}</div>
       </div>
     </div>
   );

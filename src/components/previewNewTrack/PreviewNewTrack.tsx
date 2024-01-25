@@ -1,39 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './previewNewTrack.module.scss';
 import Image from 'next/image';
-import { IFormDataStep1 } from '@/app/tracks/create/page';
+import FileUpload from '@/components/fileUploud/FileUpload';
+import { RiImageAddLine } from 'react-icons/ri';
+import { useCreateTrackStore } from '@/stores/createTrackStore';
 
-interface PreviewNewTrackProps {
-  picture: any;
-  imagePreviewSrc: string;
-  formDataStep1: IFormDataStep1;
-}
+type Props = {
+  step: number;
+};
 
-const PreviewNewTrack: React.FC<PreviewNewTrackProps> = ({
-  imagePreviewSrc,
-  formDataStep1,
-  picture,
-}) => {
+const PreviewNewTrack: React.FC<Props> = (props) => {
+  const name = useCreateTrackStore((state) => state.name);
+  const artist = useCreateTrackStore((state) => state.artist);
+  const picture = useCreateTrackStore((state) => state.picture);
+  const setPicture = useCreateTrackStore((state) => state.setPicture);
+  const [imagePreviewSrc, setImagePreviewSrc] = useState<string>('');
+
+  const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setPicture({ error: '', img: e.target.files[0] });
+      if (!FileReader) return;
+      const img = new FileReader();
+      img.onload = () => {
+        if (img.result && typeof img.result === 'string') {
+          setImagePreviewSrc(img.result);
+        }
+      };
+      img.readAsDataURL(e.target.files[0]);
+    }
+  };
+
   return (
     <div className={styles.previewBox}>
       <div className={styles.previewBox__img}>
-        {picture && (
-          <Image
-            src={imagePreviewSrc}
-            alt={'preview'}
-            width={250}
-            height={250}
-            style={{ borderRadius: '1rem' }}
-          />
+        {props.step === 2 ? (
+          <FileUpload setFile={onChangePicture} accept={'image/*'}>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '1rem',
+              }}
+            >
+              {picture.img ? (
+                <Image
+                  src={imagePreviewSrc}
+                  alt={'preview'}
+                  width={250}
+                  height={250}
+                  style={{ borderRadius: '1rem' }}
+                />
+              ) : (
+                <RiImageAddLine size={100} />
+              )}
+            </div>
+          </FileUpload>
+        ) : (
+          <>
+            {picture.img && (
+              <Image
+                src={imagePreviewSrc}
+                alt={'preview'}
+                width={250}
+                height={250}
+                style={{ borderRadius: '1rem' }}
+              />
+            )}
+          </>
         )}
       </div>
 
-      <div className={styles.previewBox__info}>
-        <div className={styles.previewBox__info_name}>{formDataStep1.name}</div>
-        <div className={styles.previewBox__info_artist}>
-          {formDataStep1.artist}
+      {props.step !== 1 && (
+        <div className={styles.previewBox__info}>
+          <div className={styles.previewBox__info_name}>{name.value}</div>
+          <div className={styles.previewBox__info_artist}>{artist.value}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

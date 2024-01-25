@@ -14,7 +14,7 @@ const FileUpload: React.FC<IFileUploadProps> = ({
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div onClick={() => ref.current?.click()}>
+    <div onClick={() => ref.current?.click()} style={{ height: '100%' }}>
       <input
         ref={ref}
         type="file"

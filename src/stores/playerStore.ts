@@ -9,6 +9,7 @@ interface IPlayerState {
   duration: number;
   currentTime: number;
   pause: boolean;
+  isShowPlayerFullScreen: boolean;
   pauseTrack: () => void;
   playTrack: () => void;
   setCurrentTime: (value: number) => void;
@@ -16,6 +17,7 @@ interface IPlayerState {
   setDuration: (value: number) => void;
   setActiveTrack: (track: ITrack | null) => void;
   setAudio: (webAudio: any) => void;
+  setIsShowPlayerFullScreen: (value: boolean) => void;
 }
 
 export const usePlayerStore = create<IPlayerState>()(
@@ -26,6 +28,7 @@ export const usePlayerStore = create<IPlayerState>()(
     duration: 0,
     pause: true,
     volume: 50,
+    isShowPlayerFullScreen: false,
     pauseTrack: () => set({ pause: true }),
     setAudio: (webAudio) => set({ audio: webAudio }),
     playTrack: () => set({ pause: false }),
@@ -34,5 +37,7 @@ export const usePlayerStore = create<IPlayerState>()(
     setDuration: (value) => set({ duration: value }),
     setActiveTrack: (track) =>
       set({ activeTrack: track, duration: 0, currentTime: 0 }),
+    setIsShowPlayerFullScreen: (value) =>
+      set({ isShowPlayerFullScreen: value }),
   })),
 );
