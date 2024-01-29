@@ -1,0 +1,26 @@
+.root{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  &__addAudio{
+    display: flex;
+    flex: 2;
+    &_text{
+      align-self: center;
+      font-size: 16px;
+    }
+    &_icon{
+      align-self: center;
+    }
+  }
+  &__uploaded{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 2;
+    font-size: 16px;
+  }
+}

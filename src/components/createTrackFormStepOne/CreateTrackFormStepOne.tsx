@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styles from './CreateTrackFormStepOne.module.scss';
 import Input from '@/components/UI/Input/Input';
 import { useCreateTrackStore } from '@/stores/createTrackStore';
+import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 
 const CreateTrackFormStepOne: FC = () => {
   const { name, setName, artist, setArtist } = useCreateTrackStore(
@@ -19,7 +20,7 @@ const CreateTrackFormStepOne: FC = () => {
             setName({ value: e.target.value, error: '' })
           }
         />
-        {name.error !== '' && <p style={{ color: 'coral' }}>{name.error}</p>}
+        {name.error !== '' && <ErrorMessage message={name.error} />}
       </div>
       <div className={styles.form__input}>
         <Input
@@ -30,9 +31,7 @@ const CreateTrackFormStepOne: FC = () => {
             setArtist({ value: e.target.value, error: '' })
           }
         />
-        {artist.error !== '' && (
-          <p style={{ color: 'coral' }}>{artist.error}</p>
-        )}
+        {artist.error !== '' && <ErrorMessage message={artist.error} />}
       </div>
     </form>
   );

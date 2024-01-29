@@ -32,11 +32,11 @@ const Page = () => {
     if (currentStep !== steps.length) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      createTrackFndReturn();
+      createTrackAndRedirect();
     }
   };
 
-  async function createTrackFndReturn() {
+  async function createTrackAndRedirect() {
     await createTrack();
     await router.push('/tracks');
   }
