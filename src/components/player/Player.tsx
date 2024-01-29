@@ -4,17 +4,19 @@ import styles from './Player.module.scss';
 import Image from 'next/image';
 import pauseIcon from '@/assets/pause-icon.svg';
 import playIcon from '@/assets/play-icon.svg';
-import TrackProgress from '@/components/trackProgress/TrackProgress';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/tracklist/TrackList';
 import { HiMiniXMark } from 'react-icons/hi2';
+// import Sheet from 'react-modal-sheet';
+import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
+import { createPortal } from 'react-dom';
+import Portal from '@/components/UI/Portal/Portal';
 
 const Player = () => {
   const {
     pause,
-    duration,
-    currentTime,
     activeTrack,
+    isShowPlayerFullScreen,
     playTrack,
     pauseTrack,
     setCurrentTime,
@@ -59,16 +61,28 @@ const Player = () => {
               <Image src={playIcon} alt={'play'} width={24} height={24} />
             )}
           </div>
-          <div className={styles.player__trackProgress}>
-            {/*<TrackProgress*/}
-            {/*  left={currentTime}*/}
-            {/*  right={duration}*/}
-            {/*  onChange={changeCurrentTime}*/}
-            {/*/>*/}
-          </div>
+          <div className={styles.player__trackProgress}></div>
           <HiMiniXMark size={30} onClick={turnOffPlayer} />
         </div>
       ) : null}
+      {/*<Sheet*/}
+      {/*  isOpen={isShowPlayerFullScreen}*/}
+      {/*  onClose={() => setIsShowPlayerFullScreen(false)}*/}
+      {/*  // disableDrag={true}*/}
+      {/*>*/}
+      {/*  <Sheet.Container>*/}
+      {/*    <Sheet.Content>*/}
+      {/*      <PlayerFullScreen />*/}
+      {/*    </Sheet.Content>*/}
+      {/*  </Sheet.Container>*/}
+      {/*  <Sheet.Backdrop />*/}
+      {/*</Sheet>*/}
+      <Portal
+        isOpen={isShowPlayerFullScreen}
+        onClose={() => setIsShowPlayerFullScreen(false)}
+      >
+        <PlayerFullScreen />
+      </Portal>
     </>
   );
 };

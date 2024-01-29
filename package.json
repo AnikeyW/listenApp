@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "axios": "^1.6.3",
+    "framer-motion": "^11.0.3",
     "next": "14.0.4",
     "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
     "react-icons": "^4.12.0",
+    "react-modal-sheet": "^2.2.0",
+    "react-spring-bottom-sheet": "^3.4.1",
     "zukeeper": "^1.0.2",
     "zustand": "^4.4.7"
   },

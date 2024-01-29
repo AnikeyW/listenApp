@@ -1,63 +1,93 @@
 'use client';
-import React, { FC, useRef, TouchEvent, useEffect } from 'react';
+import React, { FC, MouseEvent } from 'react';
+import Image from 'next/image';
+import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
+import { PiPauseFill } from 'react-icons/pi';
+import { motion } from 'framer-motion';
 import styles from './PlayerFullScreen.module.scss';
+import TrackProgress from '@/components/trackProgress/TrackProgress';
+import VolumeRange from '@/components/volumeRange/VolumeRange';
 import { usePlayerStore } from '@/stores/playerStore';
-import Content from '@/components/player/playerFullScreen/content/Content';
+import { audio } from '@/components/tracklist/TrackList';
 
 const PlayerFullScreen: FC = () => {
-  const isShowPlayerFullScreen = usePlayerStore(
-    (state) => state.isShowPlayerFullScreen,
-  );
-  const setIsShowPlayerFullScreen = usePlayerStore(
-    (state) => state.setIsShowPlayerFullScreen,
-  );
-  const ref = useRef<any>(null);
-  let startY: number;
-  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    startY = e.touches[0].clientY;
-    if (ref.current) {
-      ref.current.addEventListener('touchmove', onTouchMove);
-    }
+  const {
+    activeTrack,
+    currentTime,
+    duration,
+    pause,
+    isShowPlayerFullScreen,
+    setCurrentTime,
+    playTrack,
+    pauseTrack,
+  } = usePlayerStore((state) => state);
+
+  const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.stopPropagation();
+    audio.currentTime = Number(e.target.value);
+    setCurrentTime(Number(e.target.value));
   };
 
-  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    const newY = e.touches[0].clientY;
-    if (newY - startY > 100) {
-      ref.current.style.transform = 'translateY(100%)';
-      setTimeout(() => {
-        setIsShowPlayerFullScreen(false);
-      }, 300);
+  const play = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (pause) {
+      playTrack();
+      audio.play();
     } else {
-      ref.current.style.transform = 'translateY(0%)';
-      // setTimeout(() => {
-      //   setIsShowPlayerFullScreen(true);
-      // }, 300);
-      setIsShowPlayerFullScreen(true);
+      pauseTrack();
+      audio.pause();
     }
   };
-
-  const onTouchEnd = () => {
-    ref.current.removeEventListener('touchmove', onTouchMove);
-  };
-
-  useEffect(() => {
-    if (isShowPlayerFullScreen) {
-      ref.current.style.transform = 'translateY(0%)';
-    } else {
-      ref.current.style.transform = 'translateY(100%)';
-    }
-  }, [isShowPlayerFullScreen]);
 
   return (
-    <div
-      style={{ display: isShowPlayerFullScreen ? 'block' : 'none' }}
-      ref={ref}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      className={styles.root}
-    >
-      <Content />
-    </div>
+    <>
+      {activeTrack && (
+        <motion.div
+          animate={{ translateY: isShowPlayerFullScreen ? '100%' : '0%' }}
+          className={styles.root}
+        >
+          <div className={styles.root__image}>
+            <Image
+              src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
+              alt={'trackPicture'}
+              width={300}
+              height={300}
+            />
+          </div>
+          <div className={styles.root__progressTrack}>
+            <TrackProgress
+              left={currentTime}
+              right={duration}
+              onChange={changeCurrentTime}
+            />
+          </div>
+          <div className={styles.root__trackInfo}>
+            <div className={styles.root__trackInfo_name}>
+              {activeTrack.name}
+            </div>
+            <div className={styles.root__trackInfo_artist}>
+              {activeTrack.artist}
+            </div>
+          </div>
+          <div className={styles.root__btns}>
+            <RiRewindFill color={'white'} size={35} />
+            <div onClick={play}>
+              {pause ? (
+                <RiPlayFill color={'white'} size={60} />
+              ) : (
+                <PiPauseFill color={'white'} size={60} />
+              )}
+            </div>
+
+            <RiSpeedFill color={'white'} size={35} />
+          </div>
+          <div className={styles.root__volume}>
+            <VolumeRange />
+          </div>
+          <div className={styles.root__playerSettingsBtns}></div>
+        </motion.div>
+      )}
+    </>
   );
 };
 

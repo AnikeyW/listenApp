@@ -5,7 +5,6 @@ import Navbar from '@/components/navbar/Navbar';
 import Player from '@/components/player/Player';
 import Wrapper from '@/components/wrapper/Wrapper';
 import MainSection from '@/components/mainSection/mainSection';
-import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,8 +32,8 @@ export default function RootLayout({
           <Navbar />
           <MainSection>{children}</MainSection>
           <Player />
-          <PlayerFullScreen />
         </Wrapper>
+        <div id={'overlays'}></div>
       </body>
     </html>
   );
