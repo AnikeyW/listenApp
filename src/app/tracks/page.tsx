@@ -4,7 +4,7 @@ import styles from './page.module.scss';
 import TrackList from '@/components/tracklist/TrackList';
 import { ITrack } from '@/types/track';
 import { useTrackStore } from '@/stores/trackStore';
-import ErrorMessage from '@/components/errorMessage/ErrorMessage';
+import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 
 const Tracks = () => {
   const tracks: ITrack[] = useTrackStore((state) => state.tracks);
@@ -18,9 +18,7 @@ const Tracks = () => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.trackHeader}>
-        Мои треки
-      </div>
+      <div className={styles.trackHeader}>Мои треки</div>
       {error && <ErrorMessage message={error} />}
       {isLoading && <div>Загрузка...</div>}
       {tracks && tracks.length > 0 && <TrackList tracks={tracks} />}
