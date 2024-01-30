@@ -1,11 +1,9 @@
 {
-    "theme_color": "#252525",
-    "background_color": "#252525",
-    "display": "fullscreen",
+    "display": "standalone",
+    "short_name": "ListenBro",
     "scope": "/",
     "start_url": "/?source=pwa",
-    "name": "ListenBro",
-    "short_name": "ListenBro",
+    "theme_color": "#000",
     "icons": [
         {
             "src": "/icon-192x192.png",

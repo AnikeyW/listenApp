@@ -3,7 +3,6 @@ import React, { FC, MouseEvent } from 'react';
 import Image from 'next/image';
 import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
 import { PiPauseFill } from 'react-icons/pi';
-import { motion } from 'framer-motion';
 import styles from './PlayerFullScreen.module.scss';
 import TrackProgress from '@/components/trackProgress/TrackProgress';
 import VolumeRange from '@/components/volumeRange/VolumeRange';
@@ -16,10 +15,10 @@ const PlayerFullScreen: FC = () => {
     currentTime,
     duration,
     pause,
-    isShowPlayerFullScreen,
     setCurrentTime,
     playTrack,
     pauseTrack,
+    setIsShowPlayerFullScreen,
   } = usePlayerStore((state) => state);
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,10 +41,18 @@ const PlayerFullScreen: FC = () => {
   return (
     <>
       {activeTrack && (
-        <motion.div
-          animate={{ translateY: isShowPlayerFullScreen ? '100%' : '0%' }}
-          className={styles.root}
-        >
+        <div className={styles.root}>
+          <div
+            onClick={() => setIsShowPlayerFullScreen(false)}
+            style={{
+              backgroundColor: 'lightgray',
+              padding: '0.5rem 1.25rem',
+              borderBottomRightRadius: '0.25rem',
+              borderBottomLeftRadius: '0.25rem',
+            }}
+          >
+            X
+          </div>
           <div className={styles.root__image}>
             <Image
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
@@ -85,7 +92,7 @@ const PlayerFullScreen: FC = () => {
             <VolumeRange />
           </div>
           <div className={styles.root__playerSettingsBtns}></div>
-        </motion.div>
+        </div>
       )}
     </>
   );

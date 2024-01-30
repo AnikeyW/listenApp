@@ -7,10 +7,9 @@ import playIcon from '@/assets/play-icon.svg';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/tracklist/TrackList';
 import { HiMiniXMark } from 'react-icons/hi2';
-// import Sheet from 'react-modal-sheet';
 import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
-import { createPortal } from 'react-dom';
 import Portal from '@/components/UI/Portal/Portal';
+import Modal from '@/components/UI/Modal/Modal';
 
 const Player = () => {
   const {
@@ -65,23 +64,14 @@ const Player = () => {
           <HiMiniXMark size={30} onClick={turnOffPlayer} />
         </div>
       ) : null}
-      {/*<Sheet*/}
-      {/*  isOpen={isShowPlayerFullScreen}*/}
-      {/*  onClose={() => setIsShowPlayerFullScreen(false)}*/}
-      {/*  // disableDrag={true}*/}
-      {/*>*/}
-      {/*  <Sheet.Container>*/}
-      {/*    <Sheet.Content>*/}
-      {/*      <PlayerFullScreen />*/}
-      {/*    </Sheet.Content>*/}
-      {/*  </Sheet.Container>*/}
-      {/*  <Sheet.Backdrop />*/}
-      {/*</Sheet>*/}
-      <Portal
-        isOpen={isShowPlayerFullScreen}
-        onClose={() => setIsShowPlayerFullScreen(false)}
-      >
-        <PlayerFullScreen />
+
+      <Portal>
+        <Modal
+          isOpen={isShowPlayerFullScreen}
+          onClose={() => setIsShowPlayerFullScreen(false)}
+        >
+          <PlayerFullScreen />
+        </Modal>
       </Portal>
     </>
   );

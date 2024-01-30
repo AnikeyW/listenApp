@@ -4,11 +4,9 @@ import styles from './portal.module.scss';
 
 interface PortalProps {
   children: ReactNode;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-const Portal: FC<PortalProps> = ({ isOpen, onClose, children }) => {
+const Portal: FC<PortalProps> = ({ children }) => {
   const ref = useRef<Element | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -17,12 +15,7 @@ const Portal: FC<PortalProps> = ({ isOpen, onClose, children }) => {
     setMounted(true);
   }, []);
 
-  return mounted && ref.current
-    ? createPortal(
-        <>{isOpen && <div className={styles.portal}>{children}</div>}</>,
-        ref.current,
-      )
-    : null;
+  return mounted && ref.current ? createPortal(children, ref.current) : null;
 };
 
 export default Portal;

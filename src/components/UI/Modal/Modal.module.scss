@@ -1,0 +1,33 @@
+.root{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  &__wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.75rem 0.15rem 0rem 0.15rem;
+    &_overlay{
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.4);
+    }
+    &_content{
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+  }
+
+}
+
