@@ -9,7 +9,7 @@
     align-items: center;
     width: 100%;
     p {
-      color: #6e6e6e;
+      color: var(--text-color-dark-theme);
       text-align: center;
       font-size: 12px;
       margin-top: 0.25rem;
@@ -52,7 +52,7 @@
 
 .active p {
   font-weight: bold;
-  color: black;
+  color: #e6e6e6;
 }
 
 .complete p {

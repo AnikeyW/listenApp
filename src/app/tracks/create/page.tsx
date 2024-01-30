@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import StepWrapper from '@/components/stepWrapper/StepWrapper';
+import StepWrapper from '@/components/UI/Stepper/stepWrapper/StepWrapper';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import { usePlayerStore } from '@/stores/playerStore';
@@ -14,7 +14,6 @@ import CreateTrackFormStepThree from '@/components/createTrackFormStepThree/Crea
 const steps = ['Информация о треке', 'Загрузка изображения', 'Загрузка аудио'];
 
 const Page = () => {
-  const activeTrack = usePlayerStore((state) => state.activeTrack);
   const [currentStep, setCurrentStep] = useState(1);
   const validateStepOne = useCreateTrackStore((state) => state.validateStepOne);
   const validateStepTwo = useCreateTrackStore((state) => state.validateStepTwo);
@@ -46,9 +45,7 @@ const Page = () => {
   };
 
   return (
-    <div
-      className={`${styles.root} ${activeTrack ? styles.withActiveTrack : ''}`}
-    >
+    <div className={styles.root}>
       {!isLoading ? (
         <>
           <h2 className={styles.root__title}>Загрузка нового трека</h2>

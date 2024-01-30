@@ -36,7 +36,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
                     borderTopLeftRadius: '0.5rem',
                     borderTopRightRadius: '0.5rem',
                     overflow: 'hidden',
-                    transform: 'scale(0.96)',
+                    transform: 'scale(0.94) translateY(1.5rem)',
                     transitionProperty: 'all',
                     transitionDuration: '0.4s',
                     transitionTimingFunction:

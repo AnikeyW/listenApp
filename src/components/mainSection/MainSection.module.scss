@@ -1,7 +1,17 @@
 .main {
-  //flex: auto;
   height: calc(100% - var(--nav-height-mobile));
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
+  background-color: var(--bg-color-dark-theme);
+  box-sizing: border-box;
+
+  @media screen and (display-mode: standalone){
+    padding-top: 40px;
+    height: calc(100% - var(--nav-height-mobile));
+  }
+}
+
+.withActiveTrack{
+  height: calc(100% - var(--nav-height) - var(--player-height));
+  @media screen and (display-mode: standalone){
+    height: calc(100% - var(--nav-height-mobile) - var(--player-height));
+  }
 }

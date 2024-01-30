@@ -5,6 +5,9 @@
     --nav-height-mobile: 75px;
     --header-color: #252525;
     --trackslist-title-height: 30px;
+    --bg-color-dark-theme: #363b36;
+    --bg-soft-color-dark-theme: #737373;
+    --text-color-dark-theme: #c9c9c9;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

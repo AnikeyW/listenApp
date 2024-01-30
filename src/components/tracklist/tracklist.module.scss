@@ -2,12 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: calc(100% - var(--trackslist-title-height));
   overflow-y: scroll;
   padding: 0 0.5rem;
-  touch-action: pan-y;
-}
-
-.withActiveTrack{
-  height: calc(100% - var(--trackslist-title-height) - var(--player-height));
 }
