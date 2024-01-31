@@ -1,7 +1,7 @@
 
 .nav {
   height: var(--nav-height);
-  background: var(--header-color);
+  background: var(--navbar-color);
   @media screen and (max-width: 640px) {
     height: calc(var(--nav-height-mobile));
     padding-bottom: 25px;
@@ -9,6 +9,7 @@
     width: 100%;
     bottom: 0;
     left: 0;
+    border-top: 1px solid var(--color-background-soft);
   }
 }
 .navList {
@@ -34,5 +35,5 @@
 }
 
 .active {
-  color: #ffffff;
+  color: var(--color-text);
 }

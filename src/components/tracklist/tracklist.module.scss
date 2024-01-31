@@ -1,7 +1,9 @@
 .tracklist{
+  max-height: calc(100% - var(--trackslist-title-height));
+  flex: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
-  padding: 0 0.5rem;
+  padding: 0.5rem 0.5rem;
 }

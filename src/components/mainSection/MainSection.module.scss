@@ -10,7 +10,7 @@
 }
 
 .withActiveTrack{
-  height: calc(100% - var(--nav-height) - var(--player-height));
+  height: calc(100% - var(--nav-height-mobile) - var(--player-height));
   @media screen and (display-mode: standalone){
     height: calc(100% - var(--nav-height-mobile) - var(--player-height));
   }
