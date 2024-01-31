@@ -10,6 +10,7 @@ interface ITrackState {
   deleteTrack: (trackId: number) => void;
 }
 
+//todo add devtools
 export const useTrackStore = create<ITrackState>()((set, getState) => ({
   tracks: [],
   isLoading: false,
@@ -20,10 +21,12 @@ export const useTrackStore = create<ITrackState>()((set, getState) => ({
       set({ isLoading: true });
       const response = await axios.get(
         process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
-        {params:{
+        {
+          params: {
             count,
-            offset
-          }}
+            offset,
+          },
+        },
       );
       set({ tracks: response.data });
     } catch (err: unknown) {

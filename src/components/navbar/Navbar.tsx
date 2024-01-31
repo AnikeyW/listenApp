@@ -1,6 +1,11 @@
 'use client';
 import React from 'react';
-import { HiHome, HiOutlineViewList, HiPlusCircle } from 'react-icons/hi';
+import {
+  HiHome,
+  HiOutlineViewList,
+  HiPlusCircle,
+  HiAdjustments,
+} from 'react-icons/hi';
 import styles from './navbar.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -46,6 +51,19 @@ const Navbar = () => {
             <div className={styles.linkTitle}>
               <HiOutlineViewList size={24} />
               <div>Треки</div>
+            </div>
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={`${styles.link} ${
+              pathname === '/settings' ? styles.active : ''
+            }`}
+            href="/settings"
+          >
+            <div className={styles.linkTitle}>
+              <HiAdjustments size={24} />
+              <div>Настройки</div>
             </div>
           </Link>
         </li>
