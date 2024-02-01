@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './trackProgress.module.scss';
 import { formatTime } from '@/utils';
+import { motion } from 'framer-motion';
 
 interface ITrackProgressProps {
   left: number;
@@ -26,8 +27,24 @@ const TrackProgress: React.FC<ITrackProgressProps> = ({
       </div>
 
       <div className={styles.trackProgress__times}>
-        <div>{formatTime(left)}</div>
-        <div>{formatTime(right)}</div>
+        <motion.div
+          animate={
+            (left * 100) / right < 12
+              ? { translateY: '10px' }
+              : { translateY: 0 }
+          }
+        >
+          {formatTime(left)}
+        </motion.div>
+        <motion.div
+          animate={
+            (left * 100) / right > 88
+              ? { translateY: '10px' }
+              : { translateY: 0 }
+          }
+        >
+          {formatTime(right)}
+        </motion.div>
       </div>
     </div>
   );

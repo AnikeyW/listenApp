@@ -113,10 +113,9 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
       </div>
 
       <div className={styles.track__duration}>
-        {!pause &&
-          !pauseLocal &&
-          activeTrack?.id === track.id &&
-          formatTime(currentTime)}
+        {!pause && !pauseLocal && activeTrack?.id === track.id
+          ? formatTime(currentTime)
+          : formatTime(track.duration)}
       </div>
       <div>
         <Image

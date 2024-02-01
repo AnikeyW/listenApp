@@ -1,6 +1,7 @@
 'use client';
 import React, { FC, MouseEvent } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
 import { PiPauseFill } from 'react-icons/pi';
 import styles from './PlayerFullScreen.module.scss';
@@ -18,7 +19,6 @@ const PlayerFullScreen: FC = () => {
     setCurrentTime,
     playTrack,
     pauseTrack,
-    setIsShowPlayerFullScreen,
   } = usePlayerStore((state) => state);
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,17 +42,7 @@ const PlayerFullScreen: FC = () => {
     <>
       {activeTrack && (
         <div className={styles.root}>
-          <div
-            onClick={() => setIsShowPlayerFullScreen(false)}
-            style={{
-              backgroundColor: 'lightgray',
-              padding: '0.5rem 1.25rem',
-              borderBottomRightRadius: '0.25rem',
-              borderBottomLeftRadius: '0.25rem',
-            }}
-          >
-            X
-          </div>
+          <div className={styles.root__handle}></div>
           <div className={styles.root__image}>
             <Image
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
@@ -61,13 +51,21 @@ const PlayerFullScreen: FC = () => {
               height={300}
             />
           </div>
-          <div className={styles.root__progressTrack}>
+          <motion.div
+            className={styles.root__progressTrack}
+            drag={'y'}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={0}
+          >
             <TrackProgress
               left={currentTime}
               right={duration}
               onChange={changeCurrentTime}
             />
-          </div>
+          </motion.div>
           <div className={styles.root__trackInfo}>
             <div className={styles.root__trackInfo_name}>
               {activeTrack.name}
@@ -76,7 +74,15 @@ const PlayerFullScreen: FC = () => {
               {activeTrack.artist}
             </div>
           </div>
-          <div className={styles.root__btns}>
+          <motion.div
+            className={styles.root__btns}
+            drag={'y'}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={0}
+          >
             <RiRewindFill color={'white'} size={35} />
             <div onClick={play}>
               {pause ? (
@@ -87,10 +93,18 @@ const PlayerFullScreen: FC = () => {
             </div>
 
             <RiSpeedFill color={'white'} size={35} />
-          </div>
-          <div className={styles.root__volume}>
+          </motion.div>
+          <motion.div
+            className={styles.root__volume}
+            drag={'y'}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={0}
+          >
             <VolumeRange />
-          </div>
+          </motion.div>
           <div className={styles.root__playerSettingsBtns}></div>
         </div>
       )}

@@ -6,6 +6,7 @@ export interface ITrack {
   listens: number;
   picture: string;
   audio: string;
+  duration: number;
 }
 
 export interface IComment {

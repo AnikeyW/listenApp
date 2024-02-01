@@ -77,6 +77,24 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
                 translateY: '100%',
                 transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
               }}
+              drag={'y'}
+              dragConstraints={{
+                top: 0,
+                bottom: 0,
+              }}
+              dragElastic={{
+                top: 0.05,
+                bottom: 1,
+              }}
+              onDragEnd={(event, info) => {
+                console.log(info.velocity);
+                if (info.velocity.y > 300) {
+                  onClose();
+                }
+                if (info.offset.y > 350) {
+                  onClose();
+                }
+              }}
               className={styles.root__wrapper_content}
               onClick={(event) => event.stopPropagation()}
             >
