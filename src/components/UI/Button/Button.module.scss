@@ -1,10 +1,12 @@
 .button{
   padding: 12px 25px;
-  color: #000000;
-  background-color: #5ba4fc;
+  color: var(--color-background);
+  background-color: var(--btn-color-background);
   border-radius: 0.5rem;
   font-size: 14px;
+  border: none;
   &:disabled {
-    background-color: #e6e6e6;
+    background-color: var(--color-background);
+    color: var(--color-text-soft);
   }
 }

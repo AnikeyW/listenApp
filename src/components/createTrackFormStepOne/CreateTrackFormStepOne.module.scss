@@ -9,15 +9,15 @@
         label {
             padding-bottom: 5px;
         }
-        input {
-            box-sizing: border-box;
-            width: 100%;
-            background: var(--bg-soft-color-dark-theme);
-            color: var(--text-color-dark-theme);
-            &::placeholder{
-                color: #a8a8a8;
-            }
-        }
+        //input {
+        //    box-sizing: border-box;
+        //    width: 100%;
+        //    background: var(--bg-soft-color-dark-theme);
+        //    color: var(--text-color-dark-theme);
+        //    &::placeholder{
+        //        color: #a8a8a8;
+        //    }
+        //}
         textarea {
             flex: 3;
         }

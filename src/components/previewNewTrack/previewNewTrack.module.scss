@@ -6,16 +6,16 @@
   &__img {
     width: 250px;
     height: 250px;
-    background: var(--bg-soft-color-dark-theme);
+    background: var(--color-background-soft);
     border-radius: 1rem;
     margin-bottom: 1.5rem;
-    -webkit-box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
-    -moz-box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
-    box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
+    -webkit-box-shadow: 0px 0px 25px -1px var(--color-background-soft);
+    -moz-box-shadow: 0px 0px 25px -1px var(--color-background-soft);
+    box-shadow: 0px 0px 10px -1px var(--color-background-soft);
     img {
-      -webkit-box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
-      -moz-box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
-      box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.11);
+      -webkit-box-shadow: 0px 0px 25px -1px var(--color-background-soft);
+      -moz-box-shadow: 0px 0px 25px -1px var(--color-background-soft);
+      box-shadow: 0px 0px 25px -1px var(--color-background-soft);
       object-fit: cover;
     }
   }

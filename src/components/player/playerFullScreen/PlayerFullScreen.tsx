@@ -83,16 +83,12 @@ const PlayerFullScreen: FC = () => {
             }}
             dragElastic={0}
           >
-            <RiRewindFill color={'white'} size={35} />
+            <RiRewindFill size={35} />
             <div onClick={play}>
-              {pause ? (
-                <RiPlayFill color={'white'} size={60} />
-              ) : (
-                <PiPauseFill color={'white'} size={60} />
-              )}
+              {pause ? <RiPlayFill size={60} /> : <PiPauseFill size={60} />}
             </div>
 
-            <RiSpeedFill color={'white'} size={35} />
+            <RiSpeedFill size={35} />
           </motion.div>
           <motion.div
             className={styles.root__volume}
