@@ -1,9 +1,10 @@
 :root{
     --wrapper-width: 1200px;
-    --player-height: 60px;
+    --player-height: 40px;
     --nav-height: 50px;
     --nav-height-mobile: 75px;
     --trackslist-title-height: 30px;
+    --paddingBottomOnIphone: 25px;
 }
 
 [data-theme='dark'] {
@@ -14,6 +15,7 @@
     --navbar-color: #252525;
     --color-background-player: #252525;
     --btn-color-background: #5cdb95;
+    --color-active: #2461da;
 }
 [data-theme='light'] {
     --color-background: #e6eaea;
@@ -23,6 +25,7 @@
     --navbar-color: #e6eaea;
     --color-background-player: #e6eaea;
     --btn-color-background: #2779a7;
+    --color-active: #2461da;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

@@ -10,7 +10,7 @@ import { audio } from '@/components/tracklist/TrackList';
 
 import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
 import Portal from '@/components/UI/Portal/Portal';
-import Modal from '@/components/UI/Modal/Modal';
+import ModalWithLayerEffect from '@/components/UI/Modal/ModalWithLayerEffect';
 
 const Player = () => {
   const {
@@ -66,12 +66,12 @@ const Player = () => {
       ) : null}
 
       <Portal>
-        <Modal
+        <ModalWithLayerEffect
           isOpen={isShowPlayerFullScreen}
           onClose={() => setIsShowPlayerFullScreen(false)}
         >
           <PlayerFullScreen />
-        </Modal>
+        </ModalWithLayerEffect>
       </Portal>
     </>
   );

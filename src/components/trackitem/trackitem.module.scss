@@ -44,4 +44,59 @@
     width: 40px;
     color: var(--color-text-soft);
   }
+  &__options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    &_dot{
+      display: block;
+      height: 4px;
+      width: 4px;
+      background: var(--color-active);
+      border-radius: 50%;
+      position: relative;
+
+      &:before{
+        content: "";
+        position: absolute;
+        display: block;
+        height: 4px;
+        width: 4px;
+        background: var(--color-active);
+        border-radius: 50%;
+        left: -7px;
+      }
+      &:after{
+        content: "";
+        position: absolute;
+        display: block;
+        height: 4px;
+        width: 4px;
+        background: var(--color-active);
+        border-radius: 50%;
+        right: -7px;
+      }
+    }
+  }
+  &__modal{
+    color: var(--color-text);
+    padding-bottom: var(--paddingBottomOnIphone);
+    &_top{
+      border-bottom: 1px solid var(--color-background-soft);
+      padding: 1rem;
+    }
+    &_deleteTrack{
+      padding: 0 0.5rem;
+      display: flex;
+      height: 40px;
+      align-items: center;
+      color: crimson;
+      span{
+        color: var(--color-text);
+      }
+    }
+  }
 }

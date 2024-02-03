@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import styles from './Modal.module.scss';
+import styles from './ModalWithLayerEffect.module.scss';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 interface ModalProps {
@@ -19,7 +19,11 @@ const overlayVariants: Variants = {
   },
 };
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const ModalWithLayerEffect: FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
   const overlayAnimationStart = (variant: any) => {
     if (variant === 'open') {
       set(document.documentElement, { background: 'black' });
@@ -103,7 +107,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default Modal;
+export default ModalWithLayerEffect;
 
 type Styles = {
   [key in keyof CSSStyleDeclaration]?: string;

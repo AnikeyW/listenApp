@@ -3,7 +3,6 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import styles from './trackitem.module.scss';
-import deleteIcon from '../../assets/delete-icon.svg';
 import animateIcon from '../../assets/sound.gif';
 
 import { usePlayerStore } from '@/stores/playerStore';
@@ -11,9 +10,9 @@ import { useTrackStore } from '@/stores/trackStore';
 import { ITrack } from '@/types/track';
 import { audio, initAudio } from '@/components/tracklist/TrackList';
 import { formatTime } from '@/utils';
-import { MdPlayArrow } from 'react-icons/md';
-import Modal from '@/components/UI/Modal/Modal';
+import { MdPlayArrow, MdDeleteForever } from 'react-icons/md';
 import Portal from '@/components/UI/Portal/Portal';
+import Modal from '@/components/UI/NewModal/Modal';
 
 interface ITrackItemProps {
   track: ITrack;
@@ -148,18 +147,40 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
             ? formatTime(currentTime)
             : formatTime(track.duration)}
       </div>
-      <div onClick={openModal}>
-        <Image src={deleteIcon} alt={'delete'} width={24} />
+      <div className={styles.track__options} onClick={openModal}>
+        <span className={styles.track__options_dot}></span>
       </div>
       <Portal>
         <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-          <div style={{ background: '#c6c6c6' }}>
-            <Image
+          <div className={styles.track__modal}>
+            <div className={styles.track__modal_top}>
+              <div className={styles.track}>
+                <div className={styles.track__img}>
+                  <Image
+                    src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
+                    alt={track.name}
+                    width={50}
+                    height={50}
+                  />
+                </div>
+                <div className={styles.track__info}>
+                  <div className={styles.track__info__trackName}>
+                    {track.name}
+                  </div>
+                  <div className={styles.track__info__artistName}>
+                    {track.artist}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={styles.track__modal_deleteTrack}
               onClick={deleteHandler}
-              src={deleteIcon}
-              alt={'delete'}
-              width={24}
-            />
+            >
+              <MdDeleteForever size={34} />
+              <span>Удалить</span>
+            </div>
           </div>
         </Modal>
       </Portal>

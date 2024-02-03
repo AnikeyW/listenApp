@@ -45,7 +45,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
                 borderRadius: '1rem',
               }}
             >
-              {picture.img ? (
+              {picture.img && imagePreviewSrc ? (
                 <Image
                   src={imagePreviewSrc}
                   alt={'preview'}
@@ -60,7 +60,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
           </FileUpload>
         ) : (
           <>
-            {picture.img && (
+            {picture.img && imagePreviewSrc && (
               <Image
                 src={imagePreviewSrc}
                 alt={'preview'}

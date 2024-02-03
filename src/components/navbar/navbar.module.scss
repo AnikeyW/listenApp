@@ -4,7 +4,7 @@
   background: var(--navbar-color);
   @media screen and (max-width: 640px) {
     height: calc(var(--nav-height-mobile));
-    padding-bottom: 25px;
+    padding-bottom: var(--paddingBottomOnIphone);
     position: absolute;
     width: 100%;
     bottom: 0;
