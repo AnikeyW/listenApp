@@ -12,6 +12,8 @@ import { ITrack } from '@/types/track';
 import { audio, initAudio } from '@/components/tracklist/TrackList';
 import { formatTime } from '@/utils';
 import { MdPlayArrow } from 'react-icons/md';
+import Modal from '@/components/UI/Modal/Modal';
+import Portal from '@/components/UI/Portal/Portal';
 
 interface ITrackItemProps {
   track: ITrack;
@@ -32,6 +34,8 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
     (state) => state.setIsShowPlayerFullScreen,
   );
   const deleteTrack = useTrackStore((state) => state.deleteTrack);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const playHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -100,6 +104,11 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
     }
   };
 
+  const openModal = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setIsOpenModal(true);
+  };
+
   return (
     <div className={styles.track} onClick={clickItemHandler}>
       <div className={styles.track__img}>
@@ -139,14 +148,21 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
             ? formatTime(currentTime)
             : formatTime(track.duration)}
       </div>
-      <div>
-        <Image
-          onClick={deleteHandler}
-          src={deleteIcon}
-          alt={'delete'}
-          width={24}
-        />
+      <div onClick={openModal}>
+        <Image src={deleteIcon} alt={'delete'} width={24} />
       </div>
+      <Portal>
+        <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
+          <div style={{ background: '#c6c6c6' }}>
+            <Image
+              onClick={deleteHandler}
+              src={deleteIcon}
+              alt={'delete'}
+              width={24}
+            />
+          </div>
+        </Modal>
+      </Portal>
     </div>
   );
 };

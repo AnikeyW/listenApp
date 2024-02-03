@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import styles from './Modal.module.scss';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 interface ModalProps {
   children: ReactNode;
@@ -8,61 +8,58 @@ interface ModalProps {
   onClose: () => void;
 }
 
+const overlayVariants: Variants = {
+  open: {
+    opacity: 1,
+    transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
+  },
+  closed: {
+    opacity: 0,
+    transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
+  },
+};
+
 const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  const overlayAnimationStart = (variant: any) => {
+    if (variant === 'open') {
+      set(document.documentElement, { background: 'black' });
+
+      set(document.getElementById('root')!, {
+        borderTopLeftRadius: '0.5rem',
+        borderTopRightRadius: '0.5rem',
+        overflow: 'hidden',
+        transform: 'scale(0.94) translateY(1.5rem)',
+        transitionProperty: 'all',
+        transitionDuration: '0.4s',
+        transitionTimingFunction: 'cubic-bezier(0.36, 0.66, 0.04, 1)',
+      });
+    } else {
+      reset(document.getElementById('root')!, 'transform');
+      reset(document.getElementById('root')!, 'borderTopLeftRadius');
+      reset(document.getElementById('root')!, 'borderTopRightRadius');
+      reset(document.getElementById('root')!, 'overflow');
+    }
+  };
+
+  const overlayAnimationComplete = (variant: any) => {
+    if (variant === 'closed') {
+      reset(document.documentElement);
+      reset(document.getElementById('root')!);
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div className={styles.root}>
           <div className={styles.root__wrapper}>
             <motion.div
-              variants={{
-                open: {
-                  opacity: 1,
-                  transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
-                },
-                closed: {
-                  opacity: 0,
-                  transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
-                },
-              }}
+              variants={overlayVariants}
               initial={'closed'}
               animate={'open'}
               exit={'closed'}
-              onAnimationStart={(variant) => {
-                if (variant === 'open') {
-                  set(document.documentElement, { background: 'black' });
-
-                  set(document.getElementById('root')!, {
-                    borderTopLeftRadius: '0.5rem',
-                    borderTopRightRadius: '0.5rem',
-                    overflow: 'hidden',
-                    transform: 'scale(0.94) translateY(1.5rem)',
-                    transitionProperty: 'all',
-                    transitionDuration: '0.4s',
-                    transitionTimingFunction:
-                      'cubic-bezier(0.36, 0.66, 0.04, 1)',
-                  });
-                } else {
-                  reset(document.getElementById('root')!, 'transform');
-                  reset(
-                    document.getElementById('root')!,
-                    'borderTopLeftRadius',
-                  );
-                  reset(
-                    document.getElementById('root')!,
-                    'borderTopRightRadius',
-                  );
-                  reset(document.getElementById('root')!, 'overflow');
-                }
-              }}
-              onAnimationComplete={(variant) => {
-                if (variant === 'closed') {
-                  reset(document.documentElement);
-                  reset(document.getElementById('root')!);
-                  // document.documentElement.style.background = '';
-                  // document.getElementById('root')!.style.transform = '';
-                }
-              }}
+              onAnimationStart={overlayAnimationStart}
+              onAnimationComplete={overlayAnimationComplete}
               className={styles.root__wrapper_overlay}
               onClick={onClose}
             ></motion.div>
