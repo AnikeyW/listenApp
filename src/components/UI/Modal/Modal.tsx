@@ -87,7 +87,6 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
                 bottom: 1,
               }}
               onDragEnd={(event, info) => {
-                console.log(info.velocity);
                 if (info.velocity.y > 300) {
                   onClose();
                 }

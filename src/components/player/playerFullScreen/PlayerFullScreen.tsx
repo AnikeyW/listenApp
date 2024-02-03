@@ -43,14 +43,42 @@ const PlayerFullScreen: FC = () => {
       {activeTrack && (
         <div className={styles.root}>
           <div className={styles.root__handle}></div>
-          <div className={styles.root__image}>
+
+          <motion.div
+            variants={{
+              play: {
+                opacity: 1,
+              },
+              pause: {
+                opacity: 0,
+              },
+            }}
+            animate={!pause ? 'play' : 'pause'}
+            exit={'pause'}
+            transition={{ ease: 'easeOut', duration: 0.25 }}
+            className={styles.root__bgGlass}
+            style={{
+              background: `url(${
+                process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture
+              })`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+            }}
+          ></motion.div>
+          <motion.div
+            animate={
+              !pause ? { transform: 'scale(1.1)' } : { transform: 'scale(1)' }
+            }
+            transition={{ duration: 0.4, ease: [0.36, 0.66, 0.04, 1] }}
+            className={styles.root__image}
+          >
             <Image
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
               alt={'trackPicture'}
-              width={300}
-              height={300}
+              width={400}
+              height={400}
             />
-          </div>
+          </motion.div>
           <motion.div
             className={styles.root__progressTrack}
             drag={'y'}
