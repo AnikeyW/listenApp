@@ -1,7 +1,6 @@
 'use client';
 import React, { MouseEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import styles from './trackitem.module.scss';
 import deleteIcon from '../../assets/delete-icon.svg';
@@ -12,6 +11,7 @@ import { useTrackStore } from '@/stores/trackStore';
 import { ITrack } from '@/types/track';
 import { audio, initAudio } from '@/components/tracklist/TrackList';
 import { formatTime } from '@/utils';
+import { MdPlayArrow } from 'react-icons/md';
 
 interface ITrackItemProps {
   track: ITrack;
@@ -28,8 +28,10 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
   const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const currentTime = usePlayerStore((state) => state.currentTime);
+  const setIsShowPlayerFullScreen = usePlayerStore(
+    (state) => state.setIsShowPlayerFullScreen,
+  );
   const deleteTrack = useTrackStore((state) => state.deleteTrack);
-  const router = useRouter();
 
   const playHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -63,6 +65,14 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
     }
   }, [activeTrack]);
 
+  useEffect(() => {
+    if (pause) {
+      setPauseLocal(true);
+    } else {
+      setPauseLocal(false);
+    }
+  }, [pause]);
+
   const setInitAudio = () => {
     if (activeTrack && !pauseLocal) {
       audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
@@ -82,11 +92,16 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
     deleteTrack(track.id);
   };
 
+  const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
+    if (activeTrack && activeTrack?.id === track.id) {
+      setIsShowPlayerFullScreen(true);
+    } else {
+      playHandler(e);
+    }
+  };
+
   return (
-    <div
-      className={styles.track}
-      onClick={() => router.push('/tracks/' + track.id)}
-    >
+    <div className={styles.track} onClick={clickItemHandler}>
       <div className={styles.track__img}>
         <Image
           src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
@@ -95,6 +110,11 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
           height={50}
           onClick={playHandler}
         />
+        {pause && pauseLocal && activeTrack?.id === track.id && (
+          <div className={styles.track__img_gif}>
+            <MdPlayArrow size={40} onClick={playHandler} />
+          </div>
+        )}
         {!pause && !pauseLocal && activeTrack?.id === track.id && (
           <div className={styles.track__img_gif}>
             <Image
@@ -115,7 +135,9 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
       <div className={styles.track__duration}>
         {!pause && !pauseLocal && activeTrack?.id === track.id
           ? formatTime(currentTime)
-          : formatTime(track.duration)}
+          : pause && pauseLocal && activeTrack?.id === track.id
+            ? formatTime(currentTime)
+            : formatTime(track.duration)}
       </div>
       <div>
         <Image
