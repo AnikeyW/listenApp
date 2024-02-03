@@ -10,7 +10,7 @@ import { audio } from '@/components/tracklist/TrackList';
 
 import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
 import Portal from '@/components/UI/Portal/Portal';
-import ModalWithLayerEffect from '@/components/UI/Modal/ModalWithLayerEffect';
+import ModalWithLayerEffect from '@/components/UI/ModalWithLayerEffect/ModalWithLayerEffect';
 
 const Player = () => {
   const {

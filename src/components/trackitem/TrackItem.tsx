@@ -12,7 +12,7 @@ import { audio, initAudio } from '@/components/tracklist/TrackList';
 import { formatTime } from '@/utils';
 import { MdPlayArrow, MdDeleteForever } from 'react-icons/md';
 import Portal from '@/components/UI/Portal/Portal';
-import Modal from '@/components/UI/NewModal/Modal';
+import Modal from '@/components/UI/Modal/Modal';
 
 interface ITrackItemProps {
   track: ITrack;
