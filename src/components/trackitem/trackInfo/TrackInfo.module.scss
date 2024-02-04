@@ -1,0 +1,10 @@
+.root{
+  flex: auto;
+  &__trackName{
+    font-weight: bold;
+  }
+  &__artistName{
+    font-size: 13px;
+    color: var(--color-text-soft);
+  }
+}

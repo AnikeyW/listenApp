@@ -14,6 +14,7 @@ interface TrackListProps {
   tracks: ITrack[];
 }
 const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
+  console.log('list');
   return (
     <div className={styles.tracklist}>
       {tracks.length > 0 &&
