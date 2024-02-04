@@ -21,7 +21,9 @@ const Tracks = () => {
       <div className={styles.trackHeader}>Мои треки</div>
       {error && <ErrorMessage message={error} />}
       {isLoading && <div>Загрузка...</div>}
-      {tracks && tracks.length > 0 && <TrackList tracks={tracks} />}
+      {!isLoading && tracks && tracks.length > 0 && (
+        <TrackList tracks={tracks} />
+      )}
     </div>
   );
 };

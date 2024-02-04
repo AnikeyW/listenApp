@@ -1,16 +1,12 @@
 import React, { FC, ReactNode } from 'react';
 import styles from './ModalWithLayerEffect.module.scss';
-import {
-  AnimatePresence,
-  motion,
-  Variants,
-  useMotionValue,
-} from 'framer-motion';
+import { AnimatePresence, motion, Variants, MotionValue } from 'framer-motion';
 
 interface ModalProps {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  y: MotionValue<number>;
 }
 
 const overlayVariants: Variants = {
@@ -25,34 +21,22 @@ const overlayVariants: Variants = {
 };
 
 const ModalWithLayerEffect: FC<ModalProps> = ({
+  y,
   isOpen,
   onClose,
   children,
 }) => {
-  // const y = useMotionValue(0);
-
   const overlayAnimationStart = (variant: any) => {
     if (variant === 'open') {
-      set(document.getElementById('root')!, {
-        borderTopLeftRadius: '0.5rem',
-        borderTopRightRadius: '0.5rem',
-        overflow: 'hidden',
-        transform: 'scale(0.94) translateY(1.5rem)',
-        transitionProperty: 'all',
-        transitionDuration: '0.4s',
-        transitionTimingFunction: 'cubic-bezier(0.36, 0.66, 0.04, 1)',
-      });
+      y.set(0);
     } else {
-      reset(document.getElementById('root')!, 'transform');
-      reset(document.getElementById('root')!, 'borderTopLeftRadius');
-      reset(document.getElementById('root')!, 'borderTopRightRadius');
-      reset(document.getElementById('root')!, 'overflow');
+      y.set(-200);
     }
   };
 
   const overlayAnimationComplete = (variant: any) => {
     if (variant === 'closed') {
-      reset(document.getElementById('root')!);
+      y.set(-200);
     }
   };
 
@@ -91,12 +75,19 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
                 top: 0.05,
                 bottom: 1,
               }}
+              onDrag={(event, info) => {
+                console.log(info);
+                y.set(-info.offset.y);
+              }}
               onDragEnd={(event, info) => {
                 if (info.velocity.y > 300) {
                   onClose();
                 }
                 if (info.offset.y > 350) {
                   onClose();
+                  y.set(-200);
+                } else {
+                  y.set(0);
                 }
               }}
               className={styles.root__wrapper_content}
@@ -111,37 +102,3 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
   );
 };
 export default ModalWithLayerEffect;
-
-type Styles = {
-  [key in keyof CSSStyleDeclaration]?: string;
-};
-
-let cache = new Map<HTMLElement, Styles>();
-
-function set(el: HTMLElement, styles: Styles) {
-  let originalStyles: Styles = {};
-  for (const key in styles) {
-    if (Object.prototype.hasOwnProperty.call(styles, key) && key) {
-      originalStyles[key] = el.style[key];
-      el.style[key] = styles[key] || '';
-    }
-  }
-
-  cache.set(el, originalStyles);
-}
-
-function reset(el: HTMLElement, prop?: string) {
-  let originalStyles: Styles | undefined = cache.get(el);
-
-  if (prop && originalStyles) {
-    // @ts-ignore
-    el.style[prop] = originalStyles[prop];
-    return;
-  }
-  if (originalStyles) {
-    Object.entries(originalStyles).forEach(([key, value]) => {
-      // @ts-ignore
-      el.style[key] = value;
-    });
-  }
-}

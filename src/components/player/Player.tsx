@@ -1,16 +1,13 @@
 'use client';
 import React, { MouseEvent } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 import styles from './Player.module.scss';
 
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/tracklist/TrackList';
 
-import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
-import Portal from '@/components/UI/Portal/Portal';
-import ModalWithLayerEffect from '@/components/UI/ModalWithLayerEffect/ModalWithLayerEffect';
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
 
 const playerVariants: Variants = {
@@ -26,9 +23,6 @@ const playerVariants: Variants = {
 
 const Player = () => {
   const activeTrack = usePlayerStore((state) => state.activeTrack);
-  const isShowPlayerFullScreen = usePlayerStore(
-    (state) => state.isShowPlayerFullScreen,
-  );
   const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
@@ -45,7 +39,7 @@ const Player = () => {
   };
 
   return (
-    <AnimatePresence>
+    <>
       {activeTrack && (
         <motion.div
           variants={playerVariants}
@@ -70,16 +64,7 @@ const Player = () => {
           </div>
         </motion.div>
       )}
-
-      <Portal key={2}>
-        <ModalWithLayerEffect
-          isOpen={isShowPlayerFullScreen}
-          onClose={() => setIsShowPlayerFullScreen(false)}
-        >
-          <PlayerFullScreen />
-        </ModalWithLayerEffect>
-      </Portal>
-    </AnimatePresence>
+    </>
   );
 };
 

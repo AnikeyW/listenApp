@@ -19,8 +19,6 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
   const [pauseLocal, setPauseLocal] = useState(true);
   const childRef = useRef<RefType>(null);
 
-  console.log('item', track.name);
-
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (childRef.current) {
       childRef.current.clickItemHandler(e);

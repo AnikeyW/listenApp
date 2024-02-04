@@ -52,8 +52,6 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
     clickItemHandler,
   }));
 
-  console.log('TrackImage');
-
   const setInitAudio = () => {
     if (activeTrack && !pauseLocal) {
       audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
@@ -101,12 +99,14 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
   }, [activeTrack]);
 
   useEffect(() => {
-    if (pause) {
-      setPauseLocal(true);
-    } else {
-      setPauseLocal(false);
+    if (activeTrack?.id === track.id) {
+      if (pause) {
+        setPauseLocal(true);
+      } else {
+        setPauseLocal(false);
+      }
     }
-  }, [pause]);
+  }, [pause, activeTrack]);
 
   return (
     <div className={styles.root}>
