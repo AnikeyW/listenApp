@@ -13,13 +13,6 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const themeFromLocalStorage = getThemeFromLocalStorage();
-    // document.body.addEventListener(
-    //   'touchmove',
-    //   (e) => {
-    //     e.preventDefault();
-    //   },
-    //   { passive: false },
-    // );
     if (isTheme(themeFromLocalStorage)) {
       setTheme(themeFromLocalStorage);
       document.documentElement.setAttribute(

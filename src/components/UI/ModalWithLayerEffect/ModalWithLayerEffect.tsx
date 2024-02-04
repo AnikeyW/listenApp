@@ -1,6 +1,11 @@
 import React, { FC, ReactNode } from 'react';
 import styles from './ModalWithLayerEffect.module.scss';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
+import {
+  AnimatePresence,
+  motion,
+  Variants,
+  useMotionValue,
+} from 'framer-motion';
 
 interface ModalProps {
   children: ReactNode;
@@ -24,10 +29,10 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
   onClose,
   children,
 }) => {
+  // const y = useMotionValue(0);
+
   const overlayAnimationStart = (variant: any) => {
     if (variant === 'open') {
-      set(document.documentElement, { background: 'black' });
-
       set(document.getElementById('root')!, {
         borderTopLeftRadius: '0.5rem',
         borderTopRightRadius: '0.5rem',
@@ -47,7 +52,6 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
 
   const overlayAnimationComplete = (variant: any) => {
     if (variant === 'closed') {
-      reset(document.documentElement);
       reset(document.getElementById('root')!);
     }
   };
@@ -106,7 +110,6 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
     </AnimatePresence>
   );
 };
-
 export default ModalWithLayerEffect;
 
 type Styles = {

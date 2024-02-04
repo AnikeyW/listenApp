@@ -1,7 +1,7 @@
 'use client';
 import React, { MouseEvent } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
-import { MdOutlinePause, MdPlayArrow } from 'react-icons/md';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 import styles from './Player.module.scss';
 
@@ -11,28 +11,28 @@ import { audio } from '@/components/tracklist/TrackList';
 import PlayerFullScreen from '@/components/player/playerFullScreen/PlayerFullScreen';
 import Portal from '@/components/UI/Portal/Portal';
 import ModalWithLayerEffect from '@/components/UI/ModalWithLayerEffect/ModalWithLayerEffect';
+import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
+
+const playerVariants: Variants = {
+  open: {
+    translateY: 0,
+    transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
+  },
+  closed: {
+    translateY: '100%',
+    transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
+  },
+};
 
 const Player = () => {
-  const {
-    pause,
-    activeTrack,
-    isShowPlayerFullScreen,
-    playTrack,
-    pauseTrack,
-    setActiveTrack,
-    setIsShowPlayerFullScreen,
-  } = usePlayerStore((state) => state);
-
-  const play = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    if (pause) {
-      playTrack();
-      audio.play();
-    } else {
-      pauseTrack();
-      audio.pause();
-    }
-  };
+  const activeTrack = usePlayerStore((state) => state.activeTrack);
+  const isShowPlayerFullScreen = usePlayerStore(
+    (state) => state.isShowPlayerFullScreen,
+  );
+  const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
+  const setIsShowPlayerFullScreen = usePlayerStore(
+    (state) => state.setIsShowPlayerFullScreen,
+  );
 
   const turnOffPlayer = (e: MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
@@ -45,12 +45,18 @@ const Player = () => {
   };
 
   return (
-    <>
-      {activeTrack ? (
-        <div className={styles.player} onClick={showPlayerFullScreen}>
-          <div className={styles.player__playPausebtn} onClick={play}>
-            {!pause ? <MdOutlinePause size={30} /> : <MdPlayArrow size={30} />}
-          </div>
+    <AnimatePresence>
+      {activeTrack && (
+        <motion.div
+          variants={playerVariants}
+          initial={'closed'}
+          animate={'open'}
+          exit={'closed'}
+          className={styles.player}
+          onClick={showPlayerFullScreen}
+          key={1}
+        >
+          <PlayerButtons player={'small'} />
           <div className={styles.player__trackInfo}>
             <div className={styles.player__trackInfo_name}>
               {activeTrack.name}
@@ -62,10 +68,10 @@ const Player = () => {
           <div className={styles.player__closeBtn}>
             <HiMiniXMark size={30} onClick={turnOffPlayer} />
           </div>
-        </div>
-      ) : null}
+        </motion.div>
+      )}
 
-      <Portal>
+      <Portal key={2}>
         <ModalWithLayerEffect
           isOpen={isShowPlayerFullScreen}
           onClose={() => setIsShowPlayerFullScreen(false)}
@@ -73,7 +79,7 @@ const Player = () => {
           <PlayerFullScreen />
         </ModalWithLayerEffect>
       </Portal>
-    </>
+    </AnimatePresence>
   );
 };
 
