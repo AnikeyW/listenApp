@@ -12,8 +12,9 @@ const VolumeRange: FC = () => {
     const volumeValue = Math.ceil(Number(e.target.value));
     if (volume !== volumeValue) {
       audio.volume = volumeValue / 100;
-      if (Math.abs(volumeValue - volume) > Math.abs(2)) {
+      if (Math.abs(volumeValue - volume) >= Math.abs(1)) {
         setVolume(volumeValue);
+        localStorage.setItem('volume', volumeValue.toString());
       }
     }
   };

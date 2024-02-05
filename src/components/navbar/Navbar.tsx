@@ -34,7 +34,6 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  console.log('nav');
   return (
     <nav className={styles.nav}>
       <ul className={styles.navList}>

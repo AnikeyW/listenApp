@@ -1,89 +1,29 @@
-import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  MouseEvent,
-  Ref,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import React, { FC, memo, MouseEvent, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './TrackImage.module.scss';
 import { MdPlayArrow } from 'react-icons/md';
 import animateIcon from '@/assets/sound.gif';
 import { ITrack } from '@/types/track';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio, initAudio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/tracklist/TrackList';
 
 interface TrackImageProps {
   pauseLocal: boolean;
   track: ITrack;
   setPauseLocal: (value: boolean) => void;
+  playHandler: (e: MouseEvent<HTMLElement>) => void;
+  isActiveTrack: boolean;
 }
 
-export interface RefType {
-  clickItemHandler: (e: React.MouseEvent<HTMLElement>) => void;
-}
-
-const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
-  { track, pauseLocal, setPauseLocal },
-  ref: Ref<RefType>,
-) => {
+const TrackImage: FC<TrackImageProps> = ({
+  track,
+  pauseLocal,
+  setPauseLocal,
+  playHandler,
+  isActiveTrack,
+}) => {
   const pause = usePlayerStore((state) => state.pause);
-  const activeTrack = usePlayerStore((state) => state.activeTrack);
   const pauseTrack = usePlayerStore((state) => state.pauseTrack);
-  const playTrack = usePlayerStore((state) => state.playTrack);
-  const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
-  const setDuration = usePlayerStore((state) => state.setDuration);
-  const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
-  const volume = usePlayerStore((state) => state.volume);
-  const setIsShowPlayerFullScreen = usePlayerStore(
-    (state) => state.setIsShowPlayerFullScreen,
-  );
-  const timeRef = useRef(Date.now());
-
-  const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
-    if (activeTrack && activeTrack?.id === track.id) {
-      setIsShowPlayerFullScreen(true);
-    } else {
-      playHandler(e);
-    }
-  };
-
-  useImperativeHandle(ref, () => ({
-    clickItemHandler,
-  }));
-
-  const setInitAudio = () => {
-    if (activeTrack && !pauseLocal) {
-      audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
-      audio.volume = volume / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-        audio.play();
-      };
-      audio.ontimeupdate = () => {
-        if (Date.now() - timeRef.current > 1000) {
-          setCurrentTime(Math.ceil(audio.currentTime));
-          timeRef.current = Date.now();
-        }
-      };
-    }
-  };
-
-  const playHandler = (e: MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    if (activeTrack?.id === track.id) {
-      audio.play();
-      playTrack();
-      setPauseLocal(false);
-      return;
-    }
-    setActiveTrack(track);
-    setInitAudio();
-    playTrack();
-    setPauseLocal(false);
-  };
 
   const pauseHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -93,25 +33,14 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
   };
 
   useEffect(() => {
-    if (!audio) {
-      initAudio();
-    } else {
-      if (activeTrack) {
-        setPauseLocal(false);
-      }
-      setInitAudio();
-    }
-  }, [activeTrack]);
-
-  useEffect(() => {
-    if (activeTrack?.id === track.id) {
+    if (isActiveTrack) {
       if (pause) {
         setPauseLocal(true);
       } else {
         setPauseLocal(false);
       }
     }
-  }, [pause, activeTrack]);
+  }, [pause]);
 
   return (
     <div className={styles.root}>
@@ -122,12 +51,12 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
         height={50}
         onClick={playHandler}
       />
-      {pause && pauseLocal && activeTrack?.id === track.id && (
+      {pauseLocal && isActiveTrack && (
         <div className={styles.root__gif}>
           <MdPlayArrow size={40} onClick={playHandler} />
         </div>
       )}
-      {!pause && !pauseLocal && activeTrack?.id === track.id && (
+      {!pauseLocal && isActiveTrack && (
         <div className={styles.root__gif}>
           <Image
             src={animateIcon}
@@ -142,4 +71,4 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
   );
 };
 
-export default forwardRef(TrackImage);
+export default memo(TrackImage);

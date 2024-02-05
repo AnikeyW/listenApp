@@ -7,16 +7,19 @@ import { ITrack } from '@/types/track';
 interface TrackDurationProps {
   pauseLocal: boolean;
   track: ITrack;
+  isActiveTrack: boolean;
 }
 
-const TrackDuration: FC<TrackDurationProps> = ({ pauseLocal, track }) => {
-  const activeTrack = usePlayerStore((state) => state.activeTrack);
-
+const TrackDuration: FC<TrackDurationProps> = ({
+  pauseLocal,
+  track,
+  isActiveTrack,
+}) => {
   return (
     <>
-      {!pauseLocal && activeTrack?.id === track.id ? (
+      {!pauseLocal && isActiveTrack ? (
         <TrackCurrentDuration />
-      ) : pauseLocal && activeTrack?.id === track.id ? (
+      ) : pauseLocal && isActiveTrack ? (
         <TrackCurrentDuration />
       ) : (
         <div className={styles.root}>{formatTime(track.duration)}</div>

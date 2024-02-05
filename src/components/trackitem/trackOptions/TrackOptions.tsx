@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import Image from 'next/image';
 import { MdDeleteForever } from 'react-icons/md';
 import styles from './TrackOptions.module.scss';
@@ -68,4 +68,4 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
   );
 };
 
-export default TrackOptions;
+export default memo(TrackOptions);

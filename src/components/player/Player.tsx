@@ -1,7 +1,7 @@
 'use client';
 import React, { MouseEvent } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 
 import styles from './Player.module.scss';
 
@@ -39,7 +39,7 @@ const Player = () => {
   };
 
   return (
-    <>
+    <AnimatePresence>
       {activeTrack && (
         <motion.div
           variants={playerVariants}
@@ -64,7 +64,7 @@ const Player = () => {
           </div>
         </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
