@@ -11,7 +11,7 @@ const TrackImage = () => {
   return (
     <>
       {activeTrack && (
-        <>
+        <div className={styles.root}>
           <motion.div
             variants={{
               play: {
@@ -24,12 +24,12 @@ const TrackImage = () => {
             animate={!pause ? 'play' : 'pause'}
             exit={'pause'}
             transition={{ ease: 'easeOut', duration: 0.25 }}
-            className={styles.imageBlur}
+            className={styles.root__imageBlur}
             style={{
               background: `url(${
                 process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture
               })`,
-              backgroundSize: 'contain',
+              backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
             }}
           ></motion.div>
@@ -38,7 +38,7 @@ const TrackImage = () => {
               !pause ? { transform: 'scale(1.1)' } : { transform: 'scale(1)' }
             }
             transition={{ duration: 0.4, ease: [0.36, 0.66, 0.04, 1] }}
-            className={styles.image}
+            className={styles.root__image}
           >
             <Image
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
@@ -47,7 +47,7 @@ const TrackImage = () => {
               height={400}
             />
           </motion.div>
-        </>
+        </div>
       )}
     </>
   );
