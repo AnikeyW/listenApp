@@ -5,6 +5,7 @@ import React, {
   Ref,
   useEffect,
   useImperativeHandle,
+  useRef,
 } from 'react';
 import Image from 'next/image';
 import styles from './TrackImage.module.scss';
@@ -39,6 +40,7 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
   );
+  const timeRef = useRef(Date.now());
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (activeTrack && activeTrack?.id === track.id) {
@@ -61,7 +63,10 @@ const TrackImage: ForwardRefRenderFunction<RefType, TrackImageProps> = (
         audio.play();
       };
       audio.ontimeupdate = () => {
-        setCurrentTime(Math.ceil(audio.currentTime));
+        if (Date.now() - timeRef.current > 1000) {
+          setCurrentTime(Math.ceil(audio.currentTime));
+          timeRef.current = Date.now();
+        }
       };
     }
   };

@@ -76,7 +76,6 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
                 bottom: 1,
               }}
               onDrag={(event, info) => {
-                console.log(info);
                 y.set(-info.offset.y);
               }}
               onDragEnd={(event, info) => {

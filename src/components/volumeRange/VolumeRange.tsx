@@ -3,12 +3,6 @@ import styles from './volumeRange.module.scss';
 import { audio } from '@/components/tracklist/TrackList';
 import { usePlayerStore } from '@/stores/playerStore';
 
-// interface IVolumeRangeProps {
-//   left: number;
-//   right: number;
-//   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-// }
-
 const VolumeRange: FC = () => {
   const volume = usePlayerStore((state) => state.volume);
   const setVolume = usePlayerStore((state) => state.setVolume);
@@ -18,7 +12,9 @@ const VolumeRange: FC = () => {
     const volumeValue = Math.ceil(Number(e.target.value));
     if (volume !== volumeValue) {
       audio.volume = volumeValue / 100;
-      setVolume(volumeValue);
+      if (Math.abs(volumeValue - volume) > Math.abs(2)) {
+        setVolume(volumeValue);
+      }
     }
   };
 
