@@ -26,6 +26,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
   );
+  const setVolume = usePlayerStore((state) => state.setVolume);
   const y = useMotionValue(-200);
   const transform = useTransform(
     y,
@@ -37,6 +38,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const themeFromLocalStorage = getThemeFromLocalStorage();
     if (isTheme(themeFromLocalStorage)) {
+      setVolume(Number(localStorage.getItem('volume')));
       setTheme(themeFromLocalStorage);
       document.documentElement.setAttribute(
         'data-theme',

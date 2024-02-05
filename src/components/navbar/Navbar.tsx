@@ -42,6 +42,7 @@ const Navbar = () => {
             path={item.path}
             pathTitle={item.pathTitle}
             icon={item.icon}
+            key={item.path}
           />
         ))}
       </ul>

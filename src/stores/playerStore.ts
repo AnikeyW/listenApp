@@ -27,7 +27,7 @@ export const usePlayerStore = create<IPlayerState>()(
     currentTime: 0,
     duration: 0,
     pause: true,
-    volume: Number(localStorage.getItem('volume')) || 50,
+    volume: 50,
     isShowPlayerFullScreen: false,
     pauseTrack: () => set({ pause: true }),
     setAudio: (webAudio) => set({ audio: webAudio }),
