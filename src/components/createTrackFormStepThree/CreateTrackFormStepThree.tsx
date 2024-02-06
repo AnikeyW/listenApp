@@ -18,7 +18,10 @@ const CreateTrackFormStepThree: FC = () => {
 
   return (
     <>
-      <FileUpload setFile={onChangeAudio} accept={'audio/*'}>
+      <FileUpload
+        setFile={onChangeAudio}
+        accept={'.wav,.aif,.aiff,.flac,.alac,.aac,.ogg,.mp3'}
+      >
         <div className={styles.root}>
           {!audioFile.value ? (
             <>
