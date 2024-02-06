@@ -1,4 +1,5 @@
 import { Theme } from '@/stores/themeStore';
+import axios, { AxiosError } from 'axios';
 
 export const formatTime = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);

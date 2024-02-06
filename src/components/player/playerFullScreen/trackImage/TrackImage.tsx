@@ -41,7 +41,7 @@ const TrackImage = () => {
             className={styles.root__image}
           >
             <Image
-              src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
+              src={activeTrack.picture}
               alt={'trackPicture'}
               width={400}
               height={400}

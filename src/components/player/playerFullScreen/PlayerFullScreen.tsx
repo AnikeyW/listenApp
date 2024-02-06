@@ -11,7 +11,6 @@ const PlayerFullScreen: FC = () => {
   return (
     <>
       <div className={styles.root}>
-        <div className={styles.root__handle}></div>
         <TrackImage />
         <Progress />
         <TrackInfo />

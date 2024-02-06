@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useRef } from 'react';
 import styles from './ModalWithLayerEffect.module.scss';
 import { AnimatePresence, motion, Variants, MotionValue } from 'framer-motion';
 
@@ -26,6 +26,8 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
   onClose,
   children,
 }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const overlayAnimationStart = (variant: any) => {
     if (variant === 'open') {
       y.set(0);
@@ -82,16 +84,23 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
                 if (info.velocity.y > 300) {
                   onClose();
                 }
-                if (info.offset.y > 350) {
-                  onClose();
-                  y.set(-200);
-                } else {
-                  y.set(0);
+                if (contentRef.current instanceof Element) {
+                  if (
+                    info.offset.y >
+                    (contentRef.current.clientHeight - 100) / 2
+                  ) {
+                    onClose();
+                    y.set(-200);
+                  } else {
+                    y.set(0);
+                  }
                 }
               }}
               className={styles.root__wrapper_content}
               onClick={(event) => event.stopPropagation()}
+              ref={contentRef}
             >
+              <div className={styles.root__wrapper_content_handle}></div>
               {children}
             </motion.div>
           </div>

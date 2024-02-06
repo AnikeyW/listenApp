@@ -37,7 +37,8 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
               <div className={styles.track}>
                 <div className={styles.track__img}>
                   <Image
-                    src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
+                    src={track.picture}
+                    // src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
                     alt={track.name}
                     width={50}
                     height={50}

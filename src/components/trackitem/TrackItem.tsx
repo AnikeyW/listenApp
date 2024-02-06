@@ -18,7 +18,6 @@ interface ITrackItemProps {
 const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
   const [pauseLocal, setPauseLocal] = useState(true);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
-  // const volume = usePlayerStore((state) => state.volume);
   const playTrack = usePlayerStore((state) => state.playTrack);
   const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
   const setDuration = usePlayerStore((state) => state.setDuration);
