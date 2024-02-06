@@ -12,8 +12,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       <Link href={'/tracks'}>К трекам link</Link>
       <div style={{ display: 'flex' }}>
         <Image
-          src={track.picture}
-          // src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
+          src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
           alt={'picture'}
           width={200}
           height={200}

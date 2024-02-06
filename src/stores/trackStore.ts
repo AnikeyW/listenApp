@@ -7,7 +7,7 @@ interface ITrackState {
   isLoading: boolean;
   error: string | null;
   fetchTracks: (count?: number, offset?: number) => void;
-  deleteTrack: (trackId: number) => void;
+  deleteTrack: (trackId: string) => void;
 }
 
 //todo add devtools
@@ -39,7 +39,7 @@ export const useTrackStore = create<ITrackState>()((set, getState) => ({
       set({ isLoading: false });
     }
   },
-  deleteTrack: async (trackId: number) => {
+  deleteTrack: async (trackId: string) => {
     try {
       const response = await axios.delete(
         process.env.NEXT_PUBLIC_BASE_URL + 'tracks/' + trackId,
@@ -47,7 +47,7 @@ export const useTrackStore = create<ITrackState>()((set, getState) => ({
       if (response.status === 200) {
         const removedTrackId = response.data;
         const tracks = getState().tracks.filter(
-          (track) => track.id !== removedTrackId,
+          (track) => track._id !== removedTrackId,
         );
         set({ tracks });
       }

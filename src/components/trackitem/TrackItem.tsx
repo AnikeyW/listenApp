@@ -28,7 +28,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
   const timeRef = useRef(Date.now());
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
-    if (activeTrack && activeTrack?.id === track.id) {
+    if (activeTrack && activeTrack?._id === track._id) {
       setIsShowPlayerFullScreen(true);
     } else {
       playHandler(e);
@@ -37,7 +37,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
 
   const playHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    if (activeTrack?.id === track.id) {
+    if (activeTrack?._id === track._id) {
       audio.play();
       playTrack();
       setPauseLocal(false);
@@ -87,13 +87,13 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
         pauseLocal={pauseLocal}
         setPauseLocal={setPauseLocal}
         playHandler={playHandler}
-        isActiveTrack={activeTrack?.id === track.id}
+        isActiveTrack={activeTrack?._id === track._id}
       />
       <TrackInfo track={track} />
       <TrackDuration
         track={track}
         pauseLocal={pauseLocal}
-        isActiveTrack={activeTrack?.id === track.id}
+        isActiveTrack={activeTrack?._id === track._id}
       />
       <TrackOptions track={track} />
     </div>

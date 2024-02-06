@@ -1,5 +1,5 @@
 export interface ITrack {
-  id: number;
+  _id: string;
   name: string;
   artist: string;
   text: string;
@@ -17,4 +17,10 @@ export interface IComment {
 
 export interface ITrackInfo extends ITrack {
   comments: IComment[];
+}
+
+export interface IAlbum {
+  id: number;
+  name: string;
+  picture: string;
 }
