@@ -42,6 +42,7 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
                     alt={track.name}
                     width={50}
                     height={50}
+                    priority={true}
                   />
                 </div>
                 <div className={styles.track__info}>

@@ -43,6 +43,7 @@ const TrackImage = () => {
             <Image
               // src={activeTrack.picture}
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
+              priority={true}
               alt={'trackPicture'}
               width={380}
               height={380}

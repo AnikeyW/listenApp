@@ -46,6 +46,7 @@ const TrackImage: FC<TrackImageProps> = ({
     <div className={styles.root}>
       <Image
         src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
+        priority={true}
         alt={track.name}
         width={50}
         height={50}
