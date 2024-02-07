@@ -40,7 +40,7 @@ const TrackImage = () => {
             transition={{ duration: 0.4, ease: [0.36, 0.66, 0.04, 1] }}
             className={styles.root__image}
           >
-            <Image
+            <img
               // src={activeTrack.picture}
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
               alt={'trackPicture'}
