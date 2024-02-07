@@ -46,18 +46,17 @@ const TrackImage: FC<TrackImageProps> = ({
     <div className={styles.root}>
       <img
         src={track.picture}
-        // src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
         alt={track.name}
         width={50}
         height={50}
         onClick={playHandler}
       />
-      {pauseLocal && isActiveTrack && (
+      {(pause || pauseLocal) && isActiveTrack && (
         <div className={styles.root__gif}>
           <MdPlayArrow size={40} onClick={playHandler} />
         </div>
       )}
-      {!pauseLocal && isActiveTrack && (
+      {!pause && !pauseLocal && isActiveTrack && (
         <div className={styles.root__gif}>
           <Image
             src={animateIcon}

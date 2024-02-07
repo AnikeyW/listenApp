@@ -74,14 +74,11 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
           access: 'public',
           handleUploadUrl: '/api/image/upload',
         });
-        console.log(imageBlob);
         const audioBlob = await upload(audioName, getState().audioFile.value, {
           access: 'public',
           handleUploadUrl: '/api/audio/upload',
         });
-        console.log(audioBlob);
         const duration = await getAudioDuration(getState().audioFile.value);
-        console.log(duration);
         const data = {
           name: getState().name.value,
           artist: getState().artist.value,
