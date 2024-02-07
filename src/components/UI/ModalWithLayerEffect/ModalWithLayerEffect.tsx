@@ -32,13 +32,13 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
     if (variant === 'open') {
       y.set(0);
     } else {
-      y.set(-200);
+      y.set(-500);
     }
   };
 
   const overlayAnimationComplete = (variant: any) => {
     if (variant === 'closed') {
-      y.set(-200);
+      y.set(-500);
     }
   };
 
@@ -90,7 +90,7 @@ const ModalWithLayerEffect: FC<ModalProps> = ({
                     (contentRef.current.clientHeight - 100) / 2
                   ) {
                     onClose();
-                    y.set(-200);
+                    y.set(-500);
                   } else {
                     y.set(0);
                   }

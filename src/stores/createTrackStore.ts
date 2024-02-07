@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware';
 import axios, { AxiosError } from 'axios';
 import * as uuid from 'uuid';
 import { upload } from '@vercel/blob/client';
+import { getAudioDuration } from '@/utils';
 
 interface ICreatetrackState {
   name: { value: string; error: string };
@@ -87,7 +88,6 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
           audio: audioBlob.url,
           duration: Math.ceil(duration),
         };
-        console.log(data);
         const response = await axios.post(
           process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
           data,
@@ -116,15 +116,3 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
     },
   })),
 );
-
-const getAudioDuration = (audioFile: File): Promise<number> => {
-  return new Promise((resolve, reject) => {
-    const audio = new Audio();
-    audio.src = URL.createObjectURL(audioFile);
-    audio.addEventListener('loadedmetadata', () => {
-      URL.revokeObjectURL(audio.src); // Освобождаем ресурсы
-      resolve(audio.duration);
-    });
-    audio.addEventListener('error', reject);
-  });
-};

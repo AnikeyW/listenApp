@@ -37,3 +37,15 @@ export const getInitialThemeFromLocalStorage = (): Theme => {
     return 'dark';
   }
 };
+
+export const getAudioDuration = (audioFile: File): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const audio = new Audio();
+    audio.src = URL.createObjectURL(audioFile);
+    audio.addEventListener('loadedmetadata', () => {
+      URL.revokeObjectURL(audio.src); // Освобождаем ресурсы
+      resolve(audio.duration);
+    });
+    audio.addEventListener('error', reject);
+  });
+};

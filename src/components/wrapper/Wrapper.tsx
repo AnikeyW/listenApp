@@ -27,13 +27,21 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
     (state) => state.setIsShowPlayerFullScreen,
   );
   const setVolume = usePlayerStore((state) => state.setVolume);
-  const y = useMotionValue(-200);
+  const y = useMotionValue(-500);
   const transform = useTransform(
     y,
-    [-200, 0],
-    ['translateY(0) scale(1)', 'translateY(32px) scale(0.96)'],
+    [-500, -499, 0],
+    [
+      'translateY(0) scale(1)',
+      'translateY(0) scale(1)',
+      'translateY(32px) scale(0.96)',
+    ],
   );
-  const borderRadius = useTransform(y, [-200, 0], ['0rem', '0.5rem']);
+  const borderRadius = useTransform(
+    y,
+    [-500, -499, 0],
+    ['0rem', '3rem', '0.5rem'],
+  );
 
   useEffect(() => {
     const themeFromLocalStorage = getThemeFromLocalStorage();
@@ -55,7 +63,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
       <motion.div
         id={'root'}
         className={styles.wrapper}
-        style={{ transform, transition: 'all linear 0.15s', borderRadius }}
+        style={{ transform, transition: 'all linear 0.1s', borderRadius }}
       >
         {children}
       </motion.div>
