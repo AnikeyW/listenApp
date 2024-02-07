@@ -12,9 +12,9 @@ module.exports = withPWA({
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '192.168.0.13',
-        port: '5000',
+        protocol: 'https',
+        hostname: 'listenappserver.site',
+        // port: '5000',
       },
     ],
   },

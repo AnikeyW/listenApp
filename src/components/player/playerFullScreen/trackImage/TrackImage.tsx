@@ -40,12 +40,12 @@ const TrackImage = () => {
             transition={{ duration: 0.4, ease: [0.36, 0.66, 0.04, 1] }}
             className={styles.root__image}
           >
-            <img
+            <Image
               // src={activeTrack.picture}
               src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
               alt={'trackPicture'}
-              width={400}
-              height={400}
+              width={380}
+              height={380}
             />
           </motion.div>
         </div>

@@ -36,7 +36,7 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
             <div className={styles.trackModal__top}>
               <div className={styles.track}>
                 <div className={styles.track__img}>
-                  <img
+                  <Image
                     // src={track.picture}
                     src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
                     alt={track.name}
