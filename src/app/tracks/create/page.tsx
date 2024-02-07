@@ -36,6 +36,8 @@ const Page = () => {
   };
 
   async function createTrackAndRedirect() {
+    //upload blobs
+
     await createTrack();
     await router.push('/tracks');
   }

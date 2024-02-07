@@ -44,8 +44,9 @@ const TrackImage: FC<TrackImageProps> = ({
 
   return (
     <div className={styles.root}>
-      <Image
-        src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
+      <img
+        src={track.picture}
+        // src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
         alt={track.name}
         width={50}
         height={50}

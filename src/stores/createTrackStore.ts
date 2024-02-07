@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import axios, { AxiosError } from 'axios';
+import * as uuid from 'uuid';
+import { upload } from '@vercel/blob/client';
 
 interface ICreatetrackState {
   name: { value: string; error: string };
@@ -64,15 +66,34 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
       try {
         set({ error: null });
         set({ isLoading: true });
-        const formData = new FormData();
-        formData.append('name', getState().name.value);
-        formData.append('artist', getState().artist.value);
-        formData.append('text', getState().text.value);
-        formData.append('picture', getState().picture.img);
-        formData.append('audio', getState().audioFile.value);
+        const imageExtension = getState().picture.img.name.split('.').pop();
+        const audioExtension = getState().audioFile.value.name.split('.').pop();
+        const imageName = uuid.v4() + '.' + imageExtension;
+        const audioName = uuid.v4() + '.' + audioExtension;
+        const imageBlob = await upload(imageName, getState().picture.img, {
+          access: 'public',
+          handleUploadUrl: '/api/image/upload',
+        });
+        console.log(imageBlob);
+        const audioBlob = await upload(audioName, getState().audioFile.value, {
+          access: 'public',
+          handleUploadUrl: '/api/audio/upload',
+        });
+        console.log(audioBlob);
+        const duration = await getAudioDuration(getState().audioFile.value);
+        console.log(duration);
+        const data = {
+          name: getState().name.value,
+          artist: getState().artist.value,
+          text: getState().text.value,
+          picture: imageBlob.url,
+          audio: audioBlob.url,
+          duration: Math.ceil(duration),
+        };
+        console.log(data);
         const response = await axios.post(
           process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
-          formData,
+          data,
         );
         set({
           name: { value: '', error: '' },
@@ -93,3 +114,15 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
     },
   })),
 );
+
+const getAudioDuration = (audioFile: File): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const audio = new Audio();
+    audio.src = URL.createObjectURL(audioFile);
+    audio.addEventListener('loadedmetadata', () => {
+      URL.revokeObjectURL(audio.src); // Освобождаем ресурсы
+      resolve(audio.duration);
+    });
+    audio.addEventListener('error', reject);
+  });
+};

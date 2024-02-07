@@ -54,7 +54,8 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
       if (!localStorage.getItem('volume')) {
         localStorage.setItem('volume', '50');
       }
-      audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
+      audio.src = activeTrack.audio;
+      // audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
       audio.volume = Number(localStorage.getItem('volume')) / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio.duration));
