@@ -94,6 +94,11 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
         const response = await axios.post(
           process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
           data,
+          {
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+            },
+          },
         );
         set({
           name: { value: '', error: '' },
