@@ -26,7 +26,9 @@ const TrackImage = () => {
             transition={{ ease: 'easeOut', duration: 0.25 }}
             className={styles.root__imageBlur}
             style={{
-              background: `url(${activeTrack.picture})`,
+              background: `url(${
+                process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture
+              })`,
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
             }}
@@ -38,9 +40,9 @@ const TrackImage = () => {
             transition={{ duration: 0.4, ease: [0.36, 0.66, 0.04, 1] }}
             className={styles.root__image}
           >
-            <img
-              src={activeTrack.picture}
-              // src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
+            <Image
+              // src={activeTrack.picture}
+              src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
               alt={'trackPicture'}
               width={400}
               height={400}
