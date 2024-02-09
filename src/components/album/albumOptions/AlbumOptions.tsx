@@ -1,15 +1,16 @@
-import React, { FC, memo, useState } from 'react';
-import styles from './TrackOptions.module.scss';
+'use client';
+import React, { FC, useState } from 'react';
+import styles from './AlbumOptions.module.scss';
 import Portal from '@/components/UI/Portal/Portal';
 import Modal from '@/components/UI/Modal/Modal';
-import { ITrack } from '@/types/track';
-import TrackOptionsModalContent from '@/components/track/trackOptionsModalContent/TrackOptionsModalContent';
+import { IAlbum } from '@/types/album';
+import AlbumOptionsModalContent from '@/components/album/albumOptionsModalContent/AlbumOptionsModalContent';
 
-interface TrackOptionsProps {
-  track: ITrack;
+interface Props {
+  album: IAlbum;
 }
 
-const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
+const AlbumOptions: FC<Props> = ({ album }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const openModal = (e: React.MouseEvent<HTMLElement>) => {
@@ -24,11 +25,11 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
       </div>
       <Portal>
         <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-          <TrackOptionsModalContent track={track} />
+          <AlbumOptionsModalContent album={album} />
         </Modal>
       </Portal>
     </>
   );
 };
 
-export default memo(TrackOptions);
+export default AlbumOptions;

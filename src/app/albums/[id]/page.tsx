@@ -2,6 +2,7 @@ import React from 'react';
 import axios, { AxiosError } from 'axios';
 import styles from './page.module.scss';
 import { IAlbum } from '@/types/album';
+import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const album: IAlbum = await getAlbumById(params.id);
@@ -15,7 +16,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
             alt="album photo"
           />
         </div>
-        <div className={styles.root__info_title}>{album.name}</div>
+        <div className={styles.root__info_nameAndOptions}>
+          <div className={styles.root__info_nameAndOptions_name}>
+            {album.name}
+          </div>
+          <AlbumOptions album={album} />
+        </div>
       </div>
       <div className={styles.root__trackList}></div>
     </div>

@@ -2,25 +2,28 @@
 import React from 'react';
 import styles from './page.module.scss';
 import { useRouter } from 'next/navigation';
+import Button from '@/components/UI/Button/Button';
 
 const Page = () => {
   const router = useRouter();
   return (
     <div className={styles.root}>
-      <button
-        onClick={() => {
-          router.replace('tracks/create');
-        }}
-      >
-        добавить трек
-      </button>
-      <button
-        onClick={() => {
-          router.replace('albums/create');
-        }}
-      >
-        добавить альбом
-      </button>
+      <div className={styles.root__btns}>
+        <Button
+          onClick={() => {
+            router.replace('tracks/create');
+          }}
+        >
+          добавить трек
+        </Button>
+        <Button
+          onClick={() => {
+            router.replace('albums/create');
+          }}
+        >
+          добавить альбом
+        </Button>
+      </div>
     </div>
   );
 };

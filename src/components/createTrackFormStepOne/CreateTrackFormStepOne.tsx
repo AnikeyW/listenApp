@@ -1,13 +1,18 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import styles from './CreateTrackFormStepOne.module.scss';
 import Input from '@/components/UI/Input/Input';
 import { useCreateTrackStore } from '@/stores/createTrackStore';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
+import { useQuery } from '@tanstack/react-query';
+import albumService from '@/services/Album.service';
 
 const CreateTrackFormStepOne: FC = () => {
-  const { name, setName, artist, setArtist } = useCreateTrackStore(
-    (state) => state,
-  );
+  const { name, setName, artist, setArtist, albumId, setAlbumId } =
+    useCreateTrackStore((state) => state);
+  const { data, isError, error, isSuccess } = useQuery({
+    queryKey: ['getAlbums'],
+    queryFn: albumService.getAll,
+  });
 
   return (
     <form className={styles.form}>
@@ -33,6 +38,25 @@ const CreateTrackFormStepOne: FC = () => {
         />
         {artist.error !== '' && <ErrorMessage message={artist.error} />}
       </div>
+      {isSuccess && (
+        <select
+          name="albums"
+          id="albums"
+          value={albumId}
+          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+            setAlbumId(event.target.value);
+          }}
+        >
+          <option value="" disabled>
+            Альбом
+          </option>
+          {data.map((album) => (
+            <option key={album._id} value={album._id}>
+              {album.name}
+            </option>
+          ))}
+        </select>
+      )}
     </form>
   );
 };

@@ -8,6 +8,7 @@ interface ICreatetrackState {
   text: { value: string; error: string };
   picture: { img: any; error: string };
   audioFile: { value: any; error: string };
+  albumId: string;
   isLoading: boolean;
   error: string | null;
   setName: (payload: { value: string; error: string }) => void;
@@ -15,6 +16,7 @@ interface ICreatetrackState {
   setText: (payload: { value: string; error: string }) => void;
   setPicture: (payload: { img: any; error: string }) => void;
   setAudio: (payload: { value: any; error: string }) => void;
+  setAlbumId: (payload: string) => void;
   validateStepOne: () => boolean;
   validateStepTwo: () => boolean;
   validateStepThree: () => boolean;
@@ -28,6 +30,7 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
     text: { value: '', error: '' },
     picture: { img: null, error: '' },
     audioFile: { value: null, error: '' },
+    albumId: '',
     isLoading: false,
     error: null,
     setName: (payload) => set({ name: payload }),
@@ -35,6 +38,7 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
     setText: (payload) => set({ text: payload }),
     setPicture: (payload) => set({ picture: payload }),
     setAudio: (payload) => set({ audioFile: payload }),
+    setAlbumId: (payload) => set({ albumId: payload }),
 
     validateStepOne: () => {
       if (getState().name.value === '') {
@@ -68,6 +72,7 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
         formData.append('name', getState().name.value);
         formData.append('artist', getState().artist.value);
         formData.append('text', getState().text.value);
+        formData.append('albumId', getState().albumId);
         formData.append('picture', getState().picture.img);
         formData.append('audio', getState().audioFile.value);
         const response = await axios.post(

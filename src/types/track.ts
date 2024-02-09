@@ -7,6 +7,7 @@ export interface ITrack {
   picture: string;
   audio: string;
   duration: number;
+  albumId: string | null;
 }
 
 export interface IComment {
