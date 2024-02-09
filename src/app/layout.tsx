@@ -38,7 +38,6 @@ export default function RootLayout({
           <MainSection>{children}</MainSection>
           <Player />
         </Wrapper>
-        <div id={'overlays'}></div>
       </body>
     </html>
   );

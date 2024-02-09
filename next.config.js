@@ -11,11 +11,16 @@ module.exports = withPWA({
   reactStrictMode: false,
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'listenappserver.site',
-        // port: '5000',
-      },
+      process.env.NODE_ENV === 'development'
+        ? {
+            protocol: 'http',
+            hostname: '192.168.0.13',
+            port: '5000',
+          }
+        : {
+            protocol: 'https',
+            hostname: 'listenappserver.site',
+          },
     ],
   },
 });

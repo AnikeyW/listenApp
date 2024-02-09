@@ -17,6 +17,9 @@ import {
   useMotionValue,
   useTransform,
 } from 'framer-motion';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const { theme, setTheme } = useThemeStore((state) => state);
@@ -60,24 +63,30 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <motion.div
-        id={'root'}
-        className={styles.wrapper}
-        style={{ transform, transition: 'all linear 0.1s', borderRadius }}
-      >
-        {children}
-      </motion.div>
-      <AnimatePresence>
-        <Portal key={2}>
-          <ModalWithLayerEffect
-            y={y}
-            isOpen={isShowPlayerFullScreen}
-            onClose={() => setIsShowPlayerFullScreen(false)}
+      <div className={styles.wrapper}>
+        <QueryClientProvider client={queryClient}>
+          <motion.div
+            id={'root'}
+            className={styles.wrapper__root}
+            style={{ transform, transition: 'all linear 0.1s', borderRadius }}
           >
-            <PlayerFullScreen />
-          </ModalWithLayerEffect>
-        </Portal>
-      </AnimatePresence>
+            {children}
+            <AnimatePresence>
+              <Portal key={2}>
+                <ModalWithLayerEffect
+                  y={y}
+                  isOpen={isShowPlayerFullScreen}
+                  onClose={() => setIsShowPlayerFullScreen(false)}
+                >
+                  <PlayerFullScreen />
+                </ModalWithLayerEffect>
+              </Portal>
+            </AnimatePresence>
+          </motion.div>
+
+          <div id={'overlays'}></div>
+        </QueryClientProvider>
+      </div>
     </>
   );
 };

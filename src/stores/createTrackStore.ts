@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import axios, { AxiosError } from 'axios';
-import * as uuid from 'uuid';
-import { upload } from '@vercel/blob/client';
-import { getAudioDuration } from '@/utils';
 
 interface ICreatetrackState {
   name: { value: string; error: string };
@@ -67,34 +64,12 @@ export const useCreateTrackStore = create<ICreatetrackState>()(
       try {
         set({ error: null });
         set({ isLoading: true });
-        // const imageExtension = getState().picture.img.name.split('.').pop();
-        // const audioExtension = getState().audioFile.value.name.split('.').pop();
-        // const imageName = uuid.v4() + '.' + imageExtension;
-        // const audioName = uuid.v4() + '.' + audioExtension;
-        // const imageBlob = await upload(imageName, getState().picture.img, {
-        //   access: 'public',
-        //   handleUploadUrl: '/api/image/upload',
-        // });
-        // const audioBlob = await upload(audioName, getState().audioFile.value, {
-        //   access: 'public',
-        //   handleUploadUrl: '/api/audio/upload',
-        // });
-        // const duration = await getAudioDuration(getState().audioFile.value);
         const formData = new FormData();
         formData.append('name', getState().name.value);
         formData.append('artist', getState().artist.value);
         formData.append('text', getState().text.value);
         formData.append('picture', getState().picture.img);
         formData.append('audio', getState().audioFile.value);
-        // const data = {
-        //   name: getState().name.value,
-        //   artist: getState().artist.value,
-        //   text: getState().text.value,
-        //   picture: getState().picture.img,
-        //   audio: getState().audioFile.value,
-        //   // duration: Math.ceil(duration),
-        // };
-        console.log(formData);
         const response = await axios.post(
           process.env.NEXT_PUBLIC_BASE_URL + 'tracks',
           formData,

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import StepWrapper from '@/components/UI/Stepper/stepWrapper/StepWrapper';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
-import { usePlayerStore } from '@/stores/playerStore';
 import Button from '@/components/UI/Button/Button';
 import PreviewNewTrack from '@/components/previewNewTrack/PreviewNewTrack';
 import CreateTrackFormStepOne from '@/components/createTrackFormStepOne/CreateTrackFormStepOne';

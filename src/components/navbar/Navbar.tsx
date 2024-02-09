@@ -17,7 +17,7 @@ const navLinks = [
     icon: <HiHome size={24} />,
   },
   {
-    path: '/tracks/create',
+    path: '/create',
     pathTitle: 'Добавить',
     icon: <HiPlusCircle size={24} />,
   },
