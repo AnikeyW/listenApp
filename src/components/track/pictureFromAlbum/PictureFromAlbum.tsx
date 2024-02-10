@@ -4,7 +4,7 @@ import styles from './PictureFromAlbum.module.scss';
 import { useTrackStore } from '@/stores/trackStore';
 
 interface Props {
-  getAlbumPicture: () => '';
+  getAlbumPicture: () => string;
 }
 
 const PictureFromAlbum: FC<Props> = ({ getAlbumPicture }) => {
