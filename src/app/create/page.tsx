@@ -14,14 +14,14 @@ const Page = () => {
             router.replace('tracks/create');
           }}
         >
-          добавить трек
+          Добавить трек
         </Button>
         <Button
           onClick={() => {
             router.replace('albums/create');
           }}
         >
-          добавить альбом
+          Добавить альбом
         </Button>
       </div>
     </div>

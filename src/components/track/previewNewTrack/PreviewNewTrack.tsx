@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './previewNewTrack.module.scss';
 import Image from 'next/image';
 import FileUpload from '@/components/fileUploud/FileUpload';
 import { RiImageAddLine } from 'react-icons/ri';
 import { useTrackStore } from '@/stores/trackStore';
+import PictureFromAlbum from '@/components/track/pictureFromAlbum/PictureFromAlbum';
+import { useQuery } from '@tanstack/react-query';
+import albumService from '@/services/Album.service';
 
 type Props = {
   step: number;
@@ -17,6 +20,29 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
   const setPicture = useTrackStore((state) => state.setPicture);
   const [imagePreviewSrc, setImagePreviewSrc] = useState<string>('');
 
+  const useAlbumPictureCreatingTrack = useTrackStore(
+    (state) => state.useAlbumPictureCreatingTrack,
+  );
+  const setUseAlbumPictureCreatingTrack = useTrackStore(
+    (state) => state.setUseAlbumPictureCreatingTrack,
+  );
+
+  const getAlbumsQuery = useQuery({
+    queryKey: ['albums'],
+    queryFn: albumService.getAll,
+  });
+
+  const getAlbumPicture = useCallback((): string => {
+    if (getAlbumsQuery.isFetched) {
+      return (
+        getAlbumsQuery.data!.find((album) => {
+          return album._id === albumId;
+        })?.picture || ''
+      );
+    }
+    return '';
+  }, [getAlbumsQuery.data, useAlbumPictureCreatingTrack]);
+
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setPicture({ error: '', img: e.target.files[0] });
@@ -25,6 +51,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
       img.onload = () => {
         if (img.result && typeof img.result === 'string') {
           setImagePreviewSrc(img.result);
+          setUseAlbumPictureCreatingTrack(false);
         }
       };
       img.readAsDataURL(e.target.files[0]);
@@ -46,16 +73,28 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
                 borderRadius: '1rem',
               }}
             >
-              {picture.img && imagePreviewSrc ? (
+              {useAlbumPictureCreatingTrack ? (
                 <Image
-                  src={imagePreviewSrc}
+                  src={process.env.NEXT_PUBLIC_BASE_URL + getAlbumPicture()}
                   alt={'preview'}
                   width={250}
                   height={250}
                   style={{ borderRadius: '1rem' }}
                 />
               ) : (
-                <RiImageAddLine size={100} />
+                <>
+                  {picture.img && imagePreviewSrc ? (
+                    <Image
+                      src={imagePreviewSrc}
+                      alt={'preview'}
+                      width={250}
+                      height={250}
+                      style={{ borderRadius: '1rem' }}
+                    />
+                  ) : (
+                    <RiImageAddLine size={100} />
+                  )}
+                </>
               )}
             </div>
           </FileUpload>
@@ -81,13 +120,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
         </div>
       )}
       {albumId !== '' && props.step === 2 && (
-        //todo
-        <div>
-          <label htmlFor={'isAlbumPicture'}>
-            <input type="checkbox" id={'isAlbumPicture'} />
-            Использовать постер альбома
-          </label>
-        </div>
+        <PictureFromAlbum getAlbumPicture={getAlbumPicture} />
       )}
     </div>
   );

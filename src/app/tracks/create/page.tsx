@@ -11,10 +11,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
 import { CreateTrackDtoType } from '@/types/track';
 import Loader from '@/components/UI/Loader/Loader';
+import { useTrackStore } from '@/stores/trackStore';
 
 const steps = ['Информация о треке', 'Загрузка изображения', 'Загрузка аудио'];
 
 const Page = () => {
+  const resetAllFields = useTrackStore((state) => state.resetAllFields);
   const [currentStep, setCurrentStep] = useState(1);
   const queryClient = useQueryClient();
 
@@ -23,6 +25,7 @@ const Page = () => {
     mutationFn: (data: CreateTrackDtoType) => trackService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
+      resetAllFields();
     },
   });
 

@@ -1,4 +1,4 @@
-import { IAlbum } from '@/types/album';
+import { CreateAlbumDtoType, IAlbum } from '@/types/album';
 import axios from 'axios';
 import { ITrack } from '@/types/track';
 
@@ -9,9 +9,19 @@ class AlbumService {
       .then((res) => res.data);
   }
 
-  async create(data: any): Promise<IAlbum> {
+  async create(data: CreateAlbumDtoType): Promise<IAlbum> {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value instanceof Blob) {
+        formData.append(key, value, key);
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+
     return axios
-      .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums', data)
+      .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums', formData)
       .then((res) => res.data);
   }
 

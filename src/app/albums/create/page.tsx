@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateAlbumsButtons from '@/components/album/createAlbumsButtons/CreateAlbumsButtons';
 import Loader from '@/components/UI/Loader/Loader';
 import { useAlbumStore } from '@/stores/albumStore';
+import { CreateAlbumDtoType } from '@/types/album';
 
 const steps = ['Информация об альбоме', 'Загрузка изображения'];
 
@@ -20,7 +21,7 @@ const Page = () => {
 
   const { isPending, mutate } = useMutation({
     mutationKey: ['createAlbum'],
-    mutationFn: (variables) => albumService.create(variables),
+    mutationFn: (data: CreateAlbumDtoType) => albumService.create(data),
     onSuccess: () => {
       queryCleint.invalidateQueries({ queryKey: ['albums'] });
       resetAllFields();

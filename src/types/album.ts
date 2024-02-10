@@ -7,3 +7,5 @@ export interface IAlbum {
   picture: string;
   tracks: ITrack[];
 }
+
+export interface CreateAlbumDtoType extends Omit<IAlbum, '_id' | 'tracks'> {}

@@ -3,12 +3,13 @@ import styles from './CreateAlbumsButtons.module.scss';
 import Button from '@/components/UI/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAlbumStore } from '@/stores/albumStore';
+import { CreateAlbumDtoType } from '@/types/album';
 
 interface Props {
   currentStep: number;
   steps: string[];
   setCurrentStep: Dispatch<SetStateAction<number>>;
-  mutate: (data: any) => void;
+  mutate: (data: CreateAlbumDtoType) => void;
 }
 
 const CreateAlbumsButtons: FC<Props> = ({
@@ -26,11 +27,12 @@ const CreateAlbumsButtons: FC<Props> = ({
   const router = useRouter();
 
   async function createAlbumAndRedirect() {
-    const formData = new FormData();
-    formData.append('name', name.value);
-    formData.append('author', author.value);
-    formData.append('picture', picture.img);
-    mutate(formData);
+    const data = {
+      name: name.value,
+      author: author.value,
+      picture: picture.img,
+    };
+    mutate(data);
     await router.replace('/');
   }
 
