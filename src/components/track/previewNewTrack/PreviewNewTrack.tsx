@@ -3,18 +3,18 @@ import styles from './previewNewTrack.module.scss';
 import Image from 'next/image';
 import FileUpload from '@/components/fileUploud/FileUpload';
 import { RiImageAddLine } from 'react-icons/ri';
-import { useCreateTrackStore } from '@/stores/createTrackStore';
+import { useTrackStore } from '@/stores/trackStore';
 
 type Props = {
   step: number;
 };
 
 const PreviewNewTrack: React.FC<Props> = (props) => {
-  const name = useCreateTrackStore((state) => state.name);
-  const artist = useCreateTrackStore((state) => state.artist);
-  const picture = useCreateTrackStore((state) => state.picture);
-  const albumId = useCreateTrackStore((state) => state.albumId);
-  const setPicture = useCreateTrackStore((state) => state.setPicture);
+  const name = useTrackStore((state) => state.name);
+  const artist = useTrackStore((state) => state.artist);
+  const picture = useTrackStore((state) => state.picture);
+  const albumId = useTrackStore((state) => state.albumId);
+  const setPicture = useTrackStore((state) => state.setPicture);
   const [imagePreviewSrc, setImagePreviewSrc] = useState<string>('');
 
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {

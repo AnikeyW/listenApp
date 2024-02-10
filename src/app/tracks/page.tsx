@@ -1,29 +1,24 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './page.module.scss';
-import TrackList from '@/components/tracklist/TrackList';
-import { ITrack } from '@/types/track';
-import { useTrackStore } from '@/stores/trackStore';
+import TrackList from '@/components/track/tracklist/TrackList';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
+import { useQuery } from '@tanstack/react-query';
+import trackService from '@/services/Track.service';
 
 const Tracks = () => {
-  const tracks: ITrack[] = useTrackStore((state) => state.tracks);
-  const isLoading = useTrackStore((state) => state.isLoading);
-  const error = useTrackStore((state) => state.error);
-  const fetchTracks = useTrackStore((state) => state.fetchTracks);
-
-  useEffect(() => {
-    fetchTracks(100, 0);
-  }, []);
+  const { data, isLoading, isError, error, isSuccess } = useQuery({
+    queryKey: ['tracks'],
+    queryFn: () => trackService.getAll(),
+    staleTime: 120 * 1000,
+  });
 
   return (
     <div className={styles.root}>
       <div className={styles.trackHeader}>Мои треки</div>
-      {error && <ErrorMessage message={error} />}
-      {isLoading && <div>Загрузка...</div>}
-      {!isLoading && tracks && tracks.length > 0 && (
-        <TrackList tracks={tracks} />
-      )}
+      {isError && <ErrorMessage message={error.message} />}
+      {isLoading && <div>Загрузка22222</div>}
+      {isSuccess && data.length > 0 && <TrackList tracks={data} />}
     </div>
   );
 };

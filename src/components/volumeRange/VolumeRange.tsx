@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './volumeRange.module.scss';
-import { audio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/track/tracklist/TrackList';
 import { usePlayerStore } from '@/stores/playerStore';
 
 const VolumeRange: FC = () => {

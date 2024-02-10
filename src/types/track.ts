@@ -10,6 +10,9 @@ export interface ITrack {
   albumId: string | null;
 }
 
+export interface CreateTrackDtoType
+  extends Omit<ITrack, '_id' | 'listens' | 'duration'> {}
+
 export interface IComment {
   id: number;
   author: string;

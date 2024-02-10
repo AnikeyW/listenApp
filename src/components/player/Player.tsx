@@ -6,7 +6,7 @@ import { motion, Variants, AnimatePresence } from 'framer-motion';
 import styles from './Player.module.scss';
 
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/track/tracklist/TrackList';
 
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
 

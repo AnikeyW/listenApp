@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Progress.module.scss';
-import TrackProgress from '@/components/trackProgress/TrackProgress';
+import TrackProgress from '@/components/track/trackProgress/TrackProgress';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/track/tracklist/TrackList';
 
 const Progress = () => {
   const currentTime = usePlayerStore((state) => state.currentTime);

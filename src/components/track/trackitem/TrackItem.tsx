@@ -4,12 +4,12 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import styles from './trackitem.module.scss';
 
 import { ITrack } from '@/types/track';
-import TrackOptions from '@/components/trackitem/trackOptions/TrackOptions';
-import TrackDuration from '@/components/trackitem/trackDuration/TrackDuration';
-import TrackInfo from '@/components/trackitem/trackInfo/TrackInfo';
-import TrackImage from '@/components/trackitem/trackImage/TrackImage';
+import TrackOptions from '@/components/track/trackOptions/TrackOptions';
+import TrackDuration from '@/components/track/trackDuration/TrackDuration';
+import TrackInfo from '@/components/track/trackInfo/TrackInfo';
+import TrackImage from '@/components/track/trackImage/TrackImage';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio, initAudio } from '@/components/tracklist/TrackList';
+import { audio, initAudio } from '@/components/track/tracklist/TrackList';
 
 interface ITrackItemProps {
   track: ITrack;

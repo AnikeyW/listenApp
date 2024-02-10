@@ -5,7 +5,7 @@ import { MdPlayArrow } from 'react-icons/md';
 import animateIcon from '@/assets/sound.gif';
 import { ITrack } from '@/types/track';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/track/tracklist/TrackList';
 
 interface TrackImageProps {
   pauseLocal: boolean;

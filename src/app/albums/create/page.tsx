@@ -14,7 +14,7 @@ const steps = ['Информация об альбоме', 'Загрузка и�
 const Page = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const { isPending, mutate } = useMutation({
-    mutationKey: ['albums', 'create-album'],
+    mutationKey: ['createAlbum'],
     mutationFn: (variables) => albumService.create(variables),
   });
 

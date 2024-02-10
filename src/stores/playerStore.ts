@@ -4,7 +4,6 @@ import { devtools } from 'zustand/middleware';
 
 interface IPlayerState {
   activeTrack: null | ITrack;
-  audio: any;
   volume: number;
   duration: number;
   currentTime: number;
@@ -16,21 +15,18 @@ interface IPlayerState {
   setVolume: (value: number) => void;
   setDuration: (value: number) => void;
   setActiveTrack: (track: ITrack | null) => void;
-  setAudio: (webAudio: any) => void;
   setIsShowPlayerFullScreen: (value: boolean) => void;
 }
 
 export const usePlayerStore = create<IPlayerState>()(
   devtools((set) => ({
     activeTrack: null,
-    audio: null,
     currentTime: 0,
     duration: 0,
     pause: true,
     volume: 50,
     isShowPlayerFullScreen: false,
     pauseTrack: () => set({ pause: true }),
-    setAudio: (webAudio) => set({ audio: webAudio }),
     playTrack: () => set({ pause: false }),
     setCurrentTime: (value) => set({ currentTime: value }),
     setVolume: (value) => set({ volume: value }),

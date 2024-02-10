@@ -3,12 +3,12 @@ import Image from 'next/image';
 import styles from './CreateTrackFormStepThree.module.scss';
 import addAudioIcon from '@/assets/add-audio.png';
 import FileUpload from '@/components/fileUploud/FileUpload';
-import { useCreateTrackStore } from '@/stores/createTrackStore';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
+import { useTrackStore } from '@/stores/trackStore';
 
 const CreateTrackFormStepThree: FC = () => {
-  const audioFile = useCreateTrackStore((state) => state.audioFile);
-  const setAudio = useCreateTrackStore((state) => state.setAudio);
+  const audioFile = useTrackStore((state) => state.audioFile);
+  const setAudio = useTrackStore((state) => state.setAudio);
 
   const onChangeAudio = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

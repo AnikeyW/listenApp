@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import styles from './page.module.scss';
 import { IAlbum } from '@/types/album';
 import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
-import TrackList from '@/components/tracklist/TrackList';
+import TrackList from '@/components/track/tracklist/TrackList';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const album: IAlbum = await getAlbumById(params.id);

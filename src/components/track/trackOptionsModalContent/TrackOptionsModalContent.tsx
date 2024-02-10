@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTrackStore } from '@/stores/trackStore';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
+import trackService from '@/services/Track.service';
 
 interface Props {
   track: ITrack;
@@ -15,30 +15,42 @@ interface Props {
 }
 
 const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
+  const queryClient = useQueryClient();
+  const [isAddingToAlbum, setIsAddingToAlbum] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const deleteTrack = useTrackStore((state) => state.deleteTrack);
-  const [isAddingToAlbum, setIsAddingToAlbum] = useState(false);
+
+  const deleteTrackMutation = useMutation({
+    mutationKey: ['deleteTrack'],
+    mutationFn: (trackId: string) => trackService.delete(trackId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
+    },
+  });
+
   const { data, isSuccess } = useQuery({
-    queryKey: ['getAlbums'],
+    queryKey: ['albums'],
     queryFn: albumService.getAll,
   });
-  const { isPending, mutate } = useMutation({
-    mutationKey: ['tracks', 'albums', 'addTrackToAlbum'],
+
+  const addTrackToAlbumMutation = useMutation({
+    mutationKey: ['addTrackToAlbum'],
     mutationFn: ({ albumId, trackId }: { albumId: string; trackId: string }) =>
       albumService.addTrackToAlbum(albumId, trackId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
+      queryClient.invalidateQueries({ queryKey: ['albums'] });
+    },
   });
 
   const deleteHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    console.log('del');
-    deleteTrack(track._id);
+    deleteTrackMutation.mutate(track._id);
     setIsOpenModal(false);
   };
 
   const addToAlbumHandler = (albumId: string) => {
-    console.log('addToAlbumHandler', albumId, track);
-    mutate({ albumId, trackId: track._id });
+    addTrackToAlbumMutation.mutate({ albumId, trackId: track._id });
     setIsOpenModal(false);
   };
 
@@ -122,7 +134,9 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
             }}
           >
             <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
-            <span>Добавить в альбом {isPending && '...'}</span>
+            <span>
+              Добавить в альбом {addTrackToAlbumMutation.isPending && '...'}
+            </span>
           </div>
         )}
         <div className={styles.root__optionList_item} onClick={deleteHandler}>

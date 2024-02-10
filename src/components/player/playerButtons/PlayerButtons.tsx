@@ -4,7 +4,7 @@ import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
 import { PiPauseFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio } from '@/components/tracklist/TrackList';
+import { audio } from '@/components/track/tracklist/TrackList';
 
 type Player = 'full' | 'small';
 

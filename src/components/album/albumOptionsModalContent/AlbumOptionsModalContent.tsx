@@ -14,7 +14,7 @@ interface Props {
 const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
   const router = useRouter();
   const deleteAlbumMutation = useMutation({
-    mutationKey: ['albums', 'delete-album', 'tracks'],
+    mutationKey: ['deleteAlbum'],
     mutationFn: (albumId: string) => albumService.delete(albumId),
   });
 
