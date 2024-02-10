@@ -109,6 +109,15 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
                 style={{ borderRadius: '1rem' }}
               />
             )}
+            {useAlbumPictureCreatingTrack && (
+              <Image
+                src={process.env.NEXT_PUBLIC_BASE_URL + getAlbumPicture()}
+                alt={'preview'}
+                width={250}
+                height={250}
+                style={{ borderRadius: '1rem' }}
+              />
+            )}
           </>
         )}
       </div>

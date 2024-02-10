@@ -44,6 +44,9 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
       queryClient.invalidateQueries({ queryKey: ['albums'] });
     },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   const deleteHandler = (e: React.MouseEvent<HTMLElement>) => {

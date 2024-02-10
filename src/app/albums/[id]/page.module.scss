@@ -1,6 +1,8 @@
 .root {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   &__info{
     &_image{
       max-width: 400px;
@@ -31,5 +33,8 @@
       justify-content: center;
     }
   }
-  &__trackList{}
+  &__trackList{
+    overflow: scroll;
+    flex: auto;
+  }
 }

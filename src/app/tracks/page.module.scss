@@ -12,3 +12,6 @@
   font-weight: bold;
   padding: 0 0.5rem;
 }
+.trackListWrapper{
+  height: calc(100% - var(--trackslist-title-height));
+}

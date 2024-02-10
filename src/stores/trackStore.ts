@@ -73,6 +73,7 @@ export const useTrackStore = create<ITrackState>()(
         picture: { img: null, error: '' },
         audioFile: { value: null, error: '' },
         albumId: '',
+        useAlbumPictureCreatingTrack: false,
       });
     },
   })),

@@ -24,8 +24,11 @@ const Page = () => {
     mutationKey: ['createTrack'],
     mutationFn: (data: CreateTrackDtoType) => trackService.create(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tracks'] });
       resetAllFields();
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['tracks'] }),
+        queryClient.invalidateQueries({ queryKey: ['albums'] }),
+      ]);
     },
   });
 

@@ -1,5 +1,6 @@
 .tracklist{
-  max-height: calc(100% - var(--trackslist-title-height));
+  //max-height: calc(100% - var(--trackslist-title-height));
+  height: 100%;
   flex: auto;
   display: flex;
   flex-direction: column;
