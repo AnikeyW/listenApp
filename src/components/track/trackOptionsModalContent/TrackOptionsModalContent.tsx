@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import styles from './TrackOptionsModalContent.module.scss';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,7 +16,7 @@ interface Props {
 
 const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   const queryClient = useQueryClient();
-  const [isAddingToAlbum, setIsAddingToAlbum] = useState(false);
+  const [isShowAlbumList, setIsShowAlbumList] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -24,6 +24,9 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
     mutationKey: ['deleteTrack'],
     mutationFn: (trackId: string) => trackService.delete(trackId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
+    },
+    onError: () => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
     },
   });
@@ -78,17 +81,26 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
           </div>
         </div>
       </div>
-
-      {isAddingToAlbum && isSuccess && (
-        <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }}>
-          {data.length === 0 && <div>Нет альбомов</div>}
-          {data.map((album) => (
-            <div
-              style={{ padding: '0 0.5rem' }}
-              key={album._id}
-              onClick={() => addToAlbumHandler(album._id)}
-            >
-              <div className={styles.album}>
+      <AnimatePresence>
+        {isShowAlbumList && isSuccess && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: '140px' }}
+            exit={{ height: 0 }}
+            className={styles.albumList}
+          >
+            {data.length === 0 ? (
+              <div>Нет альбомов</div>
+            ) : (
+              <div>Мои альбомы:</div>
+            )}
+            {data.map((album) => (
+              <motion.div
+                dragPropagation
+                className={styles.album}
+                key={album._id}
+                onClick={() => addToAlbumHandler(album._id)}
+              >
                 <div className={styles.album__img}>
                   <Image
                     src={process.env.NEXT_PUBLIC_BASE_URL + album.picture}
@@ -106,11 +118,11 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
                     {album.author}
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      )}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className={styles.root__optionList}>
         {track.albumId ? (
@@ -130,7 +142,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
             className={styles.root__optionList_item}
             onClick={(e) => {
               e.stopPropagation();
-              setIsAddingToAlbum(true);
+              setIsShowAlbumList((prevState) => !prevState);
             }}
           >
             <MdPlaylistAdd size={34} color={'#44944A'} />{' '}

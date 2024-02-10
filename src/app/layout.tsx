@@ -6,7 +6,7 @@ import Player from '@/components/player/Player';
 import Wrapper from '@/components/wrapper/Wrapper';
 import MainSection from '@/components/mainSection/mainSection';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['greek'] });
 
 export const metadata: Metadata = {
   title: 'ListenBro',

@@ -7,19 +7,23 @@ import CreateTrackFormStepOne from '@/components/track/createTrackFormStepOne/Cr
 import CreateTrackFormStepTwo from '@/components/track/createTrackFormStepTwo/CreateTrackFormStepTwo';
 import CreateTrackFormStepThree from '@/components/track/createTrackFormStepThree/CreateTrackFormStepThree';
 import CreateTrackButtons from '@/components/track/createTrackButtons/CreateTrackButtons';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
 import { CreateTrackDtoType } from '@/types/track';
+import Loader from '@/components/UI/Loader/Loader';
 
 const steps = ['Информация о треке', 'Загрузка изображения', 'Загрузка аудио'];
 
 const Page = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const queryClient = useQueryClient();
 
   const createTrackMutation = useMutation({
     mutationKey: ['createTrack'],
     mutationFn: (data: CreateTrackDtoType) => trackService.create(data),
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
+    },
   });
 
   return (
@@ -46,7 +50,7 @@ const Page = () => {
           />
         </>
       ) : (
-        <div className={styles.root__loading}>LOADING....</div>
+        <Loader />
       )}
     </div>
   );

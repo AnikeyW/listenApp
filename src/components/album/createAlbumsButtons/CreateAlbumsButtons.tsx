@@ -31,7 +31,7 @@ const CreateAlbumsButtons: FC<Props> = ({
     formData.append('author', author.value);
     formData.append('picture', picture.img);
     mutate(formData);
-    await router.push('/albums');
+    await router.replace('/');
   }
 
   const next = () => {

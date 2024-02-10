@@ -6,16 +6,25 @@ import CreateAlbumStepOne from '@/components/album/createAlbumStepOne/CreateAlbu
 import PreviewNewAlbum from '@/components/album/previewNewAlbum/PreviewNewAlbum';
 import CreateAlbumStepTwo from '@/components/album/createAlbumStepTwo/CreateAlbumStepTwo';
 import albumService from '@/services/Album.service';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateAlbumsButtons from '@/components/album/createAlbumsButtons/CreateAlbumsButtons';
+import Loader from '@/components/UI/Loader/Loader';
+import { useAlbumStore } from '@/stores/albumStore';
 
 const steps = ['Информация об альбоме', 'Загрузка изображения'];
 
 const Page = () => {
+  const queryCleint = useQueryClient();
   const [currentStep, setCurrentStep] = useState(1);
+  const resetAllFields = useAlbumStore((state) => state.resetAllFields);
+
   const { isPending, mutate } = useMutation({
     mutationKey: ['createAlbum'],
     mutationFn: (variables) => albumService.create(variables),
+    onSuccess: () => {
+      queryCleint.invalidateQueries({ queryKey: ['albums'] });
+      resetAllFields();
+    },
   });
 
   return (
@@ -40,7 +49,7 @@ const Page = () => {
           />
         </>
       ) : (
-        <div className={styles.root__loading}>LOADING....</div>
+        <Loader />
       )}
     </div>
   );

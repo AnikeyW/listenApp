@@ -5,6 +5,7 @@ import TrackList from '@/components/track/tracklist/TrackList';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import { useQuery } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
+import Loader from '@/components/UI/Loader/Loader';
 
 const Tracks = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery({
@@ -17,7 +18,7 @@ const Tracks = () => {
     <div className={styles.root}>
       <div className={styles.trackHeader}>Мои треки</div>
       {isError && <ErrorMessage message={error.message} />}
-      {isLoading && <div>Загрузка22222</div>}
+      {isLoading && <Loader />}
       {isSuccess && data.length > 0 && <TrackList tracks={data} />}
     </div>
   );

@@ -10,6 +10,7 @@ interface IAlbumState {
   setPicture: (payload: { img: any; error: string }) => void;
   validateStepOne: () => boolean;
   validateStepTwo: () => boolean;
+  resetAllFields: () => void;
 }
 
 export const useAlbumStore = create<IAlbumState>()(
@@ -35,6 +36,13 @@ export const useAlbumStore = create<IAlbumState>()(
         set({ picture: { img: null, error: 'Изображение не загружено' } });
       }
       return getState().picture.img;
+    },
+    resetAllFields: () => {
+      set({
+        name: { value: '', error: '' },
+        author: { value: '', error: '' },
+        picture: { img: null, error: '' },
+      });
     },
   })),
 );

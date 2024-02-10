@@ -3,7 +3,7 @@ import { IAlbum } from '@/types/album';
 import Image from 'next/image';
 import { MdDeleteForever } from 'react-icons/md';
 import styles from './AlbumOptionsModalContent.module.scss';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
 import { useRouter } from 'next/navigation';
 
@@ -12,15 +12,20 @@ interface Props {
 }
 
 const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
+  const queryCleint = useQueryClient();
   const router = useRouter();
   const deleteAlbumMutation = useMutation({
     mutationKey: ['deleteAlbum'],
     mutationFn: (albumId: string) => albumService.delete(albumId),
+    onSuccess: () => {
+      queryCleint.invalidateQueries({ queryKey: ['albums'] });
+      queryCleint.invalidateQueries({ queryKey: ['tracks'] });
+    },
   });
 
   const deleteAlbumHandler = () => {
     deleteAlbumMutation.mutate(album._id);
-    router.back();
+    router.replace('/');
   };
 
   return (

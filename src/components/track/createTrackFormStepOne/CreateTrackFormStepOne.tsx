@@ -48,7 +48,7 @@ const CreateTrackFormStepOne: FC = () => {
           }}
         >
           <option value="" disabled>
-            Альбом
+            Альбом (необязательно)
           </option>
           {data.map((album) => (
             <option key={album._id} value={album._id}>
