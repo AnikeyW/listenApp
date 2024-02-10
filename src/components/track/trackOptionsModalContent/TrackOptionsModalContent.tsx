@@ -1,41 +1,49 @@
-import React, { FC, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import styles from './TrackOptionsModalContent.module.scss';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MdDeleteForever, MdPlaylistAdd } from 'react-icons/md';
+import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types/track';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTrackStore } from '@/stores/trackStore';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
-import { IAlbum } from '@/types/album';
 
 interface Props {
   track: ITrack;
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const TrackOptionsModalContent: FC<Props> = ({ track }) => {
+const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const deleteTrack = useTrackStore((state) => state.deleteTrack);
   const [isAddingToAlbum, setIsAddingToAlbum] = useState(false);
-  const { data, isError, error, isSuccess } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['getAlbums'],
     queryFn: albumService.getAll,
+  });
+  const { isPending, mutate } = useMutation({
+    mutationKey: ['tracks', 'albums', 'addTrackToAlbum'],
+    mutationFn: ({ albumId, trackId }: { albumId: string; trackId: string }) =>
+      albumService.addTrackToAlbum(albumId, trackId),
   });
 
   const deleteHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     console.log('del');
     deleteTrack(track._id);
+    setIsOpenModal(false);
   };
 
   const addToAlbumHandler = (albumId: string) => {
     console.log('addToAlbumHandler', albumId, track);
+    mutate({ albumId, trackId: track._id });
+    setIsOpenModal(false);
   };
 
   const redirectToAlbumHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    console.log('redirectToAlbumHandler');
     router.replace('albums/' + track.albumId);
   };
 
@@ -94,12 +102,17 @@ const TrackOptionsModalContent: FC<Props> = ({ track }) => {
 
       <div className={styles.root__optionList}>
         {track.albumId ? (
-          <div
-            className={styles.root__optionList_item}
-            onClick={redirectToAlbumHandler}
-          >
-            <span>К альбому</span>
-          </div>
+          <>
+            {pathname.split('/')[1] !== 'albums' && (
+              <div
+                className={styles.root__optionList_item}
+                onClick={redirectToAlbumHandler}
+              >
+                <MdMoveUp size={34} color={'#448194'} />
+                <span>К альбому</span>
+              </div>
+            )}
+          </>
         ) : (
           <div
             className={styles.root__optionList_item}
@@ -109,7 +122,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track }) => {
             }}
           >
             <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
-            <span>Добавить в альбом</span>{' '}
+            <span>Добавить в альбом {isPending && '...'}</span>
           </div>
         )}
         <div className={styles.root__optionList_item} onClick={deleteHandler}>

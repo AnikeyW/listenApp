@@ -13,6 +13,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
   const name = useCreateTrackStore((state) => state.name);
   const artist = useCreateTrackStore((state) => state.artist);
   const picture = useCreateTrackStore((state) => state.picture);
+  const albumId = useCreateTrackStore((state) => state.albumId);
   const setPicture = useCreateTrackStore((state) => state.setPicture);
   const [imagePreviewSrc, setImagePreviewSrc] = useState<string>('');
 
@@ -77,6 +78,15 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
         <div className={styles.previewBox__info}>
           <div className={styles.previewBox__info_name}>{name.value}</div>
           <div className={styles.previewBox__info_artist}>{artist.value}</div>
+        </div>
+      )}
+      {albumId !== '' && props.step === 2 && (
+        //todo
+        <div>
+          <label htmlFor={'isAlbumPicture'}>
+            <input type="checkbox" id={'isAlbumPicture'} />
+            Использовать постер альбома
+          </label>
         </div>
       )}
     </div>

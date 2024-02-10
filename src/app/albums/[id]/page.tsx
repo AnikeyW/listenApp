@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import styles from './page.module.scss';
 import { IAlbum } from '@/types/album';
 import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
+import TrackList from '@/components/tracklist/TrackList';
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const album: IAlbum = await getAlbumById(params.id);
@@ -23,7 +24,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
           <AlbumOptions album={album} />
         </div>
       </div>
-      <div className={styles.root__trackList}></div>
+      <div className={styles.root__trackList}>
+        <TrackList tracks={album.tracks} />
+      </div>
     </div>
   );
 };

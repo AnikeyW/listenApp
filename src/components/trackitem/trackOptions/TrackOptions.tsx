@@ -24,7 +24,10 @@ const TrackOptions: FC<TrackOptionsProps> = ({ track }) => {
       </div>
       <Portal>
         <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-          <TrackOptionsModalContent track={track} />
+          <TrackOptionsModalContent
+            track={track}
+            setIsOpenModal={setIsOpenModal}
+          />
         </Modal>
       </Portal>
     </>

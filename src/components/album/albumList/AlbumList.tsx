@@ -61,7 +61,7 @@ const ddd = [
 
 const AlbumList = () => {
   const { data, isError, error, isSuccess } = useQuery({
-    queryKey: ['getAlbums'],
+    queryKey: ['albums', 'getAlbums'],
     queryFn: albumService.getAll,
   });
 

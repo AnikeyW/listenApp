@@ -3,12 +3,26 @@ import { IAlbum } from '@/types/album';
 import Image from 'next/image';
 import { MdDeleteForever } from 'react-icons/md';
 import styles from './AlbumOptionsModalContent.module.scss';
+import { useMutation } from '@tanstack/react-query';
+import albumService from '@/services/Album.service';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   album: IAlbum;
 }
 
 const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
+  const router = useRouter();
+  const deleteAlbumMutation = useMutation({
+    mutationKey: ['albums', 'delete-album', 'tracks'],
+    mutationFn: (albumId: string) => albumService.delete(albumId),
+  });
+
+  const deleteAlbumHandler = () => {
+    deleteAlbumMutation.mutate(album._id);
+    router.back();
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.root__top}>
@@ -29,9 +43,9 @@ const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
         </div>
       </div>
 
-      <div className={styles.root__options} onClick={() => {}}>
+      <div className={styles.root__options} onClick={deleteAlbumHandler}>
         <MdDeleteForever size={34} />
-        <span>Добавить в альбом</span>
+        <span>Удалить альбом</span>
       </div>
     </div>
   );
