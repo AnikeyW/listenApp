@@ -23,7 +23,8 @@ const Page = () => {
     mutationKey: ['createAlbum'],
     mutationFn: (data: CreateAlbumDtoType) => albumService.create(data),
     onSuccess: () => {
-      queryCleint.invalidateQueries({ queryKey: ['albums'] });
+      // queryCleint.invalidateQueries({ queryKey: ['albums'] });
+      queryCleint.fetchQuery({ queryKey: ['albums'] });
       resetAllFields();
     },
   });

@@ -10,6 +10,13 @@
       height: 300px;
       margin: 0 auto;
       position: relative;
+      @media screen and (min-width: 640px){
+        overflow: hidden;
+        width: unset;
+        aspect-ratio: 1;
+        height: 250px;
+        border-radius: .5rem;
+      }
       img{
         position: absolute;
         bottom: 0;
@@ -34,7 +41,7 @@
     }
   }
   &__trackList{
-    overflow: scroll;
+    overflow-y: auto;
     flex: auto;
   }
 }

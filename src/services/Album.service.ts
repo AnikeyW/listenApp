@@ -39,6 +39,12 @@ class AlbumService {
       .delete(process.env.NEXT_PUBLIC_BASE_URL + 'albums/' + albumId)
       .then((res) => res.data);
   }
+
+  async getOne(albumId: string): Promise<IAlbum> {
+    return axios
+      .get(process.env.NEXT_PUBLIC_BASE_URL + 'albums/' + albumId)
+      .then((res) => res.data);
+  }
 }
 
 export default new AlbumService();

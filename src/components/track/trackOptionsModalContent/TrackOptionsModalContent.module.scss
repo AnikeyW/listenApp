@@ -52,7 +52,7 @@
 .albumList{
   padding: 0 1rem 0 1rem;
   margin-bottom: 0.5rem;
-  overflow: scroll;
+  overflow-y: auto;
   height: 140px;
 }
 

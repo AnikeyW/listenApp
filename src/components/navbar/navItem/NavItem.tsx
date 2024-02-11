@@ -18,7 +18,7 @@ const NavItem: FC<NavItemProps> = ({ path, pathTitle, icon }) => {
         href={path}
       >
         <div className={styles.linkTitle}>
-          {icon}
+          <div className={styles.linkTitle__icon}>{icon}</div>
           <div>{pathTitle}</div>
         </div>
       </Link>

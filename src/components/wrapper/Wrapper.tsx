@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import styles from './wrapper.module.scss';
 import { useThemeStore } from '@/stores/themeStore';
 import {
@@ -85,6 +86,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
           </motion.div>
 
           <div id={'overlays'}></div>
+          <ReactQueryDevtools />
         </QueryClientProvider>
       </div>
     </>

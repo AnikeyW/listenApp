@@ -11,7 +11,7 @@ const AlbumList = () => {
   const { data, isError, error, isSuccess } = useQuery({
     queryKey: ['albums'],
     queryFn: albumService.getAll,
-    // staleTime: 120 * 1000,
+    staleTime: 120 * 1000,
   });
 
   return (

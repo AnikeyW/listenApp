@@ -18,7 +18,7 @@ const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
     mutationKey: ['deleteAlbum'],
     mutationFn: (albumId: string) => albumService.delete(albumId),
     onSuccess: () => {
-      queryCleint.invalidateQueries({ queryKey: ['albums'] });
+      queryCleint.fetchQuery({ queryKey: ['albums'] });
       queryCleint.invalidateQueries({ queryKey: ['tracks'] });
     },
   });
