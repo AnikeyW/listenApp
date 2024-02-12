@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import styles from './PlayerFullScreen.module.scss';
 import VolumeRange from '@/components/volumeRange/VolumeRange';
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
-import Progress from '@/components/player/playerFullScreen/progress/Progress';
-import TrackImage from '@/components/player/playerFullScreen/trackImage/TrackImage';
-import TrackInfo from '@/components/player/playerFullScreen/trackInfo/TrackInfo';
+import Progress from '@/components/player/progress/Progress';
+import TrackImage from '@/components/player/trackImage/TrackImage';
+import TrackInfo from '@/components/player/trackInfo/TrackInfo';
 
 const PlayerFullScreen: FC = () => {
   return (

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
-import Player from '@/components/player/Player';
+import PlayerBar from '@/components/player/playerBar/PlayerBar';
 import Wrapper from '@/components/wrapper/Wrapper';
 import MainSection from '@/components/mainSection/mainSection';
 
@@ -36,7 +36,7 @@ export default function RootLayout({
         <Wrapper>
           <Navbar />
           <MainSection>{children}</MainSection>
-          <Player />
+          <PlayerBar />
         </Wrapper>
       </body>
     </html>

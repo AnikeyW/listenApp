@@ -3,7 +3,7 @@ import React, { MouseEvent } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 
-import styles from './Player.module.scss';
+import styles from './PlayerBar.module.scss';
 
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/track/tracklist/TrackList';
@@ -21,7 +21,7 @@ const playerVariants: Variants = {
   },
 };
 
-const Player = () => {
+const PlayerBar = () => {
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const setIndexOfActiveTrack = usePlayerStore(
     (state) => state.setIndexOfActiveTrack,
@@ -39,7 +39,10 @@ const Player = () => {
   };
 
   const showPlayerFullScreen = () => {
-    setIsShowPlayerFullScreen(true);
+    const isMobileScreen = window.matchMedia('(max-width: 640px)').matches;
+    if (isMobileScreen) {
+      setIsShowPlayerFullScreen(true);
+    }
   };
 
   return (
@@ -54,7 +57,7 @@ const Player = () => {
           onClick={showPlayerFullScreen}
           key={1}
         >
-          <PlayerButtons player={'small'} />
+          <PlayerButtons player={'playerBar'} />
           <div className={styles.player__trackInfo}>
             <div className={styles.player__trackInfo_name}>
               {activeTrack.name}
@@ -72,4 +75,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default PlayerBar;

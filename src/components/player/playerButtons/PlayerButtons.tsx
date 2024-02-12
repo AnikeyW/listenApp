@@ -7,14 +7,17 @@ import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/track/tracklist/TrackList';
 import { useQuery } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
+import clsx from 'clsx';
 
-type Player = 'full' | 'small';
+type Player = 'playerFullScreen' | 'playerBar';
 
 interface PlayerButtonsProps {
   player?: Player;
 }
 
-const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
+const PlayerButtons: FC<PlayerButtonsProps> = ({
+  player = 'playerFullScreen',
+}) => {
   const pause = usePlayerStore((state) => state.pause);
   const playTrack = usePlayerStore((state) => state.playTrack);
   const pauseTrack = usePlayerStore((state) => state.pauseTrack);
@@ -60,20 +63,32 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
       }}
       dragElastic={0}
     >
-      {player === 'full' && (
-        <RiRewindFill size={35} onClick={previousTrackHandler} />
-      )}
+      <div
+        className={clsx(
+          player === 'playerBar'
+            ? styles.root__btnSmall
+            : styles.root__btnLarge,
+        )}
+      >
+        <RiRewindFill onClick={previousTrackHandler} />
+      </div>
       <div onClick={play}>
         {pause ? (
-          <RiPlayFill size={player === 'full' ? 60 : 30} />
+          <RiPlayFill size={player === 'playerFullScreen' ? 60 : 30} />
         ) : (
-          <PiPauseFill size={player === 'full' ? 60 : 30} />
+          <PiPauseFill size={player === 'playerFullScreen' ? 60 : 30} />
         )}
       </div>
 
-      {player === 'full' && (
-        <RiSpeedFill size={35} onClick={nextTrackHandler} />
-      )}
+      <div
+        className={clsx(
+          player === 'playerBar'
+            ? styles.root__btnSmall
+            : styles.root__btnLarge,
+        )}
+      >
+        <RiSpeedFill onClick={nextTrackHandler} />
+      </div>
     </motion.div>
   );
 };
