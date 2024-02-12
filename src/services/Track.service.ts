@@ -34,16 +34,6 @@ class TrackService {
       .post(process.env.NEXT_PUBLIC_BASE_URL + 'tracks', formData)
       .then((res) => res.data);
   }
-  //
-  // async addTrackToAlbum(albumId: string, trackId: string): Promise<ITrack> {
-  //   return axios
-  //     .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums/addtrack', {
-  //       albumId,
-  //       trackId,
-  //     })
-  //     .then((res) => res.data);
-  // }
-  //
 }
 
 export default new TrackService();

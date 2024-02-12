@@ -5,6 +5,8 @@ import { PiPauseFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/track/tracklist/TrackList';
+import { useQuery } from '@tanstack/react-query';
+import trackService from '@/services/Track.service';
 
 type Player = 'full' | 'small';
 
@@ -16,6 +18,14 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
   const pause = usePlayerStore((state) => state.pause);
   const playTrack = usePlayerStore((state) => state.playTrack);
   const pauseTrack = usePlayerStore((state) => state.pauseTrack);
+  const nextTrack = usePlayerStore((state) => state.nextTrack);
+  const previousTrack = usePlayerStore((state) => state.previousTrack);
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['tracks'],
+    queryFn: () => trackService.getAll(),
+    staleTime: 120 * 1000,
+  });
 
   const play = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -25,6 +35,18 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
     } else {
       pauseTrack();
       audio.pause();
+    }
+  };
+
+  const nextTrackHandler = () => {
+    if (isSuccess) {
+      nextTrack(data);
+    }
+  };
+
+  const previousTrackHandler = () => {
+    if (isSuccess) {
+      previousTrack(data);
     }
   };
 
@@ -38,7 +60,9 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
       }}
       dragElastic={0}
     >
-      {player === 'full' && <RiRewindFill size={35} />}
+      {player === 'full' && (
+        <RiRewindFill size={35} onClick={previousTrackHandler} />
+      )}
       <div onClick={play}>
         {pause ? (
           <RiPlayFill size={player === 'full' ? 60 : 30} />
@@ -47,7 +71,9 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({ player = 'full' }) => {
         )}
       </div>
 
-      {player === 'full' && <RiSpeedFill size={35} />}
+      {player === 'full' && (
+        <RiSpeedFill size={35} onClick={nextTrackHandler} />
+      )}
     </motion.div>
   );
 };

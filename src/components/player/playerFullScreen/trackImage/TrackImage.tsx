@@ -26,7 +26,7 @@ const TrackImage = () => {
             transition={{ ease: 'easeOut', duration: 0.25 }}
             className={styles.root__imageBlur}
             style={{
-              background: `url(${
+              backgroundImage: `url(${
                 process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture
               })`,
               backgroundSize: 'cover',

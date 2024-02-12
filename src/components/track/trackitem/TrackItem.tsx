@@ -13,13 +13,18 @@ import { audio, initAudio } from '@/components/track/tracklist/TrackList';
 
 interface ITrackItemProps {
   track: ITrack;
+  indexOfTrack: number;
 }
 
-const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
+const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
   const [pauseLocal, setPauseLocal] = useState(true);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
+  const pause = usePlayerStore((state) => state.pause);
   const playTrack = usePlayerStore((state) => state.playTrack);
   const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
+  const setIndexOfActiveTrack = usePlayerStore(
+    (state) => state.setIndexOfActiveTrack,
+  );
   const setDuration = usePlayerStore((state) => state.setDuration);
   const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
   const setIsShowPlayerFullScreen = usePlayerStore(
@@ -44,6 +49,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
       return;
     }
     setActiveTrack(track);
+    setIndexOfActiveTrack(indexOfTrack);
     setInitAudio();
     playTrack();
     setPauseLocal(false);
@@ -55,11 +61,12 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track }) => {
         localStorage.setItem('volume', '50');
       }
       audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
-      // audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
       audio.volume = Number(localStorage.getItem('volume')) / 100;
       audio.onloadedmetadata = () => {
         setDuration(Math.ceil(audio.duration));
-        audio.play();
+        if (!pause) {
+          audio.play();
+        }
       };
       audio.ontimeupdate = () => {
         if (Date.now() - timeRef.current > 1000) {

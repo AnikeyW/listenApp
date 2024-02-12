@@ -23,6 +23,9 @@ const playerVariants: Variants = {
 
 const Player = () => {
   const activeTrack = usePlayerStore((state) => state.activeTrack);
+  const setIndexOfActiveTrack = usePlayerStore(
+    (state) => state.setIndexOfActiveTrack,
+  );
   const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
@@ -32,6 +35,7 @@ const Player = () => {
     e.stopPropagation();
     audio.pause();
     setActiveTrack(null);
+    setIndexOfActiveTrack(null);
   };
 
   const showPlayerFullScreen = () => {
