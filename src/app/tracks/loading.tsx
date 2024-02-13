@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
-import Loader from '@/components/UI/Loader/Loader';
+import SceletonTracksPage from '@/components/track/sceletonTracksPage/SceletonTracksPage';
 
 const Loading = () => {
-  return <Loader />;
+  return <SceletonTracksPage />;
 };
 
 export default Loading;

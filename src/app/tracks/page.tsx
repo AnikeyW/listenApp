@@ -6,6 +6,7 @@ import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import { useQuery } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
 import Loader from '@/components/UI/Loader/Loader';
+import SceletonTracksPage from '@/components/track/sceletonTracksPage/SceletonTracksPage';
 
 const Tracks = () => {
   const { data, isLoading, isError, error, isSuccess } = useQuery({
@@ -16,9 +17,9 @@ const Tracks = () => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.trackHeader}>Мои треки</div>
+      {isSuccess && <div className={styles.trackHeader}>Мои треки</div>}
       {isError && <ErrorMessage message={error.message} />}
-      {isLoading && <Loader />}
+      {isLoading && <SceletonTracksPage />}
       <div className={styles.trackListWrapper}>
         {isSuccess && data.length > 0 && <TrackList tracks={data} />}
       </div>
