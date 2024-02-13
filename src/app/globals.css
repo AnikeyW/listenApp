@@ -81,6 +81,9 @@ table {
 }
 
 @media screen and (min-width: 640px){
+    :root{
+        --player-height: 60px;
+    }
     html{
         background: var(--color-background-soft);
     }

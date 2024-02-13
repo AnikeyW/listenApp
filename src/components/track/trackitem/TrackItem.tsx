@@ -10,6 +10,8 @@ import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import TrackImage from '@/components/track/trackImage/TrackImage';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio, initAudio } from '@/components/track/tracklist/TrackList';
+import { useQuery } from '@tanstack/react-query';
+import trackService from '@/services/Track.service';
 
 interface ITrackItemProps {
   track: ITrack;
@@ -21,6 +23,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const pause = usePlayerStore((state) => state.pause);
   const playTrack = usePlayerStore((state) => state.playTrack);
+  const nextTrack = usePlayerStore((state) => state.nextTrack);
   const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
   const setIndexOfActiveTrack = usePlayerStore(
     (state) => state.setIndexOfActiveTrack,
@@ -31,6 +34,12 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
     (state) => state.setIsShowPlayerFullScreen,
   );
   const timeRef = useRef(Date.now());
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['tracks'],
+    queryFn: () => trackService.getAll(),
+    staleTime: 120 * 1000,
+  });
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (activeTrack && activeTrack?._id === track._id) {
@@ -72,6 +81,11 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
         if (Date.now() - timeRef.current > 1000) {
           setCurrentTime(Math.ceil(audio.currentTime));
           timeRef.current = Date.now();
+        }
+      };
+      audio.onended = () => {
+        if (isSuccess) {
+          nextTrack(data);
         }
       };
     }

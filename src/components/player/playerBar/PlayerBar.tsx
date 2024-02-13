@@ -9,6 +9,8 @@ import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/track/tracklist/TrackList';
 
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
+import Progress from '@/components/player/progress/Progress';
+import VolumeRange from '@/components/volumeRange/VolumeRange';
 
 const playerVariants: Variants = {
   open: {
@@ -65,6 +67,12 @@ const PlayerBar = () => {
             <div className={styles.player__trackInfo_artist}>
               {activeTrack.artist}
             </div>
+          </div>
+          <div className={styles.player__progress}>
+            <Progress />
+          </div>
+          <div className={styles.player__volume}>
+            <VolumeRange />
           </div>
           <div className={styles.player__closeBtn}>
             <HiMiniXMark size={30} onClick={turnOffPlayer} />
