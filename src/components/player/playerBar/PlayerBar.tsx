@@ -11,6 +11,8 @@ import { audio } from '@/components/track/tracklist/TrackList';
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
 import Progress from '@/components/player/progress/Progress';
 import VolumeRange from '@/components/volumeRange/VolumeRange';
+import TrackInfo from '@/components/track/trackInfo/TrackInfo';
+import Image from 'next/image';
 
 const playerVariants: Variants = {
   open: {
@@ -59,13 +61,29 @@ const PlayerBar = () => {
           onClick={showPlayerFullScreen}
           key={1}
         >
-          <PlayerButtons player={'playerBar'} />
+          <div className={styles.player__controls}>
+            <PlayerButtons player={'playerBar'} />
+          </div>
           <div className={styles.player__trackInfo}>
-            <div className={styles.player__trackInfo_name}>
-              {activeTrack.name}
-            </div>
-            <div className={styles.player__trackInfo_artist}>
-              {activeTrack.artist}
+            <div className={styles.track}>
+              <div className={styles.track__img}>
+                <Image
+                  src={process.env.NEXT_PUBLIC_BASE_URL + activeTrack.picture}
+                  alt={activeTrack.name}
+                  width={50}
+                  height={50}
+                  priority={true}
+                />
+              </div>
+
+              <div className={styles.track__info}>
+                <div className={styles.track__info__trackName}>
+                  {activeTrack.name}
+                </div>
+                <div className={styles.track__info__artistName}>
+                  {activeTrack.artist}
+                </div>
+              </div>
             </div>
           </div>
           <div className={styles.player__progress}>

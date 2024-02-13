@@ -43,7 +43,10 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (activeTrack && activeTrack?._id === track._id) {
-      setIsShowPlayerFullScreen(true);
+      const isMobileScreen = window.matchMedia('(max-width: 640px)').matches;
+      if (isMobileScreen) {
+        setIsShowPlayerFullScreen(true);
+      }
     } else {
       playHandler(e);
     }
@@ -111,7 +114,11 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
         playHandler={playHandler}
         isActiveTrack={activeTrack?._id === track._id}
       />
-      <TrackInfo track={track} />
+
+      <div className={styles.track__info}>
+        <TrackInfo track={track} withPhoto={false} />
+      </div>
+
       <TrackDuration
         track={track}
         pauseLocal={pauseLocal}

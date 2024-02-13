@@ -3,6 +3,9 @@
   align-items: center;
   gap: 2rem;
   color: var(--color-text);
+  @media screen and (min-width: 640px){
+    gap: 1rem;
+  }
   &__btnSmall {
     display: none;
     @media screen and (min-width: 640px){

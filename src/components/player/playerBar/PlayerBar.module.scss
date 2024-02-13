@@ -11,28 +11,22 @@
   @media screen and (min-width: 640px){
     bottom: 0;
   }
-  &__playPausebtn{
-    cursor: pointer;
-    color: var(--color-text);
-    padding: 5px;
-    border-radius: 50%;
+  &__controls{
+    @media screen and (min-width: 640px){
+      margin-right: 1rem;
+    }
+
   }
   &__trackInfo{
     flex: auto;
     color: var(--color-text);
+    display: flex;
+    justify-content: center;
     @media screen and (min-width: 640px){
-      min-width: 200px;
+      min-width: 190px;
+      justify-content: flex-start;
     }
-    &_name{
-      display: flex;
-      justify-content: center;
-    }
-    &_artist{
-      display: flex;
-      justify-content: center;
-      font-size: 12px;
-      color: var(--color-text-soft);
-    }
+
   }
   &__progress{
     display: none;
@@ -45,7 +39,7 @@
     display: none;
     @media screen and (min-width: 640px){
       display: block;
-      min-width: 200px;
+      min-width: 100px;
     }
   }
   &__closeBtn{
@@ -53,5 +47,39 @@
     color: var(--color-text);
     padding: 5px;
     border-radius: 50%;
+  }
+}
+
+.track {
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  gap: 0.5rem;
+  &__img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    display: none;
+    @media screen and (min-width: 640px){
+      margin-right: 1rem;
+      display: block;
+    }
+    img {
+      border-radius: 5px;
+      object-fit: cover;
+    }
+  }
+  &__info{
+    flex: auto;
+    &__trackName{
+      font-weight: bold;
+    }
+    &__artistName{
+      font-size: 13px;
+      color: var(--color-text-soft);
+    }
   }
 }

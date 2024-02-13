@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
 import trackService from '@/services/Track.service';
+import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 
 interface Props {
   track: ITrack;
@@ -68,21 +69,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   return (
     <div className={styles.root}>
       <div className={styles.root__top}>
-        <div className={styles.track}>
-          <div className={styles.track__img}>
-            <Image
-              src={process.env.NEXT_PUBLIC_BASE_URL + track.picture}
-              alt={track.name}
-              width={50}
-              height={50}
-              priority={true}
-            />
-          </div>
-          <div className={styles.track__info}>
-            <div className={styles.track__info__trackName}>{track.name}</div>
-            <div className={styles.track__info__artistName}>{track.artist}</div>
-          </div>
-        </div>
+        <TrackInfo track={track} withPhoto={true} />
       </div>
       <AnimatePresence>
         {isShowAlbumList && isSuccess && (
