@@ -5,7 +5,6 @@ import TrackList from '@/components/track/tracklist/TrackList';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import { useQuery } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
-import Loader from '@/components/UI/Loader/Loader';
 import SceletonTracksPage from '@/components/track/sceletonTracksPage/SceletonTracksPage';
 
 const Tracks = () => {

@@ -1,0 +1,42 @@
+.track {
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  gap: 0.5rem;
+  &__img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    display: none;
+    @media screen and (min-width: 640px){
+      display: block;
+    }
+    img {
+      border-radius: 5px;
+      object-fit: cover;
+    }
+  }
+  &__info{
+    flex: auto;
+    &__trackName{
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      @media screen and (min-width: 640px){
+        display: block;
+      }
+    }
+    &__artistName{
+      font-size: 13px;
+      color: var(--color-text-soft);
+      display: flex;
+      justify-content: center;
+      @media screen and (min-width: 640px){
+        display: block;
+      }
+    }
+  }
+}
