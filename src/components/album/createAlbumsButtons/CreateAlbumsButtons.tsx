@@ -33,7 +33,7 @@ const CreateAlbumsButtons: FC<Props> = ({
       name: name.value,
       author: author.value,
       picture: picture.img,
-      owner: user?.email,
+      owner: user?.email!,
     };
     mutate(data);
     await router.replace('/');
