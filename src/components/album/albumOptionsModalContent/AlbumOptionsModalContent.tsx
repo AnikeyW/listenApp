@@ -6,12 +6,14 @@ import styles from './AlbumOptionsModalContent.module.scss';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/stores/authStore';
 
 interface Props {
   album: IAlbum;
 }
 
 const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
+  const user = useAuthStore((state) => state.user);
   const queryCleint = useQueryClient();
   const router = useRouter();
   const deleteAlbumMutation = useMutation({
@@ -47,11 +49,12 @@ const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
           </div>
         </div>
       </div>
-
-      <div className={styles.root__options} onClick={deleteAlbumHandler}>
-        <MdDeleteForever size={34} />
-        <span>Удалить альбом</span>
-      </div>
+      {user?.email && user.email === album.owner && (
+        <div className={styles.root__options} onClick={deleteAlbumHandler}>
+          <MdDeleteForever size={34} />
+          <span>Удалить альбом</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Button from '@/components/UI/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAlbumStore } from '@/stores/albumStore';
 import { CreateAlbumDtoType } from '@/types/album';
+import { useAuthStore } from '@/stores/authStore';
 
 interface Props {
   currentStep: number;
@@ -18,6 +19,7 @@ const CreateAlbumsButtons: FC<Props> = ({
   setCurrentStep,
   mutate,
 }) => {
+  const user = useAuthStore((state) => state.user);
   const validateStepOne = useAlbumStore((state) => state.validateStepOne);
   const validateStepTwo = useAlbumStore((state) => state.validateStepTwo);
   const name = useAlbumStore((state) => state.name);
@@ -31,6 +33,7 @@ const CreateAlbumsButtons: FC<Props> = ({
       name: name.value,
       author: author.value,
       picture: picture.img,
+      owner: user?.email,
     };
     mutate(data);
     await router.replace('/');

@@ -88,3 +88,33 @@ table {
         background: var(--color-background-soft);
     }
 }
+
+*::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+}
+*::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:hover {
+    background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-track:active {
+    background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #9C9C9C;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #868686;
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: #707070;
+}

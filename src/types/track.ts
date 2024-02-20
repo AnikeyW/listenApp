@@ -4,6 +4,7 @@ export interface ITrack {
   artist: string;
   text: string;
   listens: number;
+  owner: string;
   picture: string;
   audio: string;
   duration: number;

@@ -1,0 +1,21 @@
+.root{
+  color: var(--color-text);
+  background-color: var(--color-background);
+  width: 100%;
+  border-radius: 0.5rem;
+  font-size: 14px;
+  border: 1px solid var(--color-background-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  @media screen and (min-width: 640px){
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  &__icon{
+    color: var(--color-text);
+  }
+}

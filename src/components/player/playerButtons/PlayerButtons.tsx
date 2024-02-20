@@ -72,7 +72,7 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({
       >
         <RiRewindFill onClick={previousTrackHandler} />
       </div>
-      <div onClick={play}>
+      <div onClick={play} className={styles.btn}>
         {pause ? (
           <RiPlayFill size={player === 'playerFullScreen' ? 60 : 30} />
         ) : (

@@ -4,6 +4,7 @@ import Button from '@/components/UI/Button/Button';
 import { useRouter } from 'next/navigation';
 import { CreateTrackDtoType } from '@/types/track';
 import { useTrackStore } from '@/stores/trackStore';
+import { useAuthStore } from '@/stores/authStore';
 
 interface Props {
   currentStep: number;
@@ -19,6 +20,7 @@ const CreateTrackButtons: FC<Props> = ({
   mutate,
 }) => {
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
   const name = useTrackStore((state) => state.name);
   const artist = useTrackStore((state) => state.artist);
   const text = useTrackStore((state) => state.text);
@@ -37,6 +39,7 @@ const CreateTrackButtons: FC<Props> = ({
       albumId: albumId,
       picture: picture.img,
       audio: audioFile.value,
+      owner: user?.email!,
     };
     await mutate(data);
     await router.push('/tracks');

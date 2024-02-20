@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
 import trackService from '@/services/Track.service';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
+import { useAuthStore } from '@/stores/authStore';
 
 interface Props {
   track: ITrack;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
+  const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [isShowAlbumList, setIsShowAlbumList] = useState(false);
   const router = useRouter();
@@ -128,23 +130,29 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
             )}
           </>
         ) : (
-          <div
-            className={styles.root__optionList_item}
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsShowAlbumList((prevState) => !prevState);
-            }}
-          >
-            <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
-            <span>
-              Добавить в альбом {addTrackToAlbumMutation.isPending && '...'}
-            </span>
+          <>
+            {user?.email && user.email === track.owner ? (
+              <div
+                className={styles.root__optionList_item}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsShowAlbumList((prevState) => !prevState);
+                }}
+              >
+                <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
+                <span>
+                  Добавить в альбом {addTrackToAlbumMutation.isPending && '...'}
+                </span>
+              </div>
+            ) : null}
+          </>
+        )}
+        {user?.email && user.email === track.owner && (
+          <div className={styles.root__optionList_item} onClick={deleteHandler}>
+            <MdDeleteForever size={34} color={'crimson'} />
+            <span>Удалить трек</span>
           </div>
         )}
-        <div className={styles.root__optionList_item} onClick={deleteHandler}>
-          <MdDeleteForever size={34} color={'crimson'} />
-          <span>Удалить трек</span>
-        </div>
       </div>
     </div>
   );

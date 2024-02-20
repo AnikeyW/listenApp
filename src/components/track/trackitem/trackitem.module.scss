@@ -7,6 +7,12 @@
   background: var(--color-background);
   color: var(--color-text);
   gap: 0.5rem;
+  @media screen and (min-width: 640px){
+    &:hover{
+      cursor: pointer;
+      background: var(--color-background-soft);
+    }
+  }
   &__info{
     flex: auto;
   }
