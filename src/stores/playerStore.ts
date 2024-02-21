@@ -77,9 +77,6 @@ export const usePlayerStore = create<IPlayerState>()(
           set({ indexOfActiveTrack: indOfActTrack + 1 });
         }
 
-        // audio.src = process.env.NEXT_PUBLIC_BASE_URL! + nextTrack.audio;
-        //
-        // set({ activeTrack: nextTrack, currentTime: 0 });
         getState().initTrack(
           nextTrack,
           getState().indexOfActiveTrack!,
