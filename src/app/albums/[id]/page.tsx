@@ -5,7 +5,7 @@ import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
 import TrackList from '@/components/track/tracklist/TrackList';
 import { useQuery } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
-import Loader from '@/components/UI/Loader/Loader';
+import SceletonAlbum from '@/components/album/sceletonAlbum/SceletonAlbum';
 
 const Page = ({ params }: { params: { id: string } }) => {
   const albumQuery = useQuery({
@@ -16,7 +16,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      {albumQuery.isPending && <Loader />}
+      {albumQuery.isPending && <SceletonAlbum />}
       {albumQuery.isSuccess && (
         <div className={styles.root}>
           <div className={styles.root__info}>

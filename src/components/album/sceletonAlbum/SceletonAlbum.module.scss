@@ -1,0 +1,115 @@
+.root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &__img{
+    height: 300px;
+    background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+    background-size: calc(160px + 160px);
+    animation: refresh 1.2s infinite linear;
+  }
+  &__title{
+    height: 30px;
+    margin-left: calc(0.5rem + 30px);
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__name{
+    height: 16px;
+    flex: auto;
+    display: flex;
+    justify-content: center;
+    span{
+      width: 150px;
+      border-radius: 0.5rem;
+      background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+      background-size: calc(160px + 160px);
+      animation: refresh 1.2s infinite linear;
+    }
+  }
+  &__options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    span{
+      width: 24px;
+      height: 6px;
+      border-radius: 0.5rem;
+      background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+      background-size: calc(160px + 160px);
+      animation: refresh 1.2s infinite linear;
+    }
+  }
+  &__list{
+    height: calc(100% - var(--trackslist-title-height) - 300px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: hidden;
+    padding: 0.5rem 0.5rem;
+  }
+  &__item{
+    display: flex;
+    gap: 0.5rem;
+    border-radius: 0.3rem;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    padding-right: 0.25rem;
+  }
+  &__image{
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: lightblue;
+    background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+    background-size: calc(160px + 160px);
+    animation: refresh 1.2s infinite ease-out;
+  }
+  &__info{
+    flex: auto;
+  }
+  &__trackName{
+    height: 16px;
+    width: 80px;
+    background-color: lightblue;
+    margin-bottom: 1px;
+    border-radius: 1px;
+    background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+    background-size: calc(160px + 160px);
+    animation: refresh 1.2s infinite ease-out;
+  }
+  &__author{
+    height: 13px;
+    width: 110px;
+    background-color: lightblue;
+    border-radius: 1px;
+    background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+    background-size: calc(160px + 160px);
+    animation: refresh 1.2s infinite ease-out;
+  }
+  &__duration{
+    height: 16px;
+    width: 30px;
+    background-color: lightblue;
+    border-radius: 1px;
+    margin-right: 0.6rem;
+    background-image: linear-gradient(90deg, #e2e2e2 0px, #efefef 30px, #e2e2e2 60px);
+    background-size: calc(160px + 160px);
+    animation: refresh 1.2s infinite ease-out;
+  }
+}
+
+@keyframes refresh {
+  0% {
+    background-position: calc(-160px);
+  }
+  100% {
+    background-position: 160px;
+  }
+}
