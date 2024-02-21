@@ -34,10 +34,8 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({
     e.stopPropagation();
     if (pause) {
       playTrack();
-      audio.play();
     } else {
       pauseTrack();
-      audio.pause();
     }
   };
 

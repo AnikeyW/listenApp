@@ -1,5 +1,5 @@
 'use client';
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 
 import styles from './trackitem.module.scss';
 
@@ -21,19 +21,11 @@ interface ITrackItemProps {
 const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
   const [pauseLocal, setPauseLocal] = useState(true);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
-  const pause = usePlayerStore((state) => state.pause);
+  const initTrack = usePlayerStore((state) => state.initTrack);
   const playTrack = usePlayerStore((state) => state.playTrack);
-  const nextTrack = usePlayerStore((state) => state.nextTrack);
-  const setActiveTrack = usePlayerStore((state) => state.setActiveTrack);
-  const setIndexOfActiveTrack = usePlayerStore(
-    (state) => state.setIndexOfActiveTrack,
-  );
-  const setDuration = usePlayerStore((state) => state.setDuration);
-  const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
   );
-  const timeRef = useRef(Date.now());
 
   const { data, isSuccess } = useQuery({
     queryKey: ['tracks'],
@@ -54,56 +46,18 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
 
   const playHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    if (activeTrack?._id === track._id) {
-      audio.play();
-      playTrack();
-      setPauseLocal(false);
-      return;
+    if (activeTrack?._id !== track._id) {
+      initTrack(track, indexOfTrack, data, isSuccess);
     }
-    setActiveTrack(track);
-    setIndexOfActiveTrack(indexOfTrack);
-    setInitAudio();
     playTrack();
     setPauseLocal(false);
-  };
-
-  const setInitAudio = () => {
-    if (activeTrack && !pauseLocal) {
-      if (!localStorage.getItem('volume')) {
-        localStorage.setItem('volume', '50');
-      }
-      audio.src = process.env.NEXT_PUBLIC_BASE_URL + activeTrack.audio;
-      audio.volume = Number(localStorage.getItem('volume')) / 100;
-      audio.onloadedmetadata = () => {
-        setDuration(Math.ceil(audio.duration));
-        if (!pause) {
-          audio.play();
-        }
-      };
-      audio.ontimeupdate = () => {
-        if (Date.now() - timeRef.current > 1000) {
-          setCurrentTime(Math.ceil(audio.currentTime));
-          timeRef.current = Date.now();
-        }
-      };
-      audio.onended = () => {
-        if (isSuccess) {
-          nextTrack(data);
-        }
-      };
-    }
   };
 
   useEffect(() => {
     if (!audio) {
       initAudio();
-    } else {
-      if (activeTrack) {
-        setPauseLocal(false);
-      }
-      setInitAudio();
     }
-  }, [activeTrack]);
+  }, []);
 
   return (
     <div className={styles.track} onClick={clickItemHandler}>

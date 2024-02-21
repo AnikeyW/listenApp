@@ -21,6 +21,12 @@ interface IPlayerState {
   setIsShowPlayerFullScreen: (value: boolean) => void;
   nextTrack: (playList: ITrack[]) => void;
   previousTrack: (playList: ITrack[]) => void;
+  initTrack: (
+    track: ITrack,
+    indexOfTrack: number,
+    playlist: ITrack[] | undefined,
+    isSuccessPlaylist: boolean,
+  ) => void;
 }
 
 export const usePlayerStore = create<IPlayerState>()(
@@ -32,8 +38,20 @@ export const usePlayerStore = create<IPlayerState>()(
     pause: true,
     volume: 50,
     isShowPlayerFullScreen: false,
-    pauseTrack: () => set({ pause: true }),
-    playTrack: () => set({ pause: false }),
+    pauseTrack: () => {
+      const activeTrack = getState().activeTrack;
+      if (activeTrack) {
+        audio.pause();
+        set({ pause: true });
+      }
+    },
+    playTrack: () => {
+      const activeTrack = getState().activeTrack;
+      if (activeTrack) {
+        audio.play();
+        set({ pause: false });
+      }
+    },
     setCurrentTime: (value) => set({ currentTime: value }),
     setVolume: (value) => set({ volume: value }),
     setDuration: (value) => set({ duration: value }),
@@ -82,6 +100,32 @@ export const usePlayerStore = create<IPlayerState>()(
 
         set({ activeTrack: previousTrack, currentTime: 0 });
       }
+    },
+    initTrack: (track, indexOfTrack, playlist, isSuccessPlaylist) => {
+      set({
+        activeTrack: track,
+        indexOfActiveTrack: indexOfTrack,
+        pause: false,
+      });
+      if (!localStorage.getItem('volume')) {
+        localStorage.setItem('volume', '50');
+      }
+      audio.src = process.env.NEXT_PUBLIC_BASE_URL + track.audio;
+      audio.volume = Number(localStorage.getItem('volume')) / 100;
+      audio.onloadedmetadata = () => {
+        set({ duration: Math.ceil(audio.duration) });
+        if (!getState().pause) {
+          audio.play();
+        }
+      };
+      audio.ontimeupdate = () => {
+        set({ currentTime: Math.ceil(audio.currentTime) });
+      };
+      audio.onended = () => {
+        if (isSuccessPlaylist) {
+          getState().nextTrack(playlist!);
+        }
+      };
     },
   })),
 );

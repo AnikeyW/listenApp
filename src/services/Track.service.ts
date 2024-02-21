@@ -19,6 +19,12 @@ class TrackService {
       .then((res) => res.data);
   }
 
+  async listen(trackId: string): Promise<void> {
+    return axios.post(
+      process.env.NEXT_PUBLIC_BASE_URL + 'tracks/listen/' + trackId,
+    );
+  }
+
   async create(data: CreateTrackDtoType): Promise<ITrack> {
     const formData = new FormData();
 
