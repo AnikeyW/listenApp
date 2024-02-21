@@ -2,6 +2,8 @@ import { ITrack } from '@/types/track';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { audio } from '@/components/track/tracklist/TrackList';
+import { TIME_TO_INCREMENT_TRACK_LISTENS } from '@/constants';
+import trackService from '@/services/Track.service';
 
 interface IPlayerState {
   activeTrack: ITrack | null;
@@ -75,9 +77,15 @@ export const usePlayerStore = create<IPlayerState>()(
           set({ indexOfActiveTrack: indOfActTrack + 1 });
         }
 
-        audio.src = process.env.NEXT_PUBLIC_BASE_URL! + nextTrack.audio;
-
-        set({ activeTrack: nextTrack, currentTime: 0 });
+        // audio.src = process.env.NEXT_PUBLIC_BASE_URL! + nextTrack.audio;
+        //
+        // set({ activeTrack: nextTrack, currentTime: 0 });
+        getState().initTrack(
+          nextTrack,
+          getState().indexOfActiveTrack!,
+          playList,
+          true,
+        );
       }
     },
     previousTrack: (playList) => {
@@ -96,9 +104,12 @@ export const usePlayerStore = create<IPlayerState>()(
           set({ indexOfActiveTrack: indOfActTrack - 1 });
         }
 
-        audio.src = process.env.NEXT_PUBLIC_BASE_URL! + previousTrack.audio;
-
-        set({ activeTrack: previousTrack, currentTime: 0 });
+        getState().initTrack(
+          previousTrack,
+          getState().indexOfActiveTrack!,
+          playList,
+          true,
+        );
       }
     },
     initTrack: (track, indexOfTrack, playlist, isSuccessPlaylist) => {
@@ -106,12 +117,14 @@ export const usePlayerStore = create<IPlayerState>()(
         activeTrack: track,
         indexOfActiveTrack: indexOfTrack,
         pause: false,
+        currentTime: 0,
       });
       if (!localStorage.getItem('volume')) {
         localStorage.setItem('volume', '50');
       }
       audio.src = process.env.NEXT_PUBLIC_BASE_URL + track.audio;
       audio.volume = Number(localStorage.getItem('volume')) / 100;
+      audio.isListened = false;
       audio.onloadedmetadata = () => {
         set({ duration: Math.ceil(audio.duration) });
         if (!getState().pause) {
@@ -120,6 +133,13 @@ export const usePlayerStore = create<IPlayerState>()(
       };
       audio.ontimeupdate = () => {
         set({ currentTime: Math.ceil(audio.currentTime) });
+        if (
+          Math.ceil(audio.currentTime) >= TIME_TO_INCREMENT_TRACK_LISTENS &&
+          !audio.isListened
+        ) {
+          trackService.listen(track._id);
+          audio.isListened = true;
+        }
       };
       audio.onended = () => {
         if (isSuccessPlaylist) {

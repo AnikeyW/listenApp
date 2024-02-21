@@ -4,7 +4,6 @@ import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
 import { PiPauseFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
-import { audio } from '@/components/track/tracklist/TrackList';
 import { useQuery } from '@tanstack/react-query';
 import trackService from '@/services/Track.service';
 import clsx from 'clsx';
