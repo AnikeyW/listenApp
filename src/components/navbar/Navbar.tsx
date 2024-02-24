@@ -5,6 +5,7 @@ import {
   HiOutlineViewList,
   HiPlusCircle,
   HiAdjustments,
+  HiHeart,
 } from 'react-icons/hi';
 
 import styles from './navbar.module.scss';
@@ -15,6 +16,11 @@ const navLinks = [
     path: '/',
     pathTitle: 'Главная',
     icon: <HiHome size={24} />,
+  },
+  {
+    path: '/favorites',
+    pathTitle: 'Избранное',
+    icon: <HiHeart size={24} />,
   },
   {
     path: '/create',

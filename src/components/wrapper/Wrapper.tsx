@@ -88,7 +88,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
             </motion.div>
 
             <div id={'overlays'}></div>
-            <ReactQueryDevtools />
+            {/*<ReactQueryDevtools />*/}
           </SessionProvider>
         </QueryClientProvider>
       </div>

@@ -1,20 +1,20 @@
 import React from 'react';
 import styles from './GoogleButton.module.scss';
-import { signIn } from 'next-auth/react';
-import Button from '@/components/UI/Button/Button';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 const GoogleButton = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   return (
     <button
       onClick={() => {
-        signIn('google', {
-          callbackUrl,
-        });
+        // signIn('google', {
+        //   callbackUrl,
+        // });
+        router.replace(process.env.NEXT_PUBLIC_BASE_URL! + 'auth/google');
       }}
       className={styles.root}
     >
