@@ -7,17 +7,20 @@ import Button from '@/components/UI/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import authService from '@/services/Auth.service';
+import { useLogout } from '@/hooks/useLogout';
+import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 
 const Page = () => {
   const router = useRouter();
   const session = useSession();
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
+  const logout = useLogout();
 
   return (
     <div className={styles.root}>
       {session.data || isAuth ? (
-        <div>
+        <>
           {session.data?.user?.image ||
             (user?.image && (
               <img
@@ -33,13 +36,14 @@ const Page = () => {
             <Button
               onClick={() => {
                 // signOut({ callbackUrl: '/' });
-                authService.logout();
+                logout.mutate();
               }}
             >
               Выйти
             </Button>
           </div>
-        </div>
+          {logout.isError && <ErrorMessage message={logout.error.message} />}
+        </>
       ) : (
         <Button onClick={() => router.replace('/signin')}>Войти</Button>
       )}

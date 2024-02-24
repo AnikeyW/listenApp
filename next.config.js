@@ -13,8 +13,8 @@ module.exports = withPWA({
     remotePatterns: [
       process.env.NODE_ENV === 'development'
         ? {
-            protocol: 'http',
-            hostname: '192.168.0.13',
+            protocol: 'https',
+            hostname: 'localhost',
             port: '5000',
           }
         : {

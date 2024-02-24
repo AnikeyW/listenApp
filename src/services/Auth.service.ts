@@ -28,6 +28,7 @@ class AuthService {
     const response = await $api.get(
       process.env.NEXT_PUBLIC_BASE_URL + 'auth/logout',
     );
+    console.log(response.data);
     return response.data;
   }
 

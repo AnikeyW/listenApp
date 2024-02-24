@@ -5,7 +5,7 @@ import { IUser } from '@/types/user';
 interface IAuthState {
   isAuth: boolean;
   user: IUser | null;
-  setUser: (user: IUser) => void;
+  setUser: (user: IUser | null) => void;
   setIsAuth: (value: boolean) => void;
 }
 
