@@ -10,15 +10,15 @@ interface IMainSectionProps {
 }
 
 const MainSection: React.FC<IMainSectionProps> = ({ children }) => {
-  const session = useSession();
+  // const session = useSession();
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const setUser = useAuthStore((state) => state.setUser);
 
-  useEffect(() => {
-    if (session.data?.user) {
-      setUser(session.data.user);
-    }
-  });
+  // useEffect(() => {
+  //   if (session.data?.user) {
+  //     setUser(session.data.user);
+  //   }
+  // });
   return (
     <main
       className={`${styles.main} ${activeTrack ? styles.withActiveTrack : ''}`}
