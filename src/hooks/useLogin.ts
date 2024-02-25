@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import authService from '@/services/Auth.service';
 import { IAuthLoginResponse } from '@/types/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
@@ -13,10 +13,13 @@ interface ILogin {
 }
 
 export const useLogin = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const setIsAuth = useAuthStore((state) => state.setIsAuth);
   const setUser = useAuthStore((state) => state.setUser);
   const [customError, setCustomError] = useState({ message: '' });
+
+  const callbackUrl = searchParams.get('callbackUrl');
 
   const { error, ...rest } = useMutation({
     mutationKey: ['login'],
@@ -26,7 +29,7 @@ export const useLogin = () => {
       localStorage.setItem('accessToken', data.accessToken);
       setIsAuth(true);
       setUser(data.user);
-      router.push('/settings');
+      router.push(callbackUrl ? callbackUrl : '/settings');
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {

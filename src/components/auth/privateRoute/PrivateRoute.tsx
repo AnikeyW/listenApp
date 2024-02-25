@@ -5,16 +5,17 @@ import { useRouter } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
+  callbackUrl: string;
 }
 
-const PrivateRoute: FC<Props> = ({ children }) => {
+const PrivateRoute: FC<Props> = ({ children, callbackUrl }) => {
   const router = useRouter();
   const isAuth = useAuthStore((state) => state.isAuth);
 
   useEffect(() => {
     const redirect = () => {
       if (!isAuth && typeof window !== 'undefined') {
-        router.replace('signin');
+        router.replace(`signin?callbackUrl=${callbackUrl}`);
       }
     };
 

@@ -9,6 +9,7 @@ import { useAuthStore } from '@/stores/authStore';
 import authService from '@/services/Auth.service';
 import { useLogout } from '@/hooks/useLogout';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
+import $api from '@/http';
 
 const Page = () => {
   const router = useRouter();
@@ -16,6 +17,17 @@ const Page = () => {
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const logout = useLogout();
+
+  const getProfile = () => {
+    $api
+      .get('https://localhost:5000/auth/profile')
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={styles.root}>
@@ -48,6 +60,7 @@ const Page = () => {
         <Button onClick={() => router.replace('/signin')}>Войти</Button>
       )}
       <ThemeToggle />
+      <Button onClick={() => getProfile()}>Тест</Button>
     </div>
   );
 };
