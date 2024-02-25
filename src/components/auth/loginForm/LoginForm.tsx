@@ -47,16 +47,23 @@ const LoginForm = () => {
       noValidate={true}
     >
       <Input placeholder={'email'} type={'email'} {...register('email')} />
-      {errors.email && <ErrorMessage message={errors.email.message!} />}
+      <div className={styles.root__error}>
+        {errors.email && <ErrorMessage message={errors.email.message!} />}
+      </div>
+
       <Input
         placeholder={'password'}
         type={'password'}
         {...register('password')}
       />
-      {errors.password && <ErrorMessage message={errors.password.message!} />}
+      <div className={styles.root__error}>
+        {errors.password && <ErrorMessage message={errors.password.message!} />}
+      </div>
+
       {loginMutation.isError && (
         <ErrorMessage message={loginMutation.error.message} />
       )}
+
       <Button type={'submit'} disabled={loginMutation.isPending}>
         Войти
       </Button>

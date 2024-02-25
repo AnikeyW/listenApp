@@ -16,6 +16,7 @@
     --color-background-player: #252525;
     --btn-color-background: #5cdb95;
     --color-active: #2461da;
+    --color-link: #2a8cac;
 }
 [data-theme='light'] {
     --color-background: #e6eaea;
@@ -26,6 +27,7 @@
     --color-background-player: #e6eaea;
     --btn-color-background: #2779a7;
     --color-active: #2461da;
+    --color-link: #2a8cac;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
