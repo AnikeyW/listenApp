@@ -59,18 +59,28 @@ const RegistrationForm = () => {
         type={'text'}
         {...register('name')}
       />
-      {errors.name && <ErrorMessage message={errors.name.message!} />}
+      <div className={styles.root__error}>
+        {errors.name && <ErrorMessage message={errors.name.message!} />}
+      </div>
+
       <Input placeholder={'Email'} type={'email'} {...register('email')} />
-      {errors.email && <ErrorMessage message={errors.email.message!} />}
+      <div className={styles.root__error}>
+        {errors.email && <ErrorMessage message={errors.email.message!} />}
+      </div>
+
       <Input
         placeholder={'Пароль'}
         type={'password'}
         {...register('password')}
       />
-      {errors.password && <ErrorMessage message={errors.password.message!} />}
+      <div className={styles.root__error}>
+        {errors.password && <ErrorMessage message={errors.password.message!} />}
+      </div>
+
       {registration.isError && (
         <ErrorMessage message={registration.error.message} />
       )}
+
       <Button type={'submit'}>Зарегистрироваться</Button>
     </form>
   );
