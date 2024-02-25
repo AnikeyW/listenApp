@@ -1,7 +1,9 @@
 .root{
   display: flex;
   flex-direction: column;
+  max-width: 207px;
   &__error{
-    height: 20px;
+    min-height: 20px;
+    word-wrap: break-word;
   }
 }

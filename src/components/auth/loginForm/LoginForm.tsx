@@ -32,7 +32,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ mode: 'onChange', resolver: yupResolver(schema) });
+  } = useForm<Inputs>({ mode: 'all', resolver: yupResolver(schema) });
 
   const loginMutation = useLogin();
 
@@ -60,13 +60,12 @@ const LoginForm = () => {
         {errors.password && <ErrorMessage message={errors.password.message!} />}
       </div>
 
-      {loginMutation.isError && (
-        <ErrorMessage message={loginMutation.error.message} />
-      )}
-
       <Button type={'submit'} disabled={loginMutation.isPending}>
         Войти
       </Button>
+      {loginMutation.isError && (
+        <ErrorMessage message={loginMutation.error.message} />
+      )}
     </form>
   );
 };

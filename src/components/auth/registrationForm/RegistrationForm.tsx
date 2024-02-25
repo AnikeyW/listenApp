@@ -77,11 +77,10 @@ const RegistrationForm = () => {
         {errors.password && <ErrorMessage message={errors.password.message!} />}
       </div>
 
+      <Button type={'submit'}>Зарегистрироваться</Button>
       {registration.isError && (
         <ErrorMessage message={registration.error.message} />
       )}
-
-      <Button type={'submit'}>Зарегистрироваться</Button>
     </form>
   );
 };
