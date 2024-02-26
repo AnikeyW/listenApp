@@ -5,12 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
 import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
+import { useAddTrackToAlbum } from '@/hooks/album/useAddTrackToAlbum';
 
 interface Props {
   track: ITrack;
@@ -19,7 +18,6 @@ interface Props {
 
 const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   const user = useAuthStore((state) => state.user);
-  const queryClient = useQueryClient();
   const [isShowAlbumList, setIsShowAlbumList] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -28,18 +26,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
 
   const { data, isSuccess } = useGetAllAlbums();
 
-  const addTrackToAlbumMutation = useMutation({
-    mutationKey: ['addTrackToAlbum'],
-    mutationFn: ({ albumId, trackId }: { albumId: string; trackId: string }) =>
-      albumService.addTrackToAlbum(albumId, trackId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tracks'] });
-      queryClient.invalidateQueries({ queryKey: ['albums'] });
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const addTrackToAlbumMutation = useAddTrackToAlbum();
 
   const deleteHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -120,7 +107,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
           </>
         ) : (
           <>
-            {user?.email && user.email === track.owner ? (
+            {user?._id && user._id === track.owner ? (
               <div
                 className={styles.root__optionList_item}
                 onClick={(e) => {
@@ -136,7 +123,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
             ) : null}
           </>
         )}
-        {user?.email && user.email === track.owner && (
+        {user?._id && user._id === track.owner && (
           <div className={styles.root__optionList_item} onClick={deleteHandler}>
             <MdDeleteForever size={34} color={'crimson'} />
             <span>Удалить трек</span>
