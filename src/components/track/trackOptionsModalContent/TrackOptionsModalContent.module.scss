@@ -4,6 +4,16 @@
   &__top{
     border-bottom: 1px solid var(--color-background-soft);
     padding: 1rem;
+    position: relative;
+  }
+  &__darkLayer{
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.32);
+    z-index: 1;
   }
   &__optionList{
     padding: 0 0.5rem;
@@ -15,7 +25,25 @@
       display: flex;
       align-items: center;
       border-bottom: 1px solid var(--color-background-soft);
+      position: relative;
     }
+    &_itemCancel{
+      border-top: 1px solid var(--color-background-soft);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--color-background-soft);
+      position: relative;
+    }
+  }
+  &__darkLayerOptionList{
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: -3rem;
+    background-color: rgba(0, 0, 0, 0.32);
+    z-index: 1;
   }
 }
 

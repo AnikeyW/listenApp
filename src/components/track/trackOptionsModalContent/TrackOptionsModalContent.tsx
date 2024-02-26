@@ -2,7 +2,12 @@ import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import styles from './TrackOptionsModalContent.module.scss';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
+import {
+  MdCancel,
+  MdDeleteForever,
+  MdMoveUp,
+  MdPlaylistAdd,
+} from 'react-icons/md';
 import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
@@ -47,6 +52,22 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   return (
     <div className={styles.root}>
       <div className={styles.root__top}>
+        <AnimatePresence>
+          {isShowAlbumList && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 100 }}
+              exit={{ opacity: 0 }}
+              drag={'y'}
+              dragConstraints={{
+                top: 0,
+                bottom: 0,
+              }}
+              dragElastic={0}
+              className={styles.root__darkLayer}
+            ></motion.div>
+          )}
+        </AnimatePresence>
         <TrackInfo track={track} withPhoto={true} />
       </div>
       <AnimatePresence>
@@ -108,18 +129,35 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
         ) : (
           <>
             {user?._id && user._id === track.owner ? (
-              <div
-                className={styles.root__optionList_item}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsShowAlbumList((prevState) => !prevState);
-                }}
-              >
-                <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
-                <span>
-                  Добавить в альбом {addTrackToAlbumMutation.isPending && '...'}
-                </span>
-              </div>
+              <>
+                {!isShowAlbumList ? (
+                  <div
+                    className={styles.root__optionList_item}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsShowAlbumList((prevState) => !prevState);
+                    }}
+                  >
+                    <MdPlaylistAdd size={34} color={'#44944A'} />{' '}
+                    <span>
+                      Добавить в альбом{' '}
+                      {addTrackToAlbumMutation.isPending && '...'}
+                    </span>
+                  </div>
+                ) : (
+                  <div
+                    className={styles.root__optionList_itemCancel}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsShowAlbumList((prevState) => !prevState);
+                    }}
+                  >
+                    {' '}
+                    <MdCancel size={34} color={'crimson'} />
+                    <span>Отменить</span>
+                  </div>
+                )}
+              </>
             ) : null}
           </>
         )}
@@ -127,6 +165,22 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
           <div className={styles.root__optionList_item} onClick={deleteHandler}>
             <MdDeleteForever size={34} color={'crimson'} />
             <span>Удалить трек</span>
+            <AnimatePresence>
+              {isShowAlbumList && (
+                <motion.div
+                  className={styles.root__darkLayerOptionList}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 100 }}
+                  exit={{ opacity: 0 }}
+                  drag={'y'}
+                  dragConstraints={{
+                    top: 0,
+                    bottom: 0,
+                  }}
+                  dragElastic={0}
+                ></motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </div>
