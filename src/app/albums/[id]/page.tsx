@@ -3,16 +3,11 @@ import React from 'react';
 import styles from './page.module.scss';
 import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
 import TrackList from '@/components/track/tracklist/TrackList';
-import { useQuery } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
 import SceletonAlbum from '@/components/album/sceletonAlbum/SceletonAlbum';
+import { useGetAlbumById } from '@/hooks/album/useGetAlbumById';
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const albumQuery = useQuery({
-    queryKey: ['albums', params.id],
-    queryFn: () => albumService.getOne(params.id),
-    staleTime: 60 * 1000,
-  });
+  const albumQuery = useGetAlbumById(params.id);
 
   return (
     <>
