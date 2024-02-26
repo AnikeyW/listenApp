@@ -41,7 +41,7 @@ const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
           </div>
         </div>
       </div>
-      {user?.email && user.email === album.owner && (
+      {user?._id && user._id === album.owner && (
         <div className={styles.root__options} onClick={deleteAlbumHandler}>
           <MdDeleteForever size={34} />
           <span>Удалить альбом</span>
