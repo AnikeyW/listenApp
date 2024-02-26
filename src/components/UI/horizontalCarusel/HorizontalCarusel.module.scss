@@ -1,0 +1,10 @@
+.root{
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}

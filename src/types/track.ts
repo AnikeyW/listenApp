@@ -9,6 +9,8 @@ export interface ITrack {
   audio: string;
   duration: number;
   albumId: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateTrackDtoType

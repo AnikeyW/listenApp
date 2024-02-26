@@ -28,8 +28,8 @@ const navLinks = [
     icon: <HiPlusCircle size={24} />,
   },
   {
-    path: '/tracks',
-    pathTitle: 'Треки',
+    path: '/publications',
+    pathTitle: 'Публикации',
     icon: <HiOutlineViewList size={24} />,
   },
   {
