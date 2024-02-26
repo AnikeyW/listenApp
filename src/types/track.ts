@@ -14,7 +14,10 @@ export interface ITrack {
 }
 
 export interface CreateTrackDtoType
-  extends Omit<ITrack, '_id' | 'listens' | 'duration'> {}
+  extends Omit<
+    ITrack,
+    '_id' | 'listens' | 'duration' | 'createdAt' | 'updatedAt'
+  > {}
 
 export interface IComment {
   id: number;
