@@ -5,13 +5,14 @@ import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 import MyLink from '@/components/UI/myLink/MyLink';
 import TrackItem from '@/components/track/trackitem/TrackItem';
 import PrivateRoute from '@/components/auth/privateRoute/PrivateRoute';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import HorizontalCarusel from '@/components/UI/horizontalCarusel/HorizontalCarusel';
 import HorizontalCaruselItem from '@/components/UI/horizontalCaruselItem/HorizontalCaruselItem';
 import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 import AlbumItem from '@/components/album/albumItem/AlbumItem';
 
 const Page = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const getAllTracks = useGetAllTracks();
   const getAllAlbums = useGetAllAlbums();
@@ -27,11 +28,11 @@ const Page = () => {
           </div>
 
           {getAllTracks.isSuccess && (
-            <HorizontalCarusel>
+            <HorizontalCarusel key={'tracks'}>
               {new Array(Math.ceil(getAllTracks.data.length / 3))
                 .fill(0)
                 .map((_, index) => (
-                  <HorizontalCaruselItem key={index}>
+                  <HorizontalCaruselItem key={index} width={'88%'}>
                     {getAllTracks.data
                       .slice(index * 3, index * 3 + 3)
                       .map((track, i) => (
@@ -54,10 +55,23 @@ const Page = () => {
           </div>
 
           {getAllAlbums.isSuccess && (
-            <HorizontalCarusel>
+            <HorizontalCarusel key={'albums'}>
               {getAllAlbums.data.map((album, index) => (
-                <HorizontalCaruselItem key={index}>
-                  <AlbumItem key={album._id} album={album} />
+                <HorizontalCaruselItem key={index} width={'144px'}>
+                  <div
+                    className={styles.album}
+                    key={album._id}
+                    onClick={() => router.push('albums/' + album._id)}
+                  >
+                    <div className={styles.album__image}>
+                      <img
+                        src={process.env.NEXT_PUBLIC_BASE_URL + album.picture}
+                        alt="wegwe"
+                      />
+                    </div>
+                    <div className={styles.root__author}>{album.author}</div>
+                    <div>{album.name}</div>
+                  </div>
                 </HorizontalCaruselItem>
               ))}
             </HorizontalCarusel>
