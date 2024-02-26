@@ -7,7 +7,9 @@ const Page = () => {
   return (
     <div className={styles.root}>
       <ProfileInfo />
-      <ThemeToggle />
+      <div className={styles.root__options}>
+        <ThemeToggle />
+      </div>
     </div>
   );
 };
