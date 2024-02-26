@@ -16,6 +16,7 @@ export const useCheckAuth = () => {
     mutationFn: () => authService.checkAuth(),
     onSuccess: (data: IAuthLoginResponse) => {
       localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       setIsAuth(true);
       setUser(data.user);
     },

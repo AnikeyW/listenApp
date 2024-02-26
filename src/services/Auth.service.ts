@@ -25,15 +25,21 @@ class AuthService {
   }
 
   async logout(): Promise<any> {
-    const response = await $api.get(
+    const response = await $api.post(
       process.env.NEXT_PUBLIC_BASE_URL + 'auth/logout',
+      {
+        refreshToken: localStorage.getItem('refreshToken'),
+      },
     );
     return response.data;
   }
 
   async checkAuth(): Promise<IAuthLoginResponse> {
-    const response = await axios.get(
+    const response = await axios.post(
       process.env.NEXT_PUBLIC_BASE_URL + 'auth/refresh',
+      {
+        refreshToken: localStorage.getItem('refreshToken'),
+      },
       {
         withCredentials: true,
       },

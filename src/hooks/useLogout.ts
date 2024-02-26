@@ -15,6 +15,7 @@ export const useLogout = () => {
     mutationFn: () => authService.logout(),
     onSuccess: () => {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setIsAuth(false);
       setUser(null);
     },

@@ -27,6 +27,7 @@ export const useLogin = () => {
       authService.login(email, password),
     onSuccess: (data: IAuthLoginResponse) => {
       localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       setIsAuth(true);
       setUser(data.user);
       router.push(callbackUrl ? callbackUrl : '/settings');
