@@ -3,10 +3,9 @@ import { IAlbum } from '@/types/album';
 import Image from 'next/image';
 import { MdDeleteForever } from 'react-icons/md';
 import styles from './AlbumOptionsModalContent.module.scss';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
+import { useDeleteAlbum } from '@/hooks/album/useDeleteAlbum';
 
 interface Props {
   album: IAlbum;
@@ -14,16 +13,9 @@ interface Props {
 
 const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
   const user = useAuthStore((state) => state.user);
-  const queryCleint = useQueryClient();
   const router = useRouter();
-  const deleteAlbumMutation = useMutation({
-    mutationKey: ['deleteAlbum'],
-    mutationFn: (albumId: string) => albumService.delete(albumId),
-    onSuccess: () => {
-      queryCleint.fetchQuery({ queryKey: ['albums'] });
-      queryCleint.invalidateQueries({ queryKey: ['tracks'] });
-    },
-  });
+
+  const deleteAlbumMutation = useDeleteAlbum();
 
   const deleteAlbumHandler = () => {
     deleteAlbumMutation.mutate(album._id);

@@ -6,6 +6,7 @@ export enum mutationKey {
   CREATE_TRACK = 'createTrack',
   CREATE_ALBUM = 'createAlbum',
   ADD_TRACK_TO_ALBUM = 'addTrackToAlbum',
+  DELETE_ALBUM = 'deleteAlbum',
 }
 
 export enum queryKey {
