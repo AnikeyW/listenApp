@@ -39,7 +39,7 @@ const CreateTrackButtons: FC<Props> = ({
       albumId: albumId,
       picture: picture.img,
       audio: audioFile.value,
-      owner: user?.email!,
+      owner: user?._id!,
     };
     await mutate(data);
     await router.push('/tracks');
