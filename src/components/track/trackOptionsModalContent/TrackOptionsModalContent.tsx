@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MdDeleteForever, MdMoveUp, MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
+import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 
 interface Props {
   track: ITrack;
@@ -25,10 +26,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
 
   const deleteTrackMutation = useDeleteTrack();
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ['albums'],
-    queryFn: albumService.getAll,
-  });
+  const { data, isSuccess } = useGetAllAlbums();
 
   const addTrackToAlbumMutation = useMutation({
     mutationKey: ['addTrackToAlbum'],

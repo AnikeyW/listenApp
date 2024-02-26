@@ -2,17 +2,14 @@ import React, { ChangeEvent, FC } from 'react';
 import styles from './CreateTrackFormStepOne.module.scss';
 import Input from '@/components/UI/Input/Input';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
-import { useQuery } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
 import { useTrackStore } from '@/stores/trackStore';
+import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 
 const CreateTrackFormStepOne: FC = () => {
   const { name, setName, artist, setArtist, albumId, setAlbumId } =
     useTrackStore((state) => state);
-  const { data, isSuccess } = useQuery({
-    queryKey: ['albums'],
-    queryFn: albumService.getAll,
-  });
+
+  const { data, isSuccess } = useGetAllAlbums();
 
   return (
     <form className={styles.form}>

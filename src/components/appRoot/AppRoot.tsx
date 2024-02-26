@@ -9,7 +9,6 @@ interface Props {
 }
 
 const AppRoot: FC<Props> = ({ children }) => {
-  const isAuth = useAuthStore((state) => state.isAuth);
   const checkAuth = useCheckAuth();
 
   useEffect(() => {

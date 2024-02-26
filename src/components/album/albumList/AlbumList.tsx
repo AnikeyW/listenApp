@@ -1,18 +1,13 @@
 'use client';
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import styles from './AlbumList.module.scss';
 
-import albumService from '@/services/Album.service';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import AlbumItem from '@/components/album/albumItem/AlbumItem';
+import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 
 const AlbumList = () => {
-  const { data, isError, error, isSuccess } = useQuery({
-    queryKey: ['albums'],
-    queryFn: albumService.getAll,
-    staleTime: 120 * 1000,
-  });
+  const { data, isError, error, isSuccess } = useGetAllAlbums();
 
   return (
     <div className={styles.root}>

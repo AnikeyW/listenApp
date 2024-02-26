@@ -5,8 +5,7 @@ import FileUpload from '@/components/fileUploud/FileUpload';
 import { RiImageAddLine } from 'react-icons/ri';
 import { useTrackStore } from '@/stores/trackStore';
 import PictureFromAlbum from '@/components/track/pictureFromAlbum/PictureFromAlbum';
-import { useQuery } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
+import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 
 type Props = {
   step: number;
@@ -27,10 +26,7 @@ const PreviewNewTrack: React.FC<Props> = (props) => {
     (state) => state.setUseAlbumPictureCreatingTrack,
   );
 
-  const getAlbumsQuery = useQuery({
-    queryKey: ['albums'],
-    queryFn: albumService.getAll,
-  });
+  const getAlbumsQuery = useGetAllAlbums();
 
   const getAlbumPicture = useCallback((): string => {
     if (getAlbumsQuery.isFetched) {
