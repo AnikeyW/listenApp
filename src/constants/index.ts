@@ -4,6 +4,7 @@ export enum mutationKey {
   UPDATE_USER_IMAGE = 'updateUserImage',
   DELETE_TRACK = 'deleteTrack',
   CREATE_TRACK = 'createTrack',
+  CREATE_ALBUM = 'createAlbum',
 }
 
 export enum queryKey {

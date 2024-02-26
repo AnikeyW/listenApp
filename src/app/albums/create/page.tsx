@@ -5,28 +5,16 @@ import styles from './page.module.scss';
 import CreateAlbumStepOne from '@/components/album/createAlbumStepOne/CreateAlbumStepOne';
 import PreviewNewAlbum from '@/components/album/previewNewAlbum/PreviewNewAlbum';
 import CreateAlbumStepTwo from '@/components/album/createAlbumStepTwo/CreateAlbumStepTwo';
-import albumService from '@/services/Album.service';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateAlbumsButtons from '@/components/album/createAlbumsButtons/CreateAlbumsButtons';
 import Loader from '@/components/UI/Loader/Loader';
-import { useAlbumStore } from '@/stores/albumStore';
-import { CreateAlbumDtoType } from '@/types/album';
+import { useCreateAlbum } from '@/hooks/album/useCreateAlbum';
 
 const steps = ['Информация об альбоме', 'Загрузка изображения'];
 
 const Page = () => {
-  const queryCleint = useQueryClient();
   const [currentStep, setCurrentStep] = useState(1);
-  const resetAllFields = useAlbumStore((state) => state.resetAllFields);
 
-  const { isPending, mutate } = useMutation({
-    mutationKey: ['createAlbum'],
-    mutationFn: (data: CreateAlbumDtoType) => albumService.create(data),
-    onSuccess: () => {
-      queryCleint.fetchQuery({ queryKey: ['albums'] });
-      resetAllFields();
-    },
-  });
+  const { isPending, mutate } = useCreateAlbum();
 
   return (
     <div className={styles.root}>
