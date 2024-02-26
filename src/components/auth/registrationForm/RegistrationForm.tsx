@@ -3,7 +3,7 @@ import React from 'react';
 import Input from '@/components/UI/Input/Input';
 import styles from './RegistrationForm.module.scss';
 import Button from '@/components/UI/Button/Button';
-import { useRegistration } from '@/hooks/useRegistration';
+import { useRegistration } from '@/hooks/auth/useRegistration';
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

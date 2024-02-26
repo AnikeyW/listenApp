@@ -4,9 +4,8 @@ import { RiPlayFill, RiRewindFill, RiSpeedFill } from 'react-icons/ri';
 import { PiPauseFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
-import { useQuery } from '@tanstack/react-query';
-import trackService from '@/services/Track.service';
 import clsx from 'clsx';
+import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 
 type Player = 'playerFullScreen' | 'playerBar';
 
@@ -23,11 +22,7 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({
   const nextTrack = usePlayerStore((state) => state.nextTrack);
   const previousTrack = usePlayerStore((state) => state.previousTrack);
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ['tracks'],
-    queryFn: () => trackService.getAll(),
-    staleTime: 120 * 1000,
-  });
+  const { data, isSuccess } = useGetAllTracks();
 
   const play = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

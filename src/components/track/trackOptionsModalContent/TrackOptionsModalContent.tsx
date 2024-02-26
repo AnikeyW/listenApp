@@ -7,9 +7,9 @@ import { ITrack } from '@/types/track';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import albumService from '@/services/Album.service';
-import trackService from '@/services/Track.service';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import { useAuthStore } from '@/stores/authStore';
+import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
 
 interface Props {
   track: ITrack;
@@ -23,16 +23,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const deleteTrackMutation = useMutation({
-    mutationKey: ['deleteTrack'],
-    mutationFn: (trackId: string) => trackService.delete(trackId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tracks'] });
-    },
-    onError: () => {
-      queryClient.invalidateQueries({ queryKey: ['tracks'] });
-    },
-  });
+  const deleteTrackMutation = useDeleteTrack();
 
   const { data, isSuccess } = useQuery({
     queryKey: ['albums'],

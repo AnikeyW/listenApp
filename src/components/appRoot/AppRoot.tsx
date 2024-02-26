@@ -1,6 +1,6 @@
 'use client';
 import React, { FC, ReactNode, useEffect } from 'react';
-import { useCheckAuth } from '@/hooks/useCheckAuth';
+import { useCheckAuth } from '@/hooks/auth/useCheckAuth';
 import Loader from '@/components/UI/Loader/Loader';
 import { useAuthStore } from '@/stores/authStore';
 

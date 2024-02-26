@@ -5,10 +5,10 @@ import Button from '@/components/UI/Button/Button';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'next/navigation';
-import { useLogout } from '@/hooks/useLogout';
+import { useLogout } from '@/hooks/auth/useLogout';
 import { RiImageAddLine } from 'react-icons/ri';
 import FileUpload from '@/components/fileUploud/FileUpload';
-import { useUpdateUserImage } from '@/hooks/useUpdateUserImage';
+import { useUpdateUserImage } from '@/hooks/user/useUpdateUserImage';
 
 const ProfileInfo = () => {
   const router = useRouter();

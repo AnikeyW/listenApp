@@ -10,8 +10,7 @@ import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import TrackImage from '@/components/track/trackImage/TrackImage';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio, initAudio } from '@/components/track/tracklist/TrackList';
-import { useQuery } from '@tanstack/react-query';
-import trackService from '@/services/Track.service';
+import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 
 interface ITrackItemProps {
   track: ITrack;
@@ -27,11 +26,7 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
     (state) => state.setIsShowPlayerFullScreen,
   );
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ['tracks'],
-    queryFn: () => trackService.getAll(),
-    staleTime: 120 * 1000,
-  });
+  const { data, isSuccess } = useGetAllTracks();
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (activeTrack && activeTrack?._id === track._id) {

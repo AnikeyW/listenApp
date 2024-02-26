@@ -7,30 +7,15 @@ import CreateTrackFormStepOne from '@/components/track/createTrackFormStepOne/Cr
 import CreateTrackFormStepTwo from '@/components/track/createTrackFormStepTwo/CreateTrackFormStepTwo';
 import CreateTrackFormStepThree from '@/components/track/createTrackFormStepThree/CreateTrackFormStepThree';
 import CreateTrackButtons from '@/components/track/createTrackButtons/CreateTrackButtons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import trackService from '@/services/Track.service';
-import { CreateTrackDtoType } from '@/types/track';
 import Loader from '@/components/UI/Loader/Loader';
-import { useTrackStore } from '@/stores/trackStore';
+import { useCreateTrack } from '@/hooks/track/useCreateTrack';
 
 const steps = ['Информация о треке', 'Загрузка изображения', 'Загрузка аудио'];
 
 const Page = () => {
-  const resetAllFields = useTrackStore((state) => state.resetAllFields);
   const [currentStep, setCurrentStep] = useState(1);
-  const queryClient = useQueryClient();
 
-  const createTrackMutation = useMutation({
-    mutationKey: ['createTrack'],
-    mutationFn: (data: CreateTrackDtoType) => trackService.create(data),
-    onSuccess: () => {
-      resetAllFields();
-      Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['tracks'] }),
-        queryClient.invalidateQueries({ queryKey: ['albums'] }),
-      ]);
-    },
-  });
+  const createTrackMutation = useCreateTrack();
 
   return (
     <div className={styles.root}>
