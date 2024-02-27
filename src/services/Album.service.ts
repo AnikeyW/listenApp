@@ -1,12 +1,22 @@
 import { CreateAlbumDtoType, IAlbum } from '@/types/album';
 import axios from 'axios';
 import { ITrack } from '@/types/track';
+import $api from '@/http';
 
 class AlbumService {
   async getAll(): Promise<IAlbum[]> {
     return axios
       .get(process.env.NEXT_PUBLIC_BASE_URL + 'albums')
       .then((res) => res.data);
+  }
+
+  async getMyAlbums(userId: string): Promise<IAlbum[]> {
+    const response = await $api.get('albums/useralbums', {
+      params: {
+        userId: userId,
+      },
+    });
+    return response.data;
   }
 
   async create(data: CreateAlbumDtoType): Promise<IAlbum> {

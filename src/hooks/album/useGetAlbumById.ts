@@ -6,6 +6,6 @@ export const useGetAlbumById = (albumId: string) => {
   return useQuery({
     queryKey: [queryKey.GET_ALL_ALBUMS, albumId],
     queryFn: () => albumService.getOne(albumId),
-    staleTime: 60 * 1000,
+    staleTime: 0,
   });
 };

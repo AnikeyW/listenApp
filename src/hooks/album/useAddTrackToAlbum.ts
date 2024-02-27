@@ -14,8 +14,10 @@ export const useAddTrackToAlbum = () => {
     mutationFn: ({ albumId, trackId }: { albumId: string; trackId: string }) =>
       albumService.addTrackToAlbum(albumId, trackId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] });
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {

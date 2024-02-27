@@ -36,7 +36,7 @@ const CreateAlbumsButtons: FC<Props> = ({
       owner: user?._id!,
     };
     mutate(data);
-    await router.replace('/');
+    await router.push('/albums');
   }
 
   const next = () => {

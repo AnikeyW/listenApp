@@ -19,7 +19,7 @@ const AlbumOptionsModalContent: FC<Props> = ({ album }) => {
 
   const deleteAlbumHandler = () => {
     deleteAlbumMutation.mutate(album._id);
-    router.replace('/');
+    router.push('/albums');
   };
 
   return (

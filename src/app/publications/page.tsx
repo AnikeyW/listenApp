@@ -7,14 +7,14 @@ import PrivateRoute from '@/components/auth/privateRoute/PrivateRoute';
 import { usePathname, useRouter } from 'next/navigation';
 import HorizontalCarusel from '@/components/UI/horizontalCarusel/HorizontalCarusel';
 import HorizontalCaruselItem from '@/components/UI/horizontalCaruselItem/HorizontalCaruselItem';
-import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 import { useGetMyTracks } from '@/hooks/track/useGetMyTracks';
+import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
 
 const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
   const myTracks = useGetMyTracks();
-  const getAllAlbums = useGetAllAlbums();
+  const myAlbums = useGetMyAlbums();
 
   return (
     <PrivateRoute callbackUrl={pathname}>
@@ -70,27 +70,44 @@ const Page = () => {
             <MyLink href={'albums'}>Показать все</MyLink>
           </div>
 
-          {getAllAlbums.isSuccess && (
-            <HorizontalCarusel key={'albums'}>
-              {getAllAlbums.data.map((album, index) => (
-                <HorizontalCaruselItem key={index} width={'144px'}>
-                  <div
-                    className={styles.album}
-                    key={album._id}
-                    onClick={() => router.push('albums/' + album._id)}
-                  >
-                    <div className={styles.album__image}>
-                      <img
-                        src={process.env.NEXT_PUBLIC_BASE_URL + album.picture}
-                        alt="wegwe"
-                      />
+          {myAlbums.isSuccess && (
+            <>
+              {myAlbums.data.length === 0 && (
+                <div
+                  style={{
+                    height: '182px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  <p>Нет загруженных альбомов</p>
+                  <MyLink href={'/albums/create'}>Загрузить</MyLink>
+                </div>
+              )}
+              <HorizontalCarusel key={'albums'}>
+                {myAlbums.data.map((album, index) => (
+                  <HorizontalCaruselItem key={index} width={'144px'}>
+                    <div
+                      className={styles.album}
+                      key={album._id}
+                      onClick={() => router.push('albums/' + album._id)}
+                    >
+                      <div className={styles.album__image}>
+                        <img
+                          src={process.env.NEXT_PUBLIC_BASE_URL + album.picture}
+                          alt="wegwe"
+                        />
+                      </div>
+                      <div className={styles.root__author}>{album.author}</div>
+                      <div>{album.name}</div>
                     </div>
-                    <div className={styles.root__author}>{album.author}</div>
-                    <div>{album.name}</div>
-                  </div>
-                </HorizontalCaruselItem>
-              ))}
-            </HorizontalCarusel>
+                  </HorizontalCaruselItem>
+                ))}
+              </HorizontalCarusel>
+            </>
           )}
         </div>
       </div>

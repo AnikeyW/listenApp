@@ -13,7 +13,9 @@ export const useDeleteAlbum = () => {
     mutationKey: [mutationKey.DELETE_ALBUM],
     mutationFn: (albumId: string) => albumService.delete(albumId),
     onSuccess: () => {
-      queryClient.fetchQuery({ queryKey: [queryKey.GET_ALL_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] });
     },
     onError: (error: unknown) => {
