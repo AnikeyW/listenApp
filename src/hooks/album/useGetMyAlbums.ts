@@ -8,6 +8,6 @@ export const useGetMyAlbums = () => {
   return useQuery({
     queryKey: [queryKey.GET_MY_ALBUMS],
     queryFn: () => albumService.getMyAlbums(user?._id!),
-    staleTime: 0,
+    staleTime: 60 * 1000,
   });
 };

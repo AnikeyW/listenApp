@@ -13,8 +13,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
-import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 import { useAddTrackToAlbum } from '@/hooks/album/useAddTrackToAlbum';
+import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
 
 interface Props {
   track: ITrack;
@@ -29,7 +29,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
 
   const deleteTrackMutation = useDeleteTrack();
 
-  const { data, isSuccess } = useGetAllAlbums();
+  const getMyAlbums = useGetMyAlbums();
 
   const addTrackToAlbumMutation = useAddTrackToAlbum();
 
@@ -71,19 +71,19 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
         <TrackInfo track={track} withPhoto={true} />
       </div>
       <AnimatePresence>
-        {isShowAlbumList && isSuccess && (
+        {isShowAlbumList && getMyAlbums.isSuccess && (
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: '140px' }}
             exit={{ height: 0 }}
             className={styles.albumList}
           >
-            {data.length === 0 ? (
+            {getMyAlbums.data.length === 0 ? (
               <div>Нет альбомов</div>
             ) : (
               <div>Мои альбомы:</div>
             )}
-            {data.map((album) => (
+            {getMyAlbums.data.map((album) => (
               <motion.div
                 dragPropagation
                 className={styles.album}

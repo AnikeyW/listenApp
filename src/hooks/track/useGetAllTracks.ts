@@ -6,6 +6,6 @@ export const useGetAllTracks = () => {
   return useQuery({
     queryKey: [queryKey.GET_ALL_TRACKS],
     queryFn: () => trackService.getAll(),
-    staleTime: 120 * 1000,
+    staleTime: 60 * 1000,
   });
 };
