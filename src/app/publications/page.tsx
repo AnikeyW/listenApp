@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import styles from './page.module.scss';
-import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 import MyLink from '@/components/UI/myLink/MyLink';
 import TrackItem from '@/components/track/trackitem/TrackItem';
 import PrivateRoute from '@/components/auth/privateRoute/PrivateRoute';
@@ -9,12 +8,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import HorizontalCarusel from '@/components/UI/horizontalCarusel/HorizontalCarusel';
 import HorizontalCaruselItem from '@/components/UI/horizontalCaruselItem/HorizontalCaruselItem';
 import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
-import AlbumItem from '@/components/album/albumItem/AlbumItem';
+import { useGetMyTracks } from '@/hooks/track/useGetMyTracks';
 
 const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const getAllTracks = useGetAllTracks();
+  const myTracks = useGetMyTracks();
   const getAllAlbums = useGetAllAlbums();
 
   return (
@@ -27,13 +26,13 @@ const Page = () => {
             <MyLink href={'tracks'}>Показать все</MyLink>
           </div>
 
-          {getAllTracks.isSuccess && (
+          {myTracks.isSuccess && (
             <HorizontalCarusel key={'tracks'}>
-              {new Array(Math.ceil(getAllTracks.data.length / 3))
+              {new Array(Math.ceil(myTracks.data.length / 3))
                 .fill(0)
                 .map((_, index) => (
                   <HorizontalCaruselItem key={index} width={'88%'}>
-                    {getAllTracks.data
+                    {myTracks.data
                       .slice(index * 3, index * 3 + 3)
                       .map((track, i) => (
                         <TrackItem

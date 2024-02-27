@@ -1,7 +1,23 @@
 import axios from 'axios';
 import { CreateTrackDtoType, ITrack } from '@/types/track';
+import $api from '@/http';
 
 class TrackService {
+  async getMyTracks(
+    userId: string,
+    count?: number,
+    offset?: number,
+  ): Promise<ITrack[]> {
+    const response = await $api.get<ITrack[]>(`tracks/usertracks`, {
+      params: {
+        userId: userId,
+        count: count ? count : 100,
+        offset: offset ? offset : 0,
+      },
+    });
+    return response.data;
+  }
+
   async getAll(count?: number, offset?: number): Promise<ITrack[]> {
     return axios
       .get(process.env.NEXT_PUBLIC_BASE_URL + 'tracks', {
