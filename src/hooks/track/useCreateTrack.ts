@@ -18,7 +18,7 @@ export const useCreateTrack = () => {
     onSuccess: () => {
       resetAllFields();
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] }),
+        queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] }),
         queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] }),
       ]);
     },

@@ -8,6 +8,6 @@ export const useGetMyTracks = (count?: number, offset?: number) => {
   return useQuery({
     queryKey: [queryKey.GET_MY_TRACKS],
     queryFn: () => trackService.getMyTracks(user?._id!, count, offset),
-    staleTime: 120 * 1000,
+    staleTime: 0,
   });
 };

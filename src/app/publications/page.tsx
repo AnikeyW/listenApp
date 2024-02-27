@@ -27,23 +27,40 @@ const Page = () => {
           </div>
 
           {myTracks.isSuccess && (
-            <HorizontalCarusel key={'tracks'}>
-              {new Array(Math.ceil(myTracks.data.length / 3))
-                .fill(0)
-                .map((_, index) => (
-                  <HorizontalCaruselItem key={index} width={'88%'}>
-                    {myTracks.data
-                      .slice(index * 3, index * 3 + 3)
-                      .map((track, i) => (
-                        <TrackItem
-                          key={track._id}
-                          track={track}
-                          indexOfTrack={3 * index + i}
-                        />
-                      ))}
-                  </HorizontalCaruselItem>
-                ))}
-            </HorizontalCarusel>
+            <>
+              {myTracks.data.length === 0 && (
+                <div
+                  style={{
+                    height: '182px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  <p>Нет загруженных треков</p>
+                  <MyLink href={'/tracks/create'}>Загрузить</MyLink>
+                </div>
+              )}
+              <HorizontalCarusel key={'tracks'}>
+                {new Array(Math.ceil(myTracks.data.length / 3))
+                  .fill(0)
+                  .map((_, index) => (
+                    <HorizontalCaruselItem key={index} width={'88%'}>
+                      {myTracks.data
+                        .slice(index * 3, index * 3 + 3)
+                        .map((track, i) => (
+                          <TrackItem
+                            key={track._id}
+                            track={track}
+                            indexOfTrack={3 * index + i}
+                          />
+                        ))}
+                    </HorizontalCaruselItem>
+                  ))}
+              </HorizontalCarusel>
+            </>
           )}
         </div>
 
