@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './page.module.scss';
-import AlbumList from '@/components/album/albumList/AlbumList';
+import BlockPopularTracks from '@/components/track/blockPopularTracks/BlockPopularTracks';
 
 export default function Home() {
   return (
-    <>
-      <AlbumList />
-    </>
+    <div className={styles.root}>
+      <BlockPopularTracks />
+    </div>
   );
 }

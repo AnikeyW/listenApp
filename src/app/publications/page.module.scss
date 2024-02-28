@@ -13,37 +13,3 @@
   }
 }
 
-.block{
-  background-color: var(--color-background-soft);
-  height: 223px;
-  border-radius: 0.5rem;
-  margin-bottom: 10px;
-  overflow: hidden;
-  &__title{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0.5rem;
-    height: 41px;
-    h3{
-      font-weight: bold;
-    }
-  }
-}
-
-.album{
-  height: 165px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  &__image{
-    width: 133px;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    img{
-      aspect-ratio: 1;
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-}
