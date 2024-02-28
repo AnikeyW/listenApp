@@ -12,7 +12,7 @@ interface NavItemProps {
 const NavItem: FC<NavItemProps> = ({ path, pathTitle, icon }) => {
   const pathname = usePathname();
   return (
-    <li>
+    <li className={styles.root}>
       <Link
         className={`${styles.link} ${pathname === path ? styles.active : ''}`}
         href={path}

@@ -1,3 +1,10 @@
+.root{
+  width: 66px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .link {
   text-decoration: none;
   color: #818181;
