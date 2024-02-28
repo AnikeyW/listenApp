@@ -37,3 +37,13 @@ export const getInitialThemeFromLocalStorage = (): Theme => {
     return 'dark';
   }
 };
+
+export const debounce = (cb: any, delay: number) => {
+  let timer: any;
+  return (...args: any) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
+};

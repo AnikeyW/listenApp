@@ -14,4 +14,5 @@ export enum queryKey {
   GET_ALL_ALBUMS = 'albums',
   GET_MY_TRACKS = 'getMyTracks',
   GET_MY_ALBUMS = 'getMyAlbums',
+  GET_SEARCH_TRACKS = 'searchTracks',
 }

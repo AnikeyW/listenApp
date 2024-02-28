@@ -41,6 +41,18 @@ class TrackService {
     );
   }
 
+  async search(query: string): Promise<ITrack[]> {
+    const response = await axios.get(
+      process.env.NEXT_PUBLIC_BASE_URL + 'tracks/search',
+      {
+        params: {
+          query: query,
+        },
+      },
+    );
+    return response.data;
+  }
+
   async create(data: CreateTrackDtoType): Promise<ITrack> {
     const formData = new FormData();
 
