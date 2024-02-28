@@ -1,0 +1,17 @@
+.root{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.trackHeader{
+  height: var(--trackslist-title-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
+.trackListWrapper{
+  height: calc(100% - var(--trackslist-title-height));
+}
