@@ -1,7 +1,6 @@
 .track {
   border-radius: 0.3rem;
   display: flex;
-  //height: 50px;
   align-items: center;
   color: var(--color-text);
   gap: 0.5rem;
@@ -17,9 +16,12 @@
     }
   }
   &__info{
-    flex: auto;
     &__trackName{
+      height: 20px;
       font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     &__artistName{
       font-size: 13px;
