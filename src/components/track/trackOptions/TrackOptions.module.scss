@@ -5,6 +5,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  flex-shrink: 0;
   @media screen and (min-width: 640px){
     &:hover{
       background: var(--color-background);
