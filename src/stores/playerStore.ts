@@ -13,6 +13,8 @@ interface IPlayerState {
   currentTime: number;
   pause: boolean;
   isShowPlayerFullScreen: boolean;
+  playList: ITrack[];
+  setPlayList: (playlist: ITrack[]) => void;
   pauseTrack: () => void;
   playTrack: () => void;
   setCurrentTime: (value: number) => void;
@@ -21,14 +23,9 @@ interface IPlayerState {
   setActiveTrack: (track: ITrack | null) => void;
   setIndexOfActiveTrack: (index: number | null) => void;
   setIsShowPlayerFullScreen: (value: boolean) => void;
-  nextTrack: (playList: ITrack[]) => void;
-  previousTrack: (playList: ITrack[]) => void;
-  initTrack: (
-    track: ITrack,
-    indexOfTrack: number,
-    playlist: ITrack[] | undefined,
-    isSuccessPlaylist: boolean,
-  ) => void;
+  nextTrack: () => void;
+  previousTrack: () => void;
+  initTrack: (track: ITrack, indexOfTrack: number) => void;
 }
 
 export const usePlayerStore = create<IPlayerState>()(
@@ -40,6 +37,10 @@ export const usePlayerStore = create<IPlayerState>()(
     pause: true,
     volume: 50,
     isShowPlayerFullScreen: false,
+    playList: [],
+    setPlayList: (playlist) => {
+      set({ playList: playlist });
+    },
     pauseTrack: () => {
       const activeTrack = getState().activeTrack;
       if (activeTrack) {
@@ -61,7 +62,8 @@ export const usePlayerStore = create<IPlayerState>()(
     setActiveTrack: (track) => set({ activeTrack: track, currentTime: 0 }),
     setIsShowPlayerFullScreen: (value) =>
       set({ isShowPlayerFullScreen: value }),
-    nextTrack: (playList) => {
+    nextTrack: () => {
+      const playList = getState().playList;
       const indOfActTrack = getState().indexOfActiveTrack;
 
       if (indOfActTrack !== null) {
@@ -77,16 +79,12 @@ export const usePlayerStore = create<IPlayerState>()(
           set({ indexOfActiveTrack: indOfActTrack + 1 });
         }
 
-        getState().initTrack(
-          nextTrack,
-          getState().indexOfActiveTrack!,
-          playList,
-          true,
-        );
+        getState().initTrack(nextTrack, getState().indexOfActiveTrack!);
       }
     },
-    previousTrack: (playList) => {
+    previousTrack: () => {
       const indOfActTrack = getState().indexOfActiveTrack;
+      const playList = getState().playList;
 
       if (indOfActTrack !== null) {
         audio.pause();
@@ -101,15 +99,10 @@ export const usePlayerStore = create<IPlayerState>()(
           set({ indexOfActiveTrack: indOfActTrack - 1 });
         }
 
-        getState().initTrack(
-          previousTrack,
-          getState().indexOfActiveTrack!,
-          playList,
-          true,
-        );
+        getState().initTrack(previousTrack, getState().indexOfActiveTrack!);
       }
     },
-    initTrack: (track, indexOfTrack, playlist, isSuccessPlaylist) => {
+    initTrack: (track, indexOfTrack) => {
       set({
         activeTrack: track,
         indexOfActiveTrack: indexOfTrack,
@@ -139,9 +132,7 @@ export const usePlayerStore = create<IPlayerState>()(
         }
       };
       audio.onended = () => {
-        if (isSuccessPlaylist) {
-          getState().nextTrack(playlist!);
-        }
+        getState().nextTrack();
       };
     },
   })),

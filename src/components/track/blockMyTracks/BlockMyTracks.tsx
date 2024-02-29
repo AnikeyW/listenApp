@@ -42,6 +42,7 @@ const BlockMyTracks = () => {
                         key={track._id}
                         track={track}
                         indexOfTrack={3 * index + i}
+                        playlist={myTracks.data}
                       />
                     ))}
                 </HorizontalCaruselItem>

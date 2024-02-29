@@ -42,6 +42,7 @@ const BlockPopularTracks = () => {
                         key={track._id}
                         track={track}
                         indexOfTrack={3 * index + i}
+                        playlist={popularTracks.data}
                       />
                     ))}
                 </HorizontalCaruselItem>

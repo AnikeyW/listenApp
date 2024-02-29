@@ -18,7 +18,12 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
     <div className={styles.tracklist}>
       {tracks.length > 0 &&
         tracks.map((track, index) => (
-          <TrackItem track={track} key={track._id} indexOfTrack={index} />
+          <TrackItem
+            track={track}
+            key={track._id}
+            indexOfTrack={index}
+            playlist={tracks}
+          />
         ))}
     </div>
   );

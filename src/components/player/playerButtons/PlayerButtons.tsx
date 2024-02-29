@@ -5,7 +5,6 @@ import { PiPauseFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
 import clsx from 'clsx';
-import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 
 type Player = 'playerFullScreen' | 'playerBar';
 
@@ -22,8 +21,6 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({
   const nextTrack = usePlayerStore((state) => state.nextTrack);
   const previousTrack = usePlayerStore((state) => state.previousTrack);
 
-  const { data, isSuccess } = useGetAllTracks();
-
   const play = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (pause) {
@@ -34,15 +31,11 @@ const PlayerButtons: FC<PlayerButtonsProps> = ({
   };
 
   const nextTrackHandler = () => {
-    if (isSuccess) {
-      nextTrack(data);
-    }
+    nextTrack();
   };
 
   const previousTrackHandler = () => {
-    if (isSuccess) {
-      previousTrack(data);
-    }
+    previousTrack();
   };
 
   return (

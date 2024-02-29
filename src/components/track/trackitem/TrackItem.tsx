@@ -10,23 +10,26 @@ import TrackInfo from '@/components/track/trackInfo/TrackInfo';
 import TrackImage from '@/components/track/trackImage/TrackImage';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio, initAudio } from '@/components/track/tracklist/TrackList';
-import { useGetAllTracks } from '@/hooks/track/useGetAllTracks';
 
 interface ITrackItemProps {
   track: ITrack;
   indexOfTrack: number;
+  playlist: ITrack[];
 }
 
-const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
+const TrackItem: React.FC<ITrackItemProps> = ({
+  track,
+  indexOfTrack,
+  playlist,
+}) => {
   const [pauseLocal, setPauseLocal] = useState(true);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
+  const setPlayList = usePlayerStore((state) => state.setPlayList);
   const initTrack = usePlayerStore((state) => state.initTrack);
   const playTrack = usePlayerStore((state) => state.playTrack);
   const setIsShowPlayerFullScreen = usePlayerStore(
     (state) => state.setIsShowPlayerFullScreen,
   );
-
-  const { data, isSuccess } = useGetAllTracks();
 
   const clickItemHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (activeTrack && activeTrack?._id === track._id) {
@@ -42,7 +45,8 @@ const TrackItem: React.FC<ITrackItemProps> = ({ track, indexOfTrack }) => {
   const playHandler = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (activeTrack?._id !== track._id) {
-      initTrack(track, indexOfTrack, data, isSuccess);
+      setPlayList(playlist);
+      initTrack(track, indexOfTrack);
     }
     playTrack();
     setPauseLocal(false);
