@@ -30,13 +30,13 @@ class AlbumService {
       }
     });
 
-    return axios
+    return $api
       .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums', formData)
       .then((res) => res.data);
   }
 
   async addTrackToAlbum(albumId: string, trackId: string): Promise<ITrack> {
-    return axios
+    return $api
       .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums/addtrack', {
         albumId,
         trackId,
@@ -45,7 +45,7 @@ class AlbumService {
   }
 
   async delete(albumId: string): Promise<string> {
-    return axios
+    return $api
       .delete(process.env.NEXT_PUBLIC_BASE_URL + 'albums/' + albumId)
       .then((res) => res.data);
   }

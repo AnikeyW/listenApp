@@ -23,6 +23,7 @@ const TrackImage: FC<TrackImageProps> = ({
   isActiveTrack,
 }) => {
   const pause = usePlayerStore((state) => state.pause);
+  const activeTrack = usePlayerStore((state) => state.activeTrack);
   const pauseTrack = usePlayerStore((state) => state.pauseTrack);
 
   const pauseHandler = (e: MouseEvent<HTMLElement>) => {
@@ -40,7 +41,7 @@ const TrackImage: FC<TrackImageProps> = ({
         setPauseLocal(false);
       }
     }
-  }, [pause]);
+  }, [pause, activeTrack]);
 
   return (
     <div className={styles.root}>

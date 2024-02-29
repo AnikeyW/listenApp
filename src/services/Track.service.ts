@@ -30,7 +30,7 @@ class TrackService {
   }
 
   async delete(trackId: string): Promise<string> {
-    return axios
+    return $api
       .delete(process.env.NEXT_PUBLIC_BASE_URL + 'tracks/' + trackId)
       .then((res) => res.data);
   }
