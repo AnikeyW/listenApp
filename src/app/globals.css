@@ -18,6 +18,7 @@
     --color-active: #2461da;
     --color-link: #2a8cac;
     --color-error-msg: coral;
+    --color-border: #565656
 }
 [data-theme='light'] {
     --color-background: #e6eaea;
@@ -30,6 +31,7 @@
     --color-active: #2461da;
     --color-link: #2a8cac;
     --color-error-msg: #ff2424;
+    --color-border: #dadada
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
