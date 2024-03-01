@@ -5,8 +5,8 @@ import VolumeRange from '@/components/volumeRange/VolumeRange';
 import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
 import Progress from '@/components/player/progress/Progress';
 import TrackImage from '@/components/player/trackImage/TrackImage';
-// import TrackInfo from '@/components/player/trackInfo/TrackInfo';
 import PlayerTrackInfo from '@/components/player/playerTrackInfo/PlayerTrackInfo';
+import FavoriteButton from '@/components/player/favoriteButton/FavoriteButton';
 
 const PlayerFullScreen: FC = () => {
   return (
@@ -14,9 +14,9 @@ const PlayerFullScreen: FC = () => {
       <div className={styles.root}>
         <TrackImage />
         <Progress />
-        {/*<TrackInfo />*/}
         <PlayerTrackInfo />
         <PlayerButtons />
+        <FavoriteButton />
         <motion.div
           className={styles.root__volume}
           drag={'y'}

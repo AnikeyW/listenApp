@@ -1,22 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateTrackDtoType } from '@/types/track';
-import trackService from '@/services/Track.service';
-import { useTrackStore } from '@/stores/trackStore';
-import { mutationKey, queryKey } from '@/constants';
 import { useState } from 'react';
+import { mutationKey, queryKey } from '@/constants';
+import trackService from '@/services/Track.service';
 import axios, { AxiosError } from 'axios';
 import { ErrorResponse } from '@/types/error';
+import { useAuthStore } from '@/stores/authStore';
 
-export const useCreateTrack = () => {
-  const resetAllFields = useTrackStore((state) => state.resetAllFields);
+export const useAddTrackToFavorites = () => {
   const queryClient = useQueryClient();
   const [customError, setCustomError] = useState({ message: '' });
+  const setUser = useAuthStore((state) => state.setUser);
 
   const { error, ...rest } = useMutation({
-    mutationKey: [mutationKey.CREATE_TRACK],
-    mutationFn: (data: CreateTrackDtoType) => trackService.create(data),
-    onSuccess: () => {
-      resetAllFields();
+    mutationKey: [mutationKey.ADD_TRACK_TO_FAVORITES],
+    mutationFn: ({ trackId, userId }: { trackId: string; userId: string }) =>
+      trackService.addTrackToFavorites(trackId as string, userId as string),
+    onSuccess: (user) => {
+      setUser(user);
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });

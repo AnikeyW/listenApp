@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { CreateTrackDtoType, ITrack } from '@/types/track';
 import $api from '@/http';
+import { IUser } from '@/types/user';
 
 class TrackService {
   async getMyTracks(
@@ -32,6 +33,15 @@ class TrackService {
   async delete(trackId: string): Promise<string> {
     return $api
       .delete(process.env.NEXT_PUBLIC_BASE_URL + 'tracks/' + trackId)
+      .then((res) => res.data);
+  }
+
+  async addTrackToFavorites(trackId: string, userId: string): Promise<IUser> {
+    return $api
+      .patch('tracks/tofavorites', {
+        trackId,
+        userId,
+      })
       .then((res) => res.data);
   }
 
