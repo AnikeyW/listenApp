@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './GithubButton.module.scss';
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -11,9 +11,9 @@ const GithubButton = () => {
   return (
     <button
       onClick={() => {
-        signIn('github', {
-          callbackUrl,
-        });
+        // signIn('github', {
+        //   callbackUrl,
+        // });
       }}
       className={styles.root}
     >

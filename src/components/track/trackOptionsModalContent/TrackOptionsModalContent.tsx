@@ -15,7 +15,6 @@ import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
 import { useAddTrackToAlbum } from '@/hooks/album/useAddTrackToAlbum';
 import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
-import Link from 'next/link';
 
 interface Props {
   track: ITrack;
