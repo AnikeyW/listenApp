@@ -25,13 +25,14 @@ $api.interceptors.response.use(
     if (error.response.status == 401 && error.config && !error.config._retry) {
       originalRequest._retry = true;
       try {
-        const response = await axios.get<IAuthLoginResponse>(
+        const response = await axios.post<IAuthLoginResponse>(
           process.env.NEXT_PUBLIC_BASE_URL + 'auth/refresh',
           {
-            withCredentials: true,
+            refreshToken: localStorage.getItem('refreshToken'),
           },
         );
         localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
         $api.request(originalRequest);
       } catch (e) {
         console.log('Не авторизован');
