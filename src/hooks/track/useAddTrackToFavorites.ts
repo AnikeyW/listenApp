@@ -21,6 +21,9 @@ export const useAddTrackToFavorites = () => {
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] });
+      queryClient.invalidateQueries({
+        queryKey: [queryKey.GET_FAVORITES_TRACKS],
+      });
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {

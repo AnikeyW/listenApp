@@ -12,7 +12,7 @@ const Tracks = () => {
     <div className={styles.root}>
       {isSuccess && <div className={styles.trackHeader}>Популярные</div>}
       {isError && <ErrorMessage message={error.message} />}
-      {isLoading && <SceletonTracksPage />}
+      {isLoading && <SceletonTracksPage title={'Популярные'} />}
       <div className={styles.trackListWrapper}>
         {isSuccess && data.length > 0 && <TrackList tracks={data} />}
       </div>
