@@ -13,8 +13,8 @@ export const useAddTrackToFavorites = () => {
 
   const { error, ...rest } = useMutation({
     mutationKey: [mutationKey.ADD_TRACK_TO_FAVORITES],
-    mutationFn: ({ trackId, userId }: { trackId: string; userId: string }) =>
-      trackService.addTrackToFavorites(trackId as string, userId as string),
+    mutationFn: ({ trackId }: { trackId: string }) =>
+      trackService.addTrackToFavorites(trackId as string),
     onSuccess: (user) => {
       setUser(user);
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });

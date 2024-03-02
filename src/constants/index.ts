@@ -16,4 +16,5 @@ export enum queryKey {
   GET_MY_TRACKS = 'getMyTracks',
   GET_MY_ALBUMS = 'getMyAlbums',
   GET_SEARCH_TRACKS = 'searchTracks',
+  GET_FAVORITES_TRACKS = 'getFavoritesTracks',
 }

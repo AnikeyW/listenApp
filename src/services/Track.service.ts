@@ -4,14 +4,19 @@ import $api from '@/http';
 import { IUser } from '@/types/user';
 
 class TrackService {
-  async getMyTracks(
-    userId: string,
-    count?: number,
-    offset?: number,
-  ): Promise<ITrack[]> {
+  async getFavoritesTracks(count?: number, offset?: number): Promise<ITrack[]> {
+    const response = await $api.get<ITrack[]>(`tracks/favorites`, {
+      params: {
+        count: count ? count : 100,
+        offset: offset ? offset : 0,
+      },
+    });
+    return response.data;
+  }
+
+  async getMyTracks(count?: number, offset?: number): Promise<ITrack[]> {
     const response = await $api.get<ITrack[]>(`tracks/usertracks`, {
       params: {
-        userId: userId,
         count: count ? count : 100,
         offset: offset ? offset : 0,
       },
@@ -36,11 +41,10 @@ class TrackService {
       .then((res) => res.data);
   }
 
-  async addTrackToFavorites(trackId: string, userId: string): Promise<IUser> {
+  async addTrackToFavorites(trackId: string): Promise<IUser> {
     return $api
       .patch('tracks/tofavorites', {
         trackId,
-        userId,
       })
       .then((res) => res.data);
   }

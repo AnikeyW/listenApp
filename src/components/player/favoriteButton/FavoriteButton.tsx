@@ -14,7 +14,6 @@ const FavoriteButton = () => {
   const addTrackToFavoritesHander = () => {
     addTrackToFavoritesMutation.mutate({
       trackId: activeTrack?._id!,
-      userId: user?._id!,
     });
   };
 
