@@ -15,9 +15,14 @@ export const useDeleteTrack = () => {
     mutationFn: (trackId: string) => trackService.delete(trackId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
+      queryClient.invalidateQueries({
+        queryKey: [queryKey.GET_FAVORITES_TRACKS],
+      });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_TRACKS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
     },
     onError: (error: unknown) => {
-      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response) {

@@ -19,7 +19,6 @@ import {
   useTransform,
 } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SessionProvider } from 'next-auth/react';
 import AppRoot from '@/components/appRoot/AppRoot';
 
 const queryClient = new QueryClient();
@@ -68,35 +67,33 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
     <>
       <div className={styles.wrapper}>
         <QueryClientProvider client={queryClient}>
-          <SessionProvider>
-            <AppRoot>
-              <motion.div
-                id={'root'}
-                className={styles.wrapper__root}
-                style={{
-                  transform,
-                  transition: 'all linear 0.1s',
-                  borderRadius,
-                }}
-              >
-                {children}
-                <AnimatePresence>
-                  <Portal key={2}>
-                    <ModalWithLayerEffect
-                      y={y}
-                      isOpen={isShowPlayerFullScreen}
-                      onClose={() => setIsShowPlayerFullScreen(false)}
-                    >
-                      <PlayerFullScreen />
-                    </ModalWithLayerEffect>
-                  </Portal>
-                </AnimatePresence>
-              </motion.div>
+          <AppRoot>
+            <motion.div
+              id={'root'}
+              className={styles.wrapper__root}
+              style={{
+                transform,
+                transition: 'all linear 0.1s',
+                borderRadius,
+              }}
+            >
+              {children}
+              <AnimatePresence>
+                <Portal key={2}>
+                  <ModalWithLayerEffect
+                    y={y}
+                    isOpen={isShowPlayerFullScreen}
+                    onClose={() => setIsShowPlayerFullScreen(false)}
+                  >
+                    <PlayerFullScreen />
+                  </ModalWithLayerEffect>
+                </Portal>
+              </AnimatePresence>
+            </motion.div>
 
-              <div id={'overlays'}></div>
-              {/*<ReactQueryDevtools />*/}
-            </AppRoot>
-          </SessionProvider>
+            <div id={'overlays'}></div>
+            {/*<ReactQueryDevtools />*/}
+          </AppRoot>
         </QueryClientProvider>
       </div>
     </>

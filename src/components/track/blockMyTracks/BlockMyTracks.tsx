@@ -12,7 +12,7 @@ const BlockMyTracks = () => {
   const myTracks = useGetMyTracks();
 
   return (
-    <Block title={'Мои треки'} linkHref={'tracks/mytracks'}>
+    <Block title={'Мои треки'} linkHref={'mytracks'}>
       {myTracks.isSuccess && (
         <>
           {myTracks.data.length === 0 && (

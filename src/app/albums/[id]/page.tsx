@@ -5,12 +5,16 @@ import AlbumOptions from '@/components/album/albumOptions/AlbumOptions';
 import TrackList from '@/components/track/tracklist/TrackList';
 import SceletonAlbum from '@/components/album/sceletonAlbum/SceletonAlbum';
 import { useGetAlbumById } from '@/hooks/album/useGetAlbumById';
+import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 
 const Page = ({ params }: { params: { id: string } }) => {
   const albumQuery = useGetAlbumById(params.id);
 
   return (
     <>
+      {albumQuery.isError && (
+        <ErrorMessage message={albumQuery.error.message} />
+      )}
       {albumQuery.isPending && <SceletonAlbum />}
       {albumQuery.isSuccess && (
         <div className={styles.root}>

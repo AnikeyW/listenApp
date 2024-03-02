@@ -15,6 +15,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
 import { useAddTrackToAlbum } from '@/hooks/album/useAddTrackToAlbum';
 import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
+import Link from 'next/link';
 
 interface Props {
   track: ITrack;
@@ -46,7 +47,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
 
   const redirectToAlbumHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    router.replace('albums/' + track.albumId);
+    router.push('albums/' + track.albumId);
   };
 
   return (
