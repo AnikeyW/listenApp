@@ -9,4 +9,5 @@ export interface IAlbum {
   tracks: ITrack[];
 }
 
-export interface CreateAlbumDtoType extends Omit<IAlbum, '_id' | 'tracks'> {}
+export interface CreateAlbumDtoType
+  extends Omit<IAlbum, '_id' | 'tracks' | 'owner'> {}

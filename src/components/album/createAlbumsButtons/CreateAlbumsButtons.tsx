@@ -19,7 +19,6 @@ const CreateAlbumsButtons: FC<Props> = ({
   setCurrentStep,
   mutate,
 }) => {
-  const user = useAuthStore((state) => state.user);
   const validateStepOne = useAlbumStore((state) => state.validateStepOne);
   const validateStepTwo = useAlbumStore((state) => state.validateStepTwo);
   const name = useAlbumStore((state) => state.name);
@@ -33,7 +32,6 @@ const CreateAlbumsButtons: FC<Props> = ({
       name: name.value,
       author: author.value,
       picture: picture.img,
-      owner: user?._id!,
     };
     mutate(data);
     await router.push('/albums');

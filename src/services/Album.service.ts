@@ -10,12 +10,8 @@ class AlbumService {
       .then((res) => res.data);
   }
 
-  async getMyAlbums(userId: string): Promise<IAlbum[]> {
-    const response = await $api.get('albums/useralbums', {
-      params: {
-        userId: userId,
-      },
-    });
+  async getMyAlbums(): Promise<IAlbum[]> {
+    const response = await $api.get('albums/useralbums');
     return response.data;
   }
 
@@ -30,14 +26,12 @@ class AlbumService {
       }
     });
 
-    return $api
-      .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums', formData)
-      .then((res) => res.data);
+    return $api.post('albums', formData).then((res) => res.data);
   }
 
   async addTrackToAlbum(albumId: string, trackId: string): Promise<ITrack> {
     return $api
-      .post(process.env.NEXT_PUBLIC_BASE_URL + 'albums/addtrack', {
+      .post('albums/addtrack', {
         albumId,
         trackId,
       })
@@ -45,9 +39,7 @@ class AlbumService {
   }
 
   async delete(albumId: string): Promise<string> {
-    return $api
-      .delete(process.env.NEXT_PUBLIC_BASE_URL + 'albums/' + albumId)
-      .then((res) => res.data);
+    return $api.delete('albums/' + albumId).then((res) => res.data);
   }
 
   async getOne(albumId: string): Promise<IAlbum> {
