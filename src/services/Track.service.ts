@@ -78,7 +78,7 @@ class TrackService {
       }
     });
 
-    return axios
+    return $api
       .post(process.env.NEXT_PUBLIC_BASE_URL + 'tracks', formData)
       .then((res) => res.data);
   }
