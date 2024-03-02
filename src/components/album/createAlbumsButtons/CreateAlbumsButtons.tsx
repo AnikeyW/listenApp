@@ -4,7 +4,6 @@ import Button from '@/components/UI/Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAlbumStore } from '@/stores/albumStore';
 import { CreateAlbumDtoType } from '@/types/album';
-import { useAuthStore } from '@/stores/authStore';
 
 interface Props {
   currentStep: number;
