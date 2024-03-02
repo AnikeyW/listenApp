@@ -7,7 +7,6 @@ import { ErrorResponse } from '@/types/error';
 import { useState } from 'react';
 
 interface IUpdateUserImage {
-  userId: string;
   picture: File;
 }
 
@@ -17,8 +16,8 @@ export const useUpdateUserImage = () => {
 
   const { error, ...rest } = useMutation({
     mutationKey: [mutationKey.UPDATE_USER_IMAGE],
-    mutationFn: ({ userId, picture }: IUpdateUserImage) =>
-      userService.updateImage(userId, picture),
+    mutationFn: ({ picture }: IUpdateUserImage) =>
+      userService.updateImage(picture),
     onSuccess: (user) => {
       setUser(user);
     },

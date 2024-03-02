@@ -20,7 +20,7 @@ const ProfileInfo = () => {
   const onChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && user) {
       const picture = e.target.files[0];
-      updateUserImageMutation.mutate({ userId: user._id, picture });
+      updateUserImageMutation.mutate({ picture });
     } else {
       console.log('Ошибка при изменении фотографии');
     }
