@@ -7,17 +7,16 @@
   align-items: center;
   gap: 1rem;
   position: relative;
-  &__handle {
-    width: 2.5rem;
-    min-height: 5px;
-    background: var(--color-background-soft);
-    border-radius: 3px;
-    margin: 0.25rem auto 0;
-    position: relative;
-    z-index: 1;
+  &__btns{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto 0;
+    padding-bottom: 100px;
+    gap: 2rem;
   }
   &__volume{
     width: 70%;
-    margin-top: 2rem;
   }
 }

@@ -24,10 +24,17 @@
     justify-content: center;
     overflow: hidden;
     @media screen and (min-width: 640px){
+      min-width: 140px;
+      justify-content: flex-start;
+    }
+    @media screen and (min-width: 768px){
       min-width: 190px;
       justify-content: flex-start;
     }
-
+    @media screen and (min-width: 992px){
+      min-width: 330px;
+      justify-content: flex-start;
+    }
   }
   &__progress{
     display: none;

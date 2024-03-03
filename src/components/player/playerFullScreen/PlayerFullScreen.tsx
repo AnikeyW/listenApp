@@ -15,20 +15,23 @@ const PlayerFullScreen: FC = () => {
         <TrackImage />
         <Progress />
         <PlayerTrackInfo />
-        <PlayerButtons />
-        <FavoriteButton />
-        <motion.div
-          className={styles.root__volume}
-          drag={'y'}
-          dragConstraints={{
-            top: 0,
-            bottom: 0,
-          }}
-          dragElastic={0}
-        >
-          <VolumeRange />
-        </motion.div>
-        <div className={styles.root__playerSettingsBtns}></div>
+
+        <div className={styles.root__btns}>
+          <PlayerButtons />
+          <FavoriteButton />
+          <motion.div
+            className={styles.root__volume}
+            drag={'y'}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={0}
+          >
+            <VolumeRange />
+          </motion.div>
+          <div className={styles.root__playerSettingsBtns}></div>
+        </div>
       </div>
     </>
   );

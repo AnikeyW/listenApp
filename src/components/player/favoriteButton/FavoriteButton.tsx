@@ -6,8 +6,8 @@ import { usePlayerStore } from '@/stores/playerStore';
 import { useAddTrackToFavorites } from '@/hooks/track/useAddTrackToFavorites';
 
 const FavoriteButton = () => {
+  const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
-  console.log(user);
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const addTrackToFavoritesMutation = useAddTrackToFavorites();
 
@@ -19,7 +19,7 @@ const FavoriteButton = () => {
 
   return (
     <div className={styles.root}>
-      {user ? (
+      {isAuth && user ? (
         <>
           {user.favoritesTracks.find((id) => id === activeTrack?._id) ? (
             <MdOutlineFavorite size={34} />
@@ -30,9 +30,8 @@ const FavoriteButton = () => {
             />
           )}
         </>
-      ) : (
-        <MdOutlineFavoriteBorder size={34} color={'#c6c6c6'} />
-      )}
+      ) : // <MdOutlineFavoriteBorder size={34} color={'#c6c6c6'} />
+      null}
     </div>
   );
 };
