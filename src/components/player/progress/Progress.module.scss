@@ -6,9 +6,26 @@
     padding: 0;
     gap: 0.5rem;
   }
-  &__times{
+  &__currentTime{
+    display: none;
+    @media screen and (min-width: 640px){
+      min-width: 38px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  &__duration{
+    display: none;
+    @media screen and (min-width: 640px){
+      display: block;
+    }
+  }
+  &__mobileTimes{
     display: flex;
     justify-content: space-between;
     color: var(--color-text);
+    @media screen and (min-width: 640px){
+      display: none;
+    }
   }
 }

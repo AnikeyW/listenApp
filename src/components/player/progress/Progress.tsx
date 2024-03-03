@@ -5,13 +5,11 @@ import { motion } from 'framer-motion';
 import { usePlayerStore } from '@/stores/playerStore';
 import { audio } from '@/components/track/tracklist/TrackList';
 import { formatTime } from '@/utils';
-import { useWindowSize } from '@/hooks/useWindowWidth';
 
 const Progress = () => {
   const currentTime = usePlayerStore((state) => state.currentTime);
   const duration = usePlayerStore((state) => state.duration);
   const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
-  const windowWidth = useWindowSize();
 
   const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.stopPropagation();
@@ -29,35 +27,34 @@ const Progress = () => {
       }}
       dragElastic={0}
     >
-      {windowWidth > 640 && <motion.div>{formatTime(currentTime)}</motion.div>}
+      <div className={styles.root__currentTime}>{formatTime(currentTime)}</div>
       <TrackProgress
         left={currentTime}
         right={duration}
         onChange={changeCurrentTime}
       />
-      {windowWidth > 640 && <motion.div>{formatTime(duration)}</motion.div>}
-      {windowWidth < 640 && (
-        <div className={styles.root__times}>
-          <motion.div
-            animate={
-              (currentTime * 100) / duration < 12
-                ? { translateY: '10px' }
-                : { translateY: 0 }
-            }
-          >
-            {formatTime(currentTime)}
-          </motion.div>
-          <motion.div
-            animate={
-              (currentTime * 100) / duration > 88
-                ? { translateY: '10px' }
-                : { translateY: 0 }
-            }
-          >
-            {formatTime(duration)}
-          </motion.div>
-        </div>
-      )}
+      <div className={styles.root__duration}>{formatTime(duration)}</div>
+
+      <div className={styles.root__mobileTimes}>
+        <motion.div
+          animate={
+            (currentTime * 100) / duration < 12
+              ? { translateY: '10px' }
+              : { translateY: 0 }
+          }
+        >
+          {formatTime(currentTime)}
+        </motion.div>
+        <motion.div
+          animate={
+            (currentTime * 100) / duration > 88
+              ? { translateY: '10px' }
+              : { translateY: 0 }
+          }
+        >
+          {formatTime(duration)}
+        </motion.div>
+      </div>
     </motion.div>
   );
 };
