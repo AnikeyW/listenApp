@@ -5,6 +5,7 @@ import TrackList from '@/components/track/tracklist/TrackList';
 import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import SceletonTracksPage from '@/components/track/sceletonTracksPage/SceletonTracksPage';
 import { useGetMyTracks } from '@/hooks/track/useGetMyTracks';
+import EmptyBlock from '@/components/UI/emptyBlock/EmptyBlock';
 
 const Tracks = () => {
   const { data, isLoading, isError, error, isSuccess } = useGetMyTracks();
@@ -15,6 +16,9 @@ const Tracks = () => {
       {isLoading && <SceletonTracksPage title={'Мои треки'} />}
       <div className={styles.trackListWrapper}>
         {isSuccess && data.length > 0 && <TrackList tracks={data} />}
+        {isSuccess && data.length === 0 && (
+          <EmptyBlock text={'Нет загруженных треков'} href={'/tracks/create'} />
+        )}
       </div>
     </div>
   );

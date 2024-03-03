@@ -15,6 +15,13 @@
     justify-content: flex-end;
     p {
       color: var(--color-link);
+      @media screen and (min-width: 640px){
+        cursor: pointer;
+        text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
   &__profilePhoto{
@@ -56,6 +63,9 @@
       color: var(--color-link);
       padding-left: 1rem;
       gap: 1rem;
+      @media screen and (min-width: 640px){
+        cursor: pointer;
+      }
     }
   }
 }

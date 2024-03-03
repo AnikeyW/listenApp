@@ -13,6 +13,8 @@
   }
   &__albums{
     height: calc(100% - var(--trackslist-title-height));
+    display: flex;
+    flex-direction: column;
   }
 }
 

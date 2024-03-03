@@ -4,8 +4,12 @@
   height: 165px;
   gap: 0.5rem;
   align-items: center;
+  border-radius: 0.5rem;
   @media screen and (min-width: 640px){
     cursor: pointer;
+    &:hover{
+      background-color: var(--color-background-soft);
+    }
   }
   &__image{
     min-width: 165px;

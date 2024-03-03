@@ -33,7 +33,7 @@ const CreateAlbumsButtons: FC<Props> = ({
       picture: picture.img,
     };
     mutate(data);
-    await router.push('/albums');
+    router.push('/myalbums');
   }
 
   const next = () => {

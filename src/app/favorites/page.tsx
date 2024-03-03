@@ -7,6 +7,7 @@ import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
 import SceletonTracksPage from '@/components/track/sceletonTracksPage/SceletonTracksPage';
 import TrackList from '@/components/track/tracklist/TrackList';
 import { useGetFavoritesTracks } from '@/hooks/track/useGetFavoritesTracks';
+import EmptyBlock from '@/components/UI/emptyBlock/EmptyBlock';
 
 const Page = () => {
   const pathname = usePathname();

@@ -9,6 +9,7 @@ import { useLogout } from '@/hooks/auth/useLogout';
 import { RiImageAddLine } from 'react-icons/ri';
 import FileUpload from '@/components/fileUploud/FileUpload';
 import { useUpdateUserImage } from '@/hooks/user/useUpdateUserImage';
+import MyLink from '@/components/UI/myLink/MyLink';
 
 const ProfileInfo = () => {
   const router = useRouter();
