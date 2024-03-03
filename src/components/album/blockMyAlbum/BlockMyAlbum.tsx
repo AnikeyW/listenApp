@@ -22,7 +22,7 @@ const BlockMyAlbum = () => {
               href={'/albums/create'}
             />
           )}
-          <HorizontalCarusel key={'albums'}>
+          <HorizontalCarusel key={'albums'} itemsLength={myAlbums.data.length}>
             {myAlbums.data.map((album) => (
               <HorizontalCaruselItem key={album._id}>
                 <AlbumItem album={album} />

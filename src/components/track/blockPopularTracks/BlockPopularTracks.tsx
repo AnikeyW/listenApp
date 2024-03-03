@@ -21,7 +21,12 @@ const BlockPopularTracks = () => {
               href={'/tracks/create'}
             />
           )}
-          <HorizontalCarusel key={'tracks'}>
+          <HorizontalCarusel
+            key={'tracks'}
+            itemsLength={
+              new Array(Math.ceil(popularTracks.data.length / 3)).fill(0).length
+            }
+          >
             {new Array(Math.ceil(popularTracks.data.length / 3))
               .fill(0)
               .map((_, index) => (
