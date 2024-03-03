@@ -15,37 +15,14 @@ const TrackProgress: React.FC<ITrackProgressProps> = ({
   onChange,
 }) => {
   return (
-    <div className={styles.trackProgress}>
-      <div className={styles.trackProgress__range}>
-        <input
-          type="range"
-          min={0}
-          max={right}
-          value={left}
-          onChange={onChange}
-        />
-      </div>
-
-      <div className={styles.trackProgress__times}>
-        <motion.div
-          animate={
-            (left * 100) / right < 12
-              ? { translateY: '10px' }
-              : { translateY: 0 }
-          }
-        >
-          {formatTime(left)}
-        </motion.div>
-        <motion.div
-          animate={
-            (left * 100) / right > 88
-              ? { translateY: '10px' }
-              : { translateY: 0 }
-          }
-        >
-          {formatTime(right)}
-        </motion.div>
-      </div>
+    <div className={styles.root}>
+      <input
+        type="range"
+        min={0}
+        max={right}
+        value={left}
+        onChange={onChange}
+      />
     </div>
   );
 };

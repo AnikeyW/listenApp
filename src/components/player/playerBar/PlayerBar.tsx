@@ -12,6 +12,7 @@ import PlayerButtons from '@/components/player/playerButtons/PlayerButtons';
 import Progress from '@/components/player/progress/Progress';
 import VolumeRange from '@/components/volumeRange/VolumeRange';
 import PlayerTrackInfo from '@/components/player/playerTrackInfo/PlayerTrackInfo';
+import { useWindowSize } from '@/hooks/useWindowWidth';
 
 const playerVariants: Variants = {
   open: {
@@ -25,6 +26,7 @@ const playerVariants: Variants = {
 };
 
 const PlayerBar = () => {
+  const windowWidth = useWindowSize();
   const activeTrack = usePlayerStore((state) => state.activeTrack);
   const setIndexOfActiveTrack = usePlayerStore(
     (state) => state.setIndexOfActiveTrack,
@@ -42,8 +44,7 @@ const PlayerBar = () => {
   };
 
   const showPlayerFullScreen = () => {
-    const isMobileScreen = window.matchMedia('(max-width: 640px)').matches;
-    if (isMobileScreen) {
+    if (windowWidth < 640) {
       setIsShowPlayerFullScreen(true);
     }
   };

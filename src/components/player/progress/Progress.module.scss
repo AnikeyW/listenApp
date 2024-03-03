@@ -1,4 +1,14 @@
 .root{
   width: 100%;
   padding: 0.25rem 2rem;
+  @media screen and (min-width: 640px){
+    display: flex;
+    padding: 0;
+    gap: 0.5rem;
+  }
+  &__times{
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-text);
+  }
 }
