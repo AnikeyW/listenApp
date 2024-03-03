@@ -5,7 +5,8 @@
   padding: 0.5rem 0 0.5rem 0.5rem;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  @media screen and (min-width: 640px){
-    min-width: 46%;
+  min-width: calc(100% - 25px - 0.5rem);
+  @media screen and (min-width: 992px){
+    min-width: calc(50% - 25px);
   }
 }

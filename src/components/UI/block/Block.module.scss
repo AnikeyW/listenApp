@@ -1,4 +1,6 @@
 .block{
+  display: flex;
+  flex-direction: column;
   background-color: var(--color-background-soft);
   height: 223px;
   border-radius: 0.5rem;

@@ -1,19 +1,19 @@
 'use client';
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './AlbumList.module.scss';
 
-import ErrorMessage from '@/components/UI/ErrorMessage/ErrorMessage';
+import { IAlbum } from '@/types/album';
 import AlbumItem from '@/components/album/albumItem/AlbumItem';
-import { useGetAllAlbums } from '@/hooks/album/useGetAllAlbums';
 
-const AlbumList = () => {
-  const { data, isError, error, isSuccess } = useGetAllAlbums();
+interface Props {
+  albums: IAlbum[];
+}
 
+const AlbumList: FC<Props> = ({ albums }) => {
   return (
     <div className={styles.root}>
-      {isError && <ErrorMessage message={error.message} />}
-      {isSuccess &&
-        data.map((album) => <AlbumItem album={album} key={album._id} />)}
+      {albums.length > 0 &&
+        albums.map((album) => <AlbumItem album={album} key={album._id} />)}
     </div>
   );
 };

@@ -1,53 +1,31 @@
 'use client';
 import React from 'react';
-import MyLink from '@/components/UI/myLink/MyLink';
+import styles from './BlockMyAlbum.module.scss';
+
 import HorizontalCarusel from '@/components/UI/horizontalCarusel/HorizontalCarusel';
 import HorizontalCaruselItem from '@/components/UI/horizontalCaruselItem/HorizontalCaruselItem';
-import styles from './BlockMyAlbum.module.scss';
 import Block from '@/components/UI/block/Block';
-import { useRouter } from 'next/navigation';
 import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
+import AlbumItem from '@/components/album/albumItem/AlbumItem';
+import EmptyBlock from '@/components/UI/emptyBlock/EmptyBlock';
 
 const BlockMyAlbum = () => {
-  const router = useRouter();
   const myAlbums = useGetMyAlbums();
 
   return (
-    <Block title={'Мои альбомы'} linkHref={'albums'}>
+    <Block title={'Мои альбомы'} linkHref={'myalbums'}>
       {myAlbums.isSuccess && (
         <>
           {myAlbums.data.length === 0 && (
-            <div
-              style={{
-                height: '182px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                gap: '1rem',
-              }}
-            >
-              <p>Нет загруженных альбомов</p>
-              <MyLink href={'/albums/create'}>Загрузить</MyLink>
-            </div>
+            <EmptyBlock
+              text={'Нет загруженных альбомов'}
+              href={'/albums/create'}
+            />
           )}
           <HorizontalCarusel key={'albums'}>
-            {myAlbums.data.map((album, index) => (
-              <HorizontalCaruselItem key={index} width={'144px'}>
-                <div
-                  className={styles.album}
-                  key={album._id}
-                  onClick={() => router.push('albums/' + album._id)}
-                >
-                  <div className={styles.album__image}>
-                    <img
-                      src={process.env.NEXT_PUBLIC_BASE_URL + album.picture}
-                      alt="wegwe"
-                    />
-                  </div>
-                  <div className={styles.root__author}>{album.author}</div>
-                  <div>{album.name}</div>
-                </div>
+            {myAlbums.data.map((album) => (
+              <HorizontalCaruselItem key={album._id}>
+                <AlbumItem album={album} />
               </HorizontalCaruselItem>
             ))}
           </HorizontalCarusel>
