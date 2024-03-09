@@ -1,3 +1,4 @@
+export const APP_VERSION = '0.1.0';
 export const TIME_TO_INCREMENT_TRACK_LISTENS = 20;
 
 export enum mutationKey {
