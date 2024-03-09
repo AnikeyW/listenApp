@@ -9,6 +9,7 @@ export enum mutationKey {
   ADD_TRACK_TO_ALBUM = 'addTrackToAlbum',
   DELETE_ALBUM = 'deleteAlbum',
   ADD_TRACK_TO_FAVORITES = 'addTrackToFavorites',
+  DELETE_TRACK_FROM_FAVORITES = 'deleteTrackFromFavorites',
 }
 
 export enum queryKey {

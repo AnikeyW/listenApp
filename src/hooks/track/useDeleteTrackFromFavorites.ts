@@ -1,19 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import albumService from '@/services/Album.service';
+import { useState } from 'react';
 import { mutationKey, queryKey } from '@/constants';
+import trackService from '@/services/Track.service';
 import axios, { AxiosError } from 'axios';
 import { ErrorResponse } from '@/types/error';
-import { useState } from 'react';
+import { useAuthStore } from '@/stores/authStore';
 
-export const useAddTrackToAlbum = () => {
+export const useDeleteTrackFromFavorites = () => {
   const queryClient = useQueryClient();
   const [customError, setCustomError] = useState({ message: '' });
+  const setUser = useAuthStore((state) => state.setUser);
 
   const { error, ...rest } = useMutation({
-    mutationKey: [mutationKey.ADD_TRACK_TO_ALBUM],
-    mutationFn: ({ albumId, trackId }: { albumId: string; trackId: string }) =>
-      albumService.addTrackToAlbum(albumId, trackId),
-    onSuccess: () => {
+    mutationKey: [mutationKey.DELETE_TRACK_FROM_FAVORITES],
+    mutationFn: ({ trackId }: { trackId: string }) =>
+      trackService.deleteTrackFromFavorites(trackId as string),
+    onSuccess: (user) => {
+      setUser(user);
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
       queryClient.invalidateQueries({ queryKey: [queryKey.GET_ALL_ALBUMS] });

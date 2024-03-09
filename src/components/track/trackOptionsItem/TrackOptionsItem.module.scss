@@ -1,0 +1,16 @@
+.root {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  &__darkLayerOptionList{
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.32);
+    z-index: 1;
+  }
+}

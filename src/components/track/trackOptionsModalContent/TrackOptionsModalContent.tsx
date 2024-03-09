@@ -6,6 +6,8 @@ import {
   MdCancel,
   MdDeleteForever,
   MdMoveUp,
+  MdOutlineHeartBroken,
+  MdOutlineVisibilityOff,
   MdPlaylistAdd,
 } from 'react-icons/md';
 import { ITrack } from '@/types/track';
@@ -15,6 +17,8 @@ import { useAuthStore } from '@/stores/authStore';
 import { useDeleteTrack } from '@/hooks/track/useDeleteTrack';
 import { useAddTrackToAlbum } from '@/hooks/album/useAddTrackToAlbum';
 import { useGetMyAlbums } from '@/hooks/album/useGetMyAlbums';
+import TrackOptionsItem from '@/components/track/trackOptionsItem/TrackOptionsItem';
+import { useDeleteTrackFromFavorites } from '@/hooks/track/useDeleteTrackFromFavorites';
 
 interface Props {
   track: ITrack;
@@ -23,17 +27,25 @@ interface Props {
 
 const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
   const user = useAuthStore((state) => state.user);
+  const isAuth = useAuthStore((state) => state.isAuth);
   const [isShowAlbumList, setIsShowAlbumList] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   const deleteTrackMutation = useDeleteTrack();
-
   const getMyAlbums = useGetMyAlbums();
-
   const addTrackToAlbumMutation = useAddTrackToAlbum();
+  const deleteTrackFromFavoritesMutation = useDeleteTrackFromFavorites();
 
-  const deleteHandler = (e: React.MouseEvent<HTMLElement>) => {
+  const deleteTrackFromFavoritesHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    e.stopPropagation();
+    deleteTrackFromFavoritesMutation.mutate({ trackId: track._id });
+    setIsOpenModal(false);
+  };
+
+  const deleteHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     deleteTrackMutation.mutate(track._id);
     setIsOpenModal(false);
@@ -161,27 +173,22 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
             ) : null}
           </>
         )}
+        {isAuth &&
+          user?.favoritesTracks.find((trackId) => trackId === track._id) && (
+            <TrackOptionsItem
+              title={'Удалить из избранного'}
+              isShowAlbumList={isShowAlbumList}
+              icon={<MdOutlineHeartBroken size={34} color={'orange'} />}
+              handler={deleteTrackFromFavoritesHandler}
+            />
+          )}
         {user?._id && user._id === track.owner && (
-          <div className={styles.root__optionList_item} onClick={deleteHandler}>
-            <MdDeleteForever size={34} color={'crimson'} />
-            <span>Удалить трек</span>
-            <AnimatePresence>
-              {isShowAlbumList && (
-                <motion.div
-                  className={styles.root__darkLayerOptionList}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 100 }}
-                  exit={{ opacity: 0 }}
-                  drag={'y'}
-                  dragConstraints={{
-                    top: 0,
-                    bottom: 0,
-                  }}
-                  dragElastic={0}
-                ></motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <TrackOptionsItem
+            title={'Удалить трек'}
+            isShowAlbumList={isShowAlbumList}
+            icon={<MdDeleteForever size={34} color={'crimson'} />}
+            handler={deleteHandler}
+          />
         )}
       </div>
     </div>

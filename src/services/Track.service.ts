@@ -49,6 +49,14 @@ class TrackService {
       .then((res) => res.data);
   }
 
+  async deleteTrackFromFavorites(trackId: string): Promise<IUser> {
+    return $api
+      .patch('tracks/deletefromfavorites', {
+        trackId,
+      })
+      .then((res) => res.data);
+  }
+
   async listen(trackId: string): Promise<void> {
     return axios.post(
       process.env.NEXT_PUBLIC_BASE_URL + 'tracks/listen/' + trackId,
