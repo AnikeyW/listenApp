@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import authService from '@/services/Auth.service';
 import { IAuthLoginResponse } from '@/types/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/authStore';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { ErrorResponse } from '@/types/error';
+import { queryKey } from '@/constants';
 
 interface ILogin {
   email: string;
@@ -13,6 +14,7 @@ interface ILogin {
 }
 
 export const useLogin = () => {
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const router = useRouter();
   const setIsAuth = useAuthStore((state) => state.setIsAuth);
@@ -31,6 +33,8 @@ export const useLogin = () => {
       setIsAuth(true);
       setUser(data.user);
       router.push(callbackUrl ? callbackUrl : '/settings');
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {

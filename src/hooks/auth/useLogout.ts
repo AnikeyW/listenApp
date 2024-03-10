@@ -1,11 +1,13 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import authService from '@/services/Auth.service';
 import { useAuthStore } from '@/stores/authStore';
 import axios, { AxiosError } from 'axios';
 import { ErrorResponse } from '@/types/error';
 import { useState } from 'react';
+import { queryKey } from '@/constants';
 
 export const useLogout = () => {
+  const queryClient = useQueryClient();
   const setIsAuth = useAuthStore((state) => state.setIsAuth);
   const setUser = useAuthStore((state) => state.setUser);
   const [customError, setCustomError] = useState({ message: '' });
@@ -18,6 +20,8 @@ export const useLogout = () => {
       localStorage.removeItem('refreshToken');
       setIsAuth(false);
       setUser(null);
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_ALBUMS] });
+      queryClient.invalidateQueries({ queryKey: [queryKey.GET_MY_TRACKS] });
     },
     onError: (error: unknown) => {
       if (axios.isAxiosError(error)) {
