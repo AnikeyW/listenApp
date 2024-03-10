@@ -178,7 +178,7 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
           ) && (
             <TrackOptionsItem
               title={'Удалить из избранного'}
-              isShowAlbumList={isShowAlbumList}
+              isShowDarkLayer={isShowAlbumList}
               icon={<MdOutlineHeartBroken size={34} color={'orange'} />}
               handler={deleteTrackFromFavoritesHandler}
             />
@@ -186,12 +186,28 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
         {user?._id && user._id === track.owner && (
           <TrackOptionsItem
             title={'Удалить трек'}
-            isShowAlbumList={isShowAlbumList}
+            isShowDarkLayer={isShowAlbumList}
             icon={<MdDeleteForever size={34} color={'crimson'} />}
             handler={deleteHandler}
           />
         )}
       </div>
+      <AnimatePresence>
+        {isShowAlbumList && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 100 }}
+            exit={{ opacity: 0 }}
+            drag={'y'}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={0}
+            className={styles.darkPadding}
+          ></motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

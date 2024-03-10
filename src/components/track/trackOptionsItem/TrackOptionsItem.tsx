@@ -6,21 +6,21 @@ interface Props {
   icon: ReactNode;
   title: string;
   handler: (e: React.MouseEvent<HTMLDivElement>) => void;
-  isShowAlbumList: boolean;
+  isShowDarkLayer: boolean;
 }
 
 const TrackOptionsItem: FC<Props> = ({
   icon,
   title,
   handler,
-  isShowAlbumList,
+  isShowDarkLayer,
 }) => {
   return (
     <div className={styles.root} onClick={handler}>
       {icon}
       <span>{title}</span>
       <AnimatePresence>
-        {isShowAlbumList && (
+        {isShowDarkLayer && (
           <motion.div
             onClick={(e) => e.stopPropagation()}
             className={styles.root__darkLayerOptionList}

@@ -1,6 +1,7 @@
 .root{
   color: var(--color-text);
   padding-bottom: var(--paddingBottomOnIphone);
+  position: relative;
   &__top{
     border-bottom: 1px solid var(--color-border);
     padding: 1rem;
@@ -45,6 +46,16 @@
     background-color: rgba(0, 0, 0, 0.32);
     z-index: 1;
   }
+}
+
+.darkPadding{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--paddingBottomOnIphone) - 1px);
+  background-color: rgba(0, 0, 0, 0.32);
+  z-index: 1;
 }
 
 .track {
