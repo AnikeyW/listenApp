@@ -174,7 +174,9 @@ const TrackOptionsModalContent: FC<Props> = ({ track, setIsOpenModal }) => {
           </>
         )}
         {isAuth &&
-          user?.favoritesTracks.find((trackId) => trackId === track._id) && (
+          user?.favoritesTracks.find(
+            (favTrack) => favTrack.trackId === track._id,
+          ) && (
             <TrackOptionsItem
               title={'Удалить из избранного'}
               isShowAlbumList={isShowAlbumList}

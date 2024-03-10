@@ -21,7 +21,9 @@ const FavoriteButton = () => {
     <div className={styles.root}>
       {isAuth && user ? (
         <>
-          {user.favoritesTracks.find((id) => id === activeTrack?._id) ? (
+          {user.favoritesTracks.find(
+            (id) => id.trackId === activeTrack?._id,
+          ) ? (
             <MdOutlineFavorite size={34} />
           ) : (
             <MdOutlineFavoriteBorder
