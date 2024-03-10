@@ -7,7 +7,6 @@ import {
   MdDeleteForever,
   MdMoveUp,
   MdOutlineHeartBroken,
-  MdOutlineVisibilityOff,
   MdPlaylistAdd,
 } from 'react-icons/md';
 import { ITrack } from '@/types/track';
